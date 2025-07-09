@@ -1764,42 +1764,6 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "Add Profile button is present");
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76767"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.ACCOUNT_SHARING, TestGroup.PRE_CONFIGURATION, US})
-    public void verifyExtraMembersProfileLimits() {
-        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-
-        setAccount(createAccountSharingUnifiedAccounts().getReceivingAccount());
-        setAppToHomeScreen(getUnifiedAccount());
-
-        homePage.clickMoreTab();
-        Assert.assertFalse(moreMenuPage.isAddProfileButtonPresent(),
-                "Add profile button was present for the extra members account");
-
-        // Revoke  subscription
-        getUnifiedSubscriptionApi().revokeSubscription(getUnifiedAccount(),
-                getUnifiedAccount().getAgreement(0).getAgreementId());
-
-        //Entitle account with D+
-        UnifiedEntitlement disneyEntitlements = UnifiedEntitlement.builder()
-                .unifiedOffer(getUnifiedOffer(DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM)).subVersion(UNIFIED_ORDER).build();
-        try {
-            getUnifiedSubscriptionApi().entitleAccount(getUnifiedAccount(), Arrays.asList(disneyEntitlements));
-        } catch (MalformedURLException | URISyntaxException | InterruptedException e) {
-            Assert.fail("Failed to entitle the account with new entitlement");
-        }
-        // Terminate app and relaunch
-        terminateApp(sessionBundles.get(DISNEY));
-        startApp(sessionBundles.get(DISNEY));
-
-        // Verify content on watchlist after revoke HULU entitlement
-        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
-
-        //Create 6 additional profiles via api and ensure that we can see add profile button
-
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-77236"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.ACCOUNT_SHARING, TestGroup.PRE_CONFIGURATION, US})
     public void verifyExtraMemberCanUpdateProfile() {
@@ -1866,6 +1830,48 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(editProfilePage.isGenderButtonPresent(), "Gender button is not present");
         Assert.assertTrue(editProfilePage.getStaticTextByLabel(desiredGender).isElementPresent(),
                 "Gender is not updated");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76767"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.ACCOUNT_SHARING, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyExtraMembersProfileLimits() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+
+        setAccount(createAccountSharingUnifiedAccounts().getReceivingAccount());
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        homePage.clickMoreTab();
+        moreMenuPage.clickEditProfilesBtn();
+
+        Assert.assertTrue(editProfilePage.isOpened(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
+        Assert.assertEquals(editProfilePage.getQuantityOfProfileCells(), 1,
+                "Extra Member account should only have one profile");
+        Assert.assertFalse(editProfilePage.getAddProfileBtn().isElementPresent(FIVE_SEC_TIMEOUT),
+                "Add Profile button should not be present for Extra Member account");
+
+        //Convert Extra Member account to independent D+ subscription
+        convertExtraMemberToIndependentSubscription(getUnifiedAccount());
+
+        // Refresh app state to reflect new subscription status
+        terminateApp(sessionBundles.get(DISNEY));
+        launchApp(sessionBundles.get(DISNEY));
+
+        homePage.clickMoreTab();
+        moreMenuPage.clickEditProfilesBtn();
+        Assert.assertTrue(editProfilePage.getAddProfileBtn().isElementPresent(FIVE_SEC_TIMEOUT),
+                "Add Profile button should be present after conversion to independent subscription");
+
+        // User can add profiles up to the max allowed
+        addAdultProfiles(getUnifiedAccount(), 6, "AdultProfile");
+        //This time is needed to propagate the changes
+        pause(20);
+        terminateApp(sessionBundles.get(DISNEY));
+        launchApp(sessionBundles.get(DISNEY));
+        homePage.clickMoreTab();
+        moreMenuPage.clickEditProfilesBtn();
+        Assert.assertFalse(editProfilePage.getAddProfileBtn().isElementPresent(FIVE_SEC_TIMEOUT),
+                "Add Profile button should not be present after reaching max profile limit");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72166"})
@@ -2164,5 +2170,19 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         handleGenericPopup(5,1);
         handleOneTrustPopUp();
         whoseWatchingPage.clickProfile(profileName, false);
+    }
+
+    public void addAdultProfiles(UnifiedAccount account, int count, String namePrefix) {
+        for (int i = 1; i <= count; i++) {
+            String profileName = namePrefix + i;
+            getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                    .unifiedAccount(account)
+                    .profileName(profileName)
+                    .dateOfBirth(ADULT_DOB)
+                    .language(getLocalizationUtils().getUserLanguage())
+                    .kidsModeEnabled(false)
+                    .isStarOnboarded(true)
+                    .build());
+        }
     }
 }

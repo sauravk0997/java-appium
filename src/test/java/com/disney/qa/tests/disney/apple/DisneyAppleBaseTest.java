@@ -6,7 +6,8 @@ import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import com.disney.qa.api.account.*;
 import com.disney.config.DisneyParameters;
 import com.disney.qa.api.accountsharing.AccountSharingAccounts;
@@ -50,8 +51,7 @@ import com.disney.jarvisutils.parameters.apple.JarvisAppleParameters;
 import com.disney.qa.api.config.DisneyMobileConfigApi;
 import com.zebrunner.carina.utils.DateUtils;
 import com.zebrunner.carina.utils.R;
-import org.testng.ITestContext;
-import org.testng.ITestResult;
+import org.testng.*;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
@@ -77,10 +77,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public static final String WEB = "web";
     public static final String DISNEY = "disney";
     public static final String APP = "app";
-    //Keeping this not to a specific plan name to support localization tests
-    //Plan names in non-us countries might differ from that in us.
-    public static final String BUNDLE_PREMIUM = "Yearly";
-    public static final String SUBSCRIPTION_V2 = "V2";
     public static final String ZEBRUNNER_XRAY_TEST_KEY = "com.zebrunner.app/tcm.xray.test-key";
     public static final String LATAM = "LATAM";
     public static final String EMEA = "EMEA";
@@ -654,6 +650,20 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         return accountSharingAccounts;
     }
 
+    public void convertExtraMemberToIndependentSubscription(UnifiedAccount account) {
+        // Remove the Extra Member subscription using AccountSharingHelper
+        getAccountSharingHelper().removeAsExtraMember(account);
+        //Entitle account with D+
+        UnifiedEntitlement disneyEntitlements = UnifiedEntitlement.builder()
+                .unifiedOffer(getUnifiedOffer(DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM)).subVersion(UNIFIED_ORDER).build();
+        try {
+            getUnifiedSubscriptionApi().entitleAccount(getUnifiedAccount(), Collections.singletonList(disneyEntitlements));
+        } catch (MalformedURLException | URISyntaxException | InterruptedException e) {
+            Assert.fail("Failed to entitle the account with new entitlement");
+        }
+        setAccount(account);
+    }
+
     ////////////////////////////
     protected BuildType buildType;
     protected Map<String, String> sessionBundles = new HashMap<>();
@@ -781,12 +791,5 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
                 HONDURAS, MEXICO, NICARAGUA, PANAMA, PARAGUAY, PERU, URUGUAY);
         LOGGER.info("Selecting random Country code from EMEA and LATAM region");
         return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
-    }
-
-    public ExploreSearchRequest createUpNextRequest(String contentId) {
-        return ExploreSearchRequest.builder()
-                .contentEntitlements(CONTENT_ENTITLEMENT_DISNEY)
-                .profileId(getUnifiedAccount().getProfileId())
-                .contentId(contentId).build();
     }
 }
