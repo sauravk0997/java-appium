@@ -314,7 +314,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         Item firstUpcomingEvent = getUpcomingEventFromAPI(maxQuantityOfExpectedChannels);
         String contentTitle = firstUpcomingEvent.getVisuals().getTitle();
@@ -324,7 +324,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.typeInSearchField(contentTitle);
-//        searchPage.waitForPresenceOfAnElement(searchPage.getSearchResults());
+        searchPage.waitForSearchResultToVisible();
         searchPage.clickSearchResult(contentTitle);
 
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
