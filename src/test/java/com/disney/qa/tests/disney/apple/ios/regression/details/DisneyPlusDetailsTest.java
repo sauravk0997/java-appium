@@ -1004,7 +1004,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 CollectionConstant.Collection.ESPN_EXPLORE_MORE;
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         //verify network attribution on VOD

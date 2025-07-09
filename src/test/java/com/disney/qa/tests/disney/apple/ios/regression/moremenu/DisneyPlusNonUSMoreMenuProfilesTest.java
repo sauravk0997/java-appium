@@ -156,7 +156,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
                 .build());
 
         setAppToHomeScreen(getUnifiedAccount());
-        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
+
         handleAlert();
         whoIsWatching.clickEditProfile();
         editProfile.clickEditModeProfile(KIDS_PROFILE);
