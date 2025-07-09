@@ -268,7 +268,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     public void verifyLinearChannelMovieTile() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         SoftAssert sa = new SoftAssert();
-        String streamsCollectionName = getCollectionName(STREAMS_NON_STOP_PLAYLISTS);
+        String streamsCollectionName = getCollectionName(STREAMS);
 
         logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
@@ -277,7 +277,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         Item channelItemMovie = getFirstMovieChannelItem(MAX_EXPECTED_CHANNELS_SIX);
         //Swipe Horizontally to Title
         homePage.moveRightUntilElementIsFocused(
-                homePage.getCellElementFromContainer(STREAMS_NON_STOP_PLAYLISTS,
+                homePage.getCellElementFromContainer(STREAMS,
                         channelItemMovie.getVisuals().getTitle()),
                 MAX_EXPECTED_CHANNELS_SIX);
         String movieYear = "";
