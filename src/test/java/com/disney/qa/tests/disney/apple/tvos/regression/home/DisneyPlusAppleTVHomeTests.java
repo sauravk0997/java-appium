@@ -273,31 +273,33 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 12);
         Item channelItemMovie = getFirstMovieChannelItem(MAX_EXPECTED_CHANNELS_SIX);
 
+        //Swipe Horizontally to Title
         homePage.moveRightUntilElementIsFocused(
                 homePage.getCellElementFromContainer(STREAMS_NON_STOP_PLAYLISTS,
                         channelItemMovie.getVisuals().getTitle()),
                 MAX_EXPECTED_CHANNELS_SIX);
-        String movieTitle = "";
         String movieYear = "";
         String movieGenre = "";
         String movieRating = "";
         try {
-            movieTitle = channelItemMovie.getVisuals().getTitle();
             movieYear = channelItemMovie.getVisuals().getReleaseYearRange().toString();
             movieGenre = channelItemMovie.getVisuals().getEpisodeTitle();
-            movieRating = channelItemMovie.getVisuals().getRatingInfo().toString();
+            movieRating = channelItemMovie.getVisuals().getMetastringParts().getRatingInfo().getRating().getText();
         } catch (Exception e) {
             Assert.fail("Exception occurred: " + e.getMessage());
         }
-        LOGGER.info("Episodic Info from Explore API: Movie Title '{}', Movie Year '{}', Movie Genre '{}', Movie Rating `{}`",
-                movieTitle, movieYear, movieGenre, movieRating);
+        LOGGER.info("Episodic Info from Explore API: Movie Year '{}', Movie Genre '{}', Movie Rating `{}`",
+                movieYear, movieGenre, movieRating);
 
-        // On Now
-        // Live Badge
-        // Title
-        // Rating
-        // year
-        // genre
+        String yearAndGenre = String.format("%s \u2022 %s", movieYear, movieGenre);
+        LOGGER.info("Metadata episode {}", yearAndGenre);
+        sa.assertTrue(homePage.getTypeCellLabelContains(movieRating).isPresent(), "Channel Rating is not displayed");
+        sa.assertTrue(homePage.getStaticTextByLabelContains(yearAndGenre).isPresent(),
+                "Movie Year and Genre is not displayed");
+        sa.assertTrue(homePage.getStaticTextByLabelContains("On Now:").isPresent(),
+                "On Now: is not displayed");
+        sa.assertTrue(homePage.getTypeOtherContainsLabel("LIVE").isPresent(),
+                "LIVE badge is not displayed");
 
         sa.assertAll();
     }
