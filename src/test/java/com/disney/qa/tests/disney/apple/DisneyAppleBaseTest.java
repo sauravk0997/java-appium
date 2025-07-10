@@ -92,6 +92,7 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public static final String LATAM_US = "LATAM_US";
     public static final String EMEA_CA = "EMEA_CA";
     public static final String EMEA_LATAM = "EMEA_LATAM";
+    public static final String TR_EN = "TR_EN";
     protected static final ThreadLocal<String> TEST_FAIRY_APP_VERSION = new ThreadLocal<>();
     protected static final ThreadLocal<String> TEST_FAIRY_URL = new ThreadLocal<>();
     private static final ThreadLocal<ZebrunnerProxyBuilder> PROXY = new ThreadLocal<>();
@@ -373,6 +374,9 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
         } else if (groups.contains(REST_OF_WORLD)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getRestOfWorldCountryCode(), true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
+        } else if (groups.contains(TR_EN)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), TR, true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
         } else {
             throw new RuntimeException("No associated Locale and Language was found.");
