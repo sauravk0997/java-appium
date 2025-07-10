@@ -532,21 +532,66 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         setAppToHomeScreen(getUnifiedAccount());
 
+        ArrayList<Container> emptySearchContainers;
+        try {
+            emptySearchContainers = getSearchExploreQuery("").getPage().getContainers();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, failed to get empty search collections using Explore API", e);
+        }
+
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         sa.assertTrue(searchPage.getOriginalsTile().isPresent(), "Originals tile not found");
         sa.assertTrue(searchPage.getMovieTile().isPresent(), "Movies tile not found");
         sa.assertTrue(searchPage.getSeriesTile().isPresent(), "Series tile not found");
-        sa.assertTrue(searchPage.isExploreTitleDisplayed(SHORT_TIMEOUT), "Explore title is not displayed");
-        sa.assertTrue(searchPage.isCollectionTitleDisplayed(), "Collection title not displayed");
 
-        if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
-            searchPage.swipeUp(1500);
-            sa.assertFalse(searchPage.getOriginalsTile().isPresent(), "Originals tile found after scrolling");
-            sa.assertFalse(searchPage.getMovieTile().isPresent(), "Movies tile found after scrolling");
-            sa.assertFalse(searchPage.getSeriesTile().isPresent(), "Series tile found after scrolling");
-            sa.assertFalse(searchPage.isExploreTitleDisplayed(SHORT_TIMEOUT),
-                    "Explore title is displayed after scrolling");
+        // If Explore (previous) UI is visible, validate corresponding elements
+        if (searchPage.isExploreTitleDisplayed(SHORT_TIMEOUT)) {
+            sa.assertTrue(searchPage.isCollectionTitleDisplayed(), "Collection title not displayed");
+            if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
+                searchPage.swipeUp(1500);
+                sa.assertFalse(searchPage.getOriginalsTile().isPresent(ONE_SEC_TIMEOUT),
+                        "Originals tile found after scrolling");
+                sa.assertFalse(searchPage.getMovieTile().isPresent(ONE_SEC_TIMEOUT),
+                        "Movies tile found after scrolling");
+                sa.assertFalse(searchPage.getSeriesTile().isPresent(ONE_SEC_TIMEOUT),
+                        "Series tile found after scrolling");
+                sa.assertFalse(searchPage.isExploreTitleDisplayed(ONE_SEC_TIMEOUT),
+                        "Explore title is displayed after scrolling");
+            }
+        }
+        // If Explore (previous) UI is not visible, validate new expected Collections
+        else {
+            if (emptySearchContainers.isEmpty()) {
+                throw new SkipException("Skipping test, list of containers for default search query was empty");
+            }
+            for(Container container : emptySearchContainers) {
+                String collectionName = container.getVisuals().getName();
+                String collectionId =  container.getId();
+                ExtendedWebElement collectionCell = searchPage.getCollection(collectionId);
+
+                List<Item> containerTitles = getExploreAPIItemsFromSet(collectionId, 100);
+                if (containerTitles.isEmpty()) {
+                    throw new SkipException(String.format("Failed to get '%s' collection titles from Explore API",
+                            collectionName));
+                }
+                String lastElementTitle = containerTitles.get(containerTitles.size() - 1).getVisuals().getTitle();
+                ExtendedWebElement lastElement = searchPage.getCellElementFromContainer(collectionId, lastElementTitle);
+
+                swipePageTillElementTappable(collectionCell, 5, null, Direction.UP, 900);
+                searchPage.swipeInContainerTillElementIsPresent(collectionCell, lastElement,
+                        30, Direction.LEFT, 150);
+                sa.assertTrue(lastElement.isPresent(),
+                        String.format("Last element (%s) from '%s' collection was not visible" +
+                                        " after swiping left in the container", lastElementTitle, collectionName));
+            }
+            String firstCollectionTitle = emptySearchContainers.get(0).getVisuals().getName();
+            if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
+                searchPage.swipeUp(1500);
+                sa.assertFalse(searchPage.getStaticTextByLabel(firstCollectionTitle).isPresent(THREE_SEC_TIMEOUT),
+                        String.format("First collection title '%s' is displayed after scrolling",
+                                firstCollectionTitle));
+            }
         }
         sa.assertAll();
     }
