@@ -354,7 +354,8 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
      * @param direction
      */
 
-    default void swipeInContainerTillElementIsPresent(ExtendedWebElement container, ExtendedWebElement element, int count, Direction direction, int... duration) {
+    default void swipeInContainerTillElementIsPresent(ExtendedWebElement container, ExtendedWebElement element,
+                                                      int count, Direction direction, int... duration) {
         int swipeDuration = duration.length > 0 ? duration[0] : 900;
         while (element.isElementNotPresent(1) && count >= 0) {
             swipeInContainer(container, direction, 1, swipeDuration);
