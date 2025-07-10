@@ -1018,25 +1018,27 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-83282"})
-    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, TR_EN})
     public void verifyAdFreeDownloadForAdTierUserTurkey() {
+        String subscriptionType = "Ad-tier";
         setAccount(getUnifiedAccountApi().createAccount(
                 getCreateUnifiedAccountRequestForCountryWithPlan(DISNEY_PLUS_STANDARD_YEARLY_TURKEY,
-                        TR, getLocalizationUtils().getUserLanguage())));
-        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), TR);
+                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
 
-        verifyAdFreeDownload("Ad-tier");
+        verifyAdFreeDownload(subscriptionType);
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-81029"})
-    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, TR_EN})
     public void verifyAdFreeDownloadForPremiumUserTurkey() {
+        String subscriptionType = "Premium-tier";
         setAccount(getUnifiedAccountApi().createAccount(
                 getCreateUnifiedAccountRequestForCountryWithPlan(DISNEY_PREMIUM_YEARLY_TURKEY,
-                        TR, getLocalizationUtils().getUserLanguage())));
-        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), TR);
+                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
 
-        verifyAdFreeDownload("Premium-tier");
+        verifyAdFreeDownload(subscriptionType);
     }
 
     private void verifyAdFreeDownload(String subscriptionType) {
