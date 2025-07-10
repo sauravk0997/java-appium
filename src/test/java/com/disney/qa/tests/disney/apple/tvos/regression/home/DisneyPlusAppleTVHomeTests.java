@@ -140,7 +140,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.waitUntilElementIsFocused(detailsPage.getPlayOrContinueButton(), FIFTEEN_SEC_TIMEOUT);
         detailsPage.clickSelect();
-        videoPlayerTVPage.waitForPresenceOfAnElement(videoPlayerTVPage.getPlayerView());
+        videoPlayerTVPage.waitForVideoToStart();
         Assert.assertTrue(videoPlayerTVPage.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayerTVPage.clickBack();
 
