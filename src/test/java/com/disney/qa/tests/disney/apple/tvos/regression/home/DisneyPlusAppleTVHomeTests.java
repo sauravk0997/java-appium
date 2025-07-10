@@ -383,7 +383,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
-        homePage.moveDownUntilCollectionContentIsFocused(streamsNonStopPlaylists, 10);
+        homePage.moveDownUntilCollectionContentIsFocused(streamsNonStopPlaylists, 20);
 
         try {
             // Get first series item
