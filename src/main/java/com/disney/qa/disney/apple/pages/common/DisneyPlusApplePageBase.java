@@ -1195,6 +1195,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return cellElementFromCollection.format(CollectionConstant.getCollectionName(collection), title);
     }
 
+    public ExtendedWebElement getCellElementFromContainer(String collectionId, String title) {
+        return cellElementFromCollection.format(collectionId, title);
+    }
+
     public boolean isRatingPresent(String rating) {
         return getStaticTextByLabelContains(rating).isPresent(FORTY_FIVE_SEC_TIMEOUT);
     }
