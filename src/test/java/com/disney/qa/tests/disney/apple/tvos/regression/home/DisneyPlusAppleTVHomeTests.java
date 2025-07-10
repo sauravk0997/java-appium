@@ -33,7 +33,6 @@ import java.util.stream.Stream;
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.CollectionConstant.Collection.STREAMS;
-import static com.disney.qa.common.constant.CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS;
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BASIC_MONTHLY;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
@@ -309,7 +308,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
 
         String streamsCollectionName =
-                getCollectionName(STREAMS_NON_STOP_PLAYLISTS);
+                getCollectionName(STREAMS);
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
@@ -317,7 +316,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         Item channelItemWithEpisodicInfo = getFirstChannelItemThatHasEpisodicInfo(MAX_EXPECTED_CHANNELS_SIX);
         homePage.moveRightUntilElementIsFocused(
-                homePage.getCellElementFromContainer(STREAMS_NON_STOP_PLAYLISTS,
+                homePage.getCellElementFromContainer(STREAMS,
                         channelItemWithEpisodicInfo.getVisuals().getTitle()),
                 MAX_EXPECTED_CHANNELS_SIX);
         String seasonNumber = "";
@@ -350,14 +349,14 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         SoftAssert sa = new SoftAssert();
 
         String streamsCollectionName =
-                CollectionConstant.getCollectionName(CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS);
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.STREAMS);
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 12);
         Item channelItemWithEpisodicInfo = getFirstChannelItemThatHasEpisodicInfo(MAX_EXPECTED_CHANNELS_SIX);
         homePage.moveRightUntilElementIsFocused(
-                homePage.getCellElementFromContainer(STREAMS_NON_STOP_PLAYLISTS,
+                homePage.getCellElementFromContainer(STREAMS,
                         channelItemWithEpisodicInfo.getVisuals().getTitle()),
                 MAX_EXPECTED_CHANNELS_SIX);
         homePage.clickSelect();
@@ -379,7 +378,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         SoftAssert sa = new SoftAssert();
 
         String streamsNonStopPlaylists =
-                CollectionConstant.getCollectionName(CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS);
+                CollectionConstant.getCollectionName(CollectionConstant.Collection.STREAMS);
 
         logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
@@ -389,7 +388,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
             // Get first series item
             Item channelItemWithEpisodicInfo = getFirstChannelItemThatHasEpisodicInfo(10);
             homePage.moveRightUntilElementIsFocused(
-                    homePage.getCellElementFromContainer(STREAMS_NON_STOP_PLAYLISTS,
+                    homePage.getCellElementFromContainer(STREAMS,
                             channelItemWithEpisodicInfo.getVisuals().getTitle()), 10);
 
             String rating = channelItemWithEpisodicInfo.getVisuals().getMetastringParts().getRatingInfo().getRating().getText();
@@ -607,10 +606,10 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
     private Item getFirstChannelItemThatHasEpisodicInfo(int titlesLimit) {
         List<Item> liveChannelsFromApi = getExploreAPIItemsFromSet(
-                getCollectionName(STREAMS_NON_STOP_PLAYLISTS), titlesLimit);
+                getCollectionName(STREAMS), titlesLimit);
         Assert.assertNotNull(liveChannelsFromApi,
                 String.format("No items for '%s' collection were fetched from Explore API",
-                        STREAMS_NON_STOP_PLAYLISTS));
+                        STREAMS));
         for (Item liveChannelFromApi : liveChannelsFromApi) {
             if (liveChannelFromApi.getVisuals().getEpisodeNumber() != null) {
                 return liveChannelFromApi;
