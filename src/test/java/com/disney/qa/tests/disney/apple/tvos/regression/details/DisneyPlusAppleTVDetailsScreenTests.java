@@ -568,13 +568,13 @@ public class DisneyPlusAppleTVDetailsScreenTests extends DisneyPlusAppleTVBaseTe
         homePage.waitForHomePageToOpen();
 
         homePage.moveDownUntilCollectionContentIsFocused(
-                getCollectionName(CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS), 10);
+                getCollectionName(CollectionConstant.Collection.STREAMS), 15);
         String[] firstNewlyAddedLongTitle = homePage.getFirstCellTitleFromContainer(
-                CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS).split(",");
+                CollectionConstant.Collection.STREAMS).split(",");
         String firstNewlyAddedTitleName = "";
         try {
             if (liveCell != null && homePage.isFocused(liveCell)) {
-                    firstNewlyAddedTitleName = firstNewlyAddedLongTitle[1].trim();
+                    firstNewlyAddedTitleName = firstNewlyAddedLongTitle[2].trim();
             } else {
                 firstNewlyAddedTitleName = firstNewlyAddedLongTitle[0].trim();
             }
