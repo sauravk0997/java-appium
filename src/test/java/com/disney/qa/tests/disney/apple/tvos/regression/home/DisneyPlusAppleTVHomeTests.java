@@ -123,7 +123,6 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         SoftAssert sa = new SoftAssert();
 
         logIn(getUnifiedAccount());
-
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
         homePage.clickBrandTile(brandPage.getBrand(DisneyPlusAppleTVBrandsPage.Brand.HULU));
@@ -141,6 +140,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         detailsPage.waitForDetailsPageToOpen();
         detailsPage.waitUntilElementIsFocused(detailsPage.getPlayOrContinueButton(), FIFTEEN_SEC_TIMEOUT);
         detailsPage.clickSelect();
+        videoPlayerTVPage.waitForPresenceOfAnElement(videoPlayerTVPage.getPlayerView());
         Assert.assertTrue(videoPlayerTVPage.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         videoPlayerTVPage.clickBack();
 
