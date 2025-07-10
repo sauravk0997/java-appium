@@ -280,7 +280,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
-
+        jarvisDisableDMPOverride();
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
         searchPage.searchForMedia(THE_MARVELS);
@@ -432,6 +432,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
+        jarvisDisableDMPOverride();
         homePage.waitForHomePageToOpen();
         homePage.clickSearchIcon();
         searchPage.searchForMedia(content);
