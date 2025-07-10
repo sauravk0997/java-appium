@@ -244,7 +244,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         titleContainer.click();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
         videoPlayer.validateRatingsOnPlayer(EPISODIC_RATING.get(), sa, detailsPage);
-        detailsPage.waitForRestartButtonToAppear();
+        detailsPage.waitForDetailsPageToOpen();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
 
         swipe(detailsPage.getLogoImage(), Direction.DOWN, 2, 1000);
@@ -290,7 +290,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         homePage.clickSearchIcon();
         detailsPage.verifyRatingsInDetailsFeaturedArea(rating, sa);
         videoPlayer.validateRatingsOnPlayer(rating, sa, detailsPage);
-        detailsPage.waitForRestartButtonToAppear();
+        detailsPage.waitForDetailsPageToOpen();
         detailsPage.validateRatingsInDetailsTab(rating, sa);
         sa.assertAll();
     }
