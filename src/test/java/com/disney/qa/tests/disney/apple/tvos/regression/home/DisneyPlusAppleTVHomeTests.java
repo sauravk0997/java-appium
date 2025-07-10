@@ -627,7 +627,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         }
         for (Item liveChannelFromApi : liveChannelsFromApi) {
             LOGGER.info("channel titles {}", liveChannelFromApi.getVisuals().getTitle().toString());
-            if (liveChannelFromApi.getVisuals().getEpisodeNumber() == null && liveChannelFromApi.getVisuals().getTitle().contains("ABC") != true) {
+            if (liveChannelFromApi.getVisuals().getEpisodeNumber() == null && !liveChannelFromApi.getVisuals().getTitle().contains("ABC")) {
                 return liveChannelFromApi;
             }
         }
