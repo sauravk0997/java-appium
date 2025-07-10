@@ -1865,8 +1865,8 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         // User can add profiles up to the max allowed
         addAdultProfiles(getUnifiedAccount(), 6, "AdultProfile");
         //This time is needed to propagate the changes
-        pause(20);
         terminateApp(sessionBundles.get(DISNEY));
+        pause(30);
         launchApp(sessionBundles.get(DISNEY));
         homePage.clickMoreTab();
         moreMenuPage.clickEditProfilesBtn();
