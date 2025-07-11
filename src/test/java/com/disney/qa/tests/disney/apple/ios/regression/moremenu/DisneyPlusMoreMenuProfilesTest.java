@@ -25,7 +25,6 @@ import org.testng.asserts.SoftAssert;
 
 import java.awt.image.BufferedImage;
 import java.lang.invoke.MethodHandles;
-import java.net.*;
 import java.security.SecureRandom;
 import java.util.*;
 import java.util.Set;
