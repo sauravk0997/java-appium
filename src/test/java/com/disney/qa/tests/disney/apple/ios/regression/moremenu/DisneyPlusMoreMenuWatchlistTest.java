@@ -34,7 +34,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
     private static final String WATCHLIST_PAGE_DID_NOT_OPEN = "'Watchlist' page did not open";
 
     public void onboard() {
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68442"})
@@ -92,7 +92,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
 
         //Create account with Disney Bundle plan
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_BASIC)));
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         //Add disney content to watchlist
         getWatchlistApi().addContentToWatchlist(getUnifiedAccount().getAccountId(),
@@ -149,7 +149,7 @@ public class DisneyPlusMoreMenuWatchlistTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         //Add Hulu title to watch list
         homePage.clickSearchIcon();

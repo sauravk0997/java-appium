@@ -59,7 +59,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -79,7 +79,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         searchPage.getCancelButton();
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -100,23 +100,25 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-68290"})
-    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US}, enabled = false)
+    @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
     public void clearRecentSearches() {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
-
+        setAppToHomeScreen(getUnifiedAccount());
+        homePage.waitForHomePageToOpen();
         homePage.clickSearchIcon();
-        sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
         //User made search
         searchPage.searchForMedia(BLUEY);
         List<ExtendedWebElement> results = searchPage.getDisplayedTitles();
         results.get(0).click();
-        sa.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.getBackArrow().click();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+
         //Empty string to clear the keys
         searchPage.searchForMedia("");
         searchPage.getCancelButton().click();
@@ -136,7 +138,9 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         //next time user select search bar, recent search is no longer displayed
         homePage.clickHomeIcon();
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         homePage.clickSearchIcon();
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.getSearchBar().click();
         sa.assertFalse(searchPage.isRecentSearchDisplayed(), RECENT_SEARCH_FOUND_ERROR_MESSAGE);
         sa.assertAll();
@@ -148,7 +152,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         String title = "Simpson";
         String placeholderError = "Placeholder text is not as expected";
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         searchPage.clickSearchIcon();
 
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -181,7 +185,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -225,7 +229,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -257,7 +261,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -282,7 +286,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusOriginalsIOSPageBase originalsPage = initPage(DisneyPlusOriginalsIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -375,7 +379,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -406,7 +410,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                 DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         ExploreContent movieApiContent = getMovieApi(DisneyEntityIds.MARVELS.getEntityId(), DisneyPlusBrandIOSPageBase.Brand.DISNEY);
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
@@ -444,7 +448,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusLiveEventModalIOSPageBase liveEventModal = initPage(DisneyPlusLiveEventModalIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
@@ -507,7 +511,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                 getLocalizationUtils().getRatingSystem(),
                 RATING_TV14);
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -526,7 +530,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -554,7 +558,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusOriginalsIOSPageBase originalsPage = initPage(DisneyPlusOriginalsIOSPageBase.class);
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -603,7 +607,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(false)
                 .build());
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
@@ -654,7 +658,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                 getLocalizationUtils().getRatingSystem(),
                 RatingConstant.Rating.TV_Y.getContentRating());
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         homePage.clickSearchIcon();
         searchPage.waitForPresenceOfAnElement(searchPage.getSearchBar());
@@ -686,7 +690,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         getUnifiedAccountApi().editContentRatingProfileSetting(getUnifiedAccount(),
                 getLocalizationUtils().getRatingSystem(),
                 RatingConstant.Rating.TV_Y.getContentRating());
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
@@ -728,7 +732,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         getUnifiedAccountApi().editContentRatingProfileSetting(getUnifiedAccount(),
                 getLocalizationUtils().getRatingSystem(),
                 RatingConstant.Rating.TV_Y.getContentRating());
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickDisneyTile();
         Assert.assertTrue(brandPage.isOpened(), "Disney brand page was not opened");
@@ -782,7 +786,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
             throw new SkipException("Skipping test, failed to fetch ESPN event's sports league name from Explore API");
         }
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), "Search page did not open");
         searchPage.searchForMedia(lastEventSportsLeague);
@@ -805,7 +809,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -843,7 +847,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                 .kidsModeEnabled(true)
                 .isStarOnboarded(true)
                 .build());
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -883,7 +887,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         getUnifiedAccountApi().editContentRatingProfileSetting(getUnifiedAccount(),
                 getLocalizationUtils().getRatingSystem(),
                 RATING_MATURE);
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -907,7 +911,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         String searchLimitQuery = "automationsearchlongqueryformaximumSixtyfourcharacterlimittest!!";
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -930,7 +934,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -949,7 +953,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -979,7 +983,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -1003,7 +1007,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PREMIUM_MONTHLY_CANADA)));
         handleAlert();
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -1019,7 +1023,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         DisneyPlusOneTrustConsentBannerIOSPageBase oneTrustPage =
                 initPage(DisneyPlusOneTrustConsentBannerIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM)));
 
@@ -1028,7 +1031,6 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         if (oneTrustPage.isOpened())
             oneTrustPage.tapAcceptAllButton();
         handleSystemAlert(AlertButtonCommand.DISMISS, 1);
-        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
@@ -1048,7 +1050,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);

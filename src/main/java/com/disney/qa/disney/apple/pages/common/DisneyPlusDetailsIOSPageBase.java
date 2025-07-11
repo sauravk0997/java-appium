@@ -817,14 +817,6 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
         return progressBar.isPresent(TEN_SEC_TIMEOUT);
     }
 
-    public String getDetailsTabSeasonRating() {
-        String[] seasonNumberRating = getTypeOtherContainsLabel("Season").getText().split(":");
-        String[] seasonNumber = seasonNumberRating[0].split(" ");
-        String number = seasonNumber[1];
-        return getLocalizationUtils().formatPlaceholderString(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
-                DETAILS_SEASON_RATING.getText()), Map.of("season_number", Integer.parseInt(number)));
-    }
-
     public String getSeasonSelector() {
         String[] seasonSelector = seasonSelectorButton.getText().split(" ");
         return seasonSelector[1];
@@ -1121,7 +1113,7 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
      * To be used with continually navigating back and forth between details and player of same content.
      */
     public DisneyPlusVideoPlayerIOSPageBase clickPlayOrContinue() {
-        if (getPlayButton().isPresent()) {
+        if (getPlayButton().isPresent(SHORT_TIMEOUT)) {
             clickPlayButton();
         } else {
             clickContinueButton();
@@ -1455,5 +1447,12 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getShopTabLink() {
         return getTypeOtherByLabel(SHOP_TAB_LINK);
+    }
+
+    public boolean waitForPlayOrContinueButton() {
+        LOGGER.info("Waiting for play or continue button to load on details page");
+        return fluentWait(getDriver(), SIXTY_SEC_TIMEOUT, THREE_SEC_TIMEOUT,
+                "Play or continue button was not found").until(it ->
+                getPlayButton().isPresent() || getContinueButton().isPresent());
     }
 }

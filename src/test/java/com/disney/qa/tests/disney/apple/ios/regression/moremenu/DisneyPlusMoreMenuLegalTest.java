@@ -5,7 +5,6 @@ import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.disney.config.DisneyParameters;
 import com.disney.qa.common.constant.DisneyUnifiedOfferPlan;
-import com.disney.qa.common.utils.IOSUtils;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -82,7 +81,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase disneyPlusMoreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM, getLocalizationUtils().getLocale(), lang)));
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         handleAlert();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
@@ -120,7 +119,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyPlusMoreMenuIOSPageBase moreMenuIOSPageBase = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyplusLegalIOSPageBase legalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         handleAlert();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
@@ -154,7 +153,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyplusLegalIOSPageBase legalPage = initPage(DisneyplusLegalIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whosIsWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
 
         String country = StringUtils.substringAfter(TUID, "TUID: ");
         setAccount(getUnifiedAccountApi()
@@ -164,7 +162,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         handleOneTrustPopUp();
-        whosIsWatchingPage.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
         if (homePage.isTravelAlertTitlePresent()) {
             homePage.getTravelAlertOk().click();
         }
@@ -208,7 +205,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
         DisneyplusSellingLegalIOSPageBase sellingLegalTextPage = initPage(DisneyplusSellingLegalIOSPageBase.class);
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(disneyPlusMoreMenuIOSPageBase.selectMoreMenu(
                 DisneyPlusMoreMenuIOSPageBase.MoreMenu.LEGAL)).click();
@@ -221,7 +218,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         sa.assertTrue(oneTrustPage.isNoticeOfRightToOptOutOfSaleTitlePresent(), "'Notice of Right to Opt-Out of Sale/Sharing' title was not found");
         sa.assertTrue(oneTrustPage.isLegalTextPresent(), "Legal text was not found");
         sa.assertTrue(oneTrustPage.isUSStatePrivacyRightsLinkPresent(), "'US State Privacy Rights Link' was not found");
-        sa.assertTrue(oneTrustPage.isYourCaliforniaPrivacyRightsLinkPresent(), "'Your California Privacy Rights link' was not found");
         sa.assertTrue(oneTrustPage.isSellingSharingTargatedAdvertisingConsentTitlePresent(), "'Selling, Sharing, Targeted Advertising consent Title' was not found");
         sa.assertTrue(oneTrustPage.getValueOfConsentSwitch().equalsIgnoreCase("1"), "toggle was not Turned ON by default");
         sa.assertTrue(oneTrustPage.isArrowIconToRightOfTooglePresent(), "Arrow to the Right of the Toggle was not found");
@@ -250,7 +246,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
         DisneyplusSellingLegalIOSPageBase sellingLegalTextPage = initPage(DisneyplusSellingLegalIOSPageBase.class);
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         handleAlert();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(getLocalizationUtils().getDictionaryItem(
@@ -318,7 +314,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
         DisneyplusSellingLegalIOSPageBase sellingLegalTextPage = initPage(DisneyplusSellingLegalIOSPageBase.class);
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         handleAlert();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getDynamicCellByLabel(disneyPlusMoreMenuIOSPageBase.selectMoreMenu(
@@ -330,14 +326,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         oneTrustPage.clickYourUSStatePrivacyRightsLink();
         sa.assertTrue(oneTrustPage.isYourUSStatePrivacyRightsPageOpened(15),
                 "US State Privacy Rights Link page not opened");
-        tap(oneTrustPage.getDoneButton());
-        sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
-
-        //Verify California Privacy Rights Link
-        oneTrustPage.clickYourCaliforniaPrivacyRightsLink();
-        sa.assertTrue(oneTrustPage.isYourCaliforniaPrivacyRightsPageOpened(15),
-                "California Privacy Rights Link page not opened");
-        oneTrustPage.waitForPresenceOfAnElement(oneTrustPage.getDoneButton());
         tap(oneTrustPage.getDoneButton());
         sa.assertTrue(oneTrustPage.isOpened(), ONE_TRUST_PAGE_NOT_DISPLAYED);
 

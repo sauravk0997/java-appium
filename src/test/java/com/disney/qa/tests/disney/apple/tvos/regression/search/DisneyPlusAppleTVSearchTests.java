@@ -33,11 +33,10 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
 
     private static final String UNENTITLED_HULU_CONTENT = "Only Murders in the Building";
     private static final String ENTITLED_HULU_CONTENT = "Solar Opposites";
+    private static final String UNENTITLED_ESPN_CONTENT = "The Championships, Wimbledon";
     private static final String UNLOCK = "Unlock";
-    private static final String HOME_PAGE_ERROR_MESSAGE = "Home page did not open";
-    private static final String SEARCH_PAGE_ERROR_MESSAGE = "Search page did not open";
+    private static final String AVAILABLE_WITH_ESPN_SUBSCRIPTION = "Available with ESPN+ Subscription";
     private static final String HULU_CONTENT_ERROR_MESSAGE = "Hulu content is not present";
-    private static final String DETAILS_PAGE_ERROR_MESSAGE = "Details page did not open";
     private static final String HULU_CONTENT_NOT_AVAILABLE_IN_CANADA = "Normal People";
     private static final String A_CHARACTER = "a";
     private static final String B_CHARACTER = "b";
@@ -48,12 +47,12 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
-        Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
+        logIn(getUnifiedAccount());
+        Assert.assertTrue(home.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         home.moveDownFromHeroTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.typeInSearchField(UNENTITLED_HULU_CONTENT);
         Assert.assertEquals(searchPage.getSearchBar().getAttribute("value"), UNENTITLED_HULU_CONTENT,
                 "Search text was not displayed in the search field");
@@ -65,11 +64,12 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
-        Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
+        logIn(getUnifiedAccount());
+        Assert.assertTrue(home.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+
         home.moveDownFromHeroTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.typeInSearchField(UNENTITLED_HULU_CONTENT);
         Assert.assertTrue(searchPage.getStaticTextByLabelContains(UNENTITLED_HULU_CONTENT).isPresent(), HULU_CONTENT_ERROR_MESSAGE);
     }
@@ -82,16 +82,16 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
-        Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(home.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         home.moveDownFromHeroTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.typeInSearchField(UNENTITLED_HULU_CONTENT);
         Assert.assertTrue(searchPage.getStaticTextByLabelContains(UNENTITLED_HULU_CONTENT).isPresent(), HULU_CONTENT_ERROR_MESSAGE);
         searchPage.clickSearchResult(UNENTITLED_HULU_CONTENT);
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         Assert.assertFalse(detailsPage.getUpgradeNowButton().isPresent(), "Upsell message is present");
         Assert.assertTrue(detailsPage.isPlayButtonDisplayed(), "Play button is not displayed");
     }
@@ -109,14 +109,14 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
                 getLocalizationUtils().getUserLanguage())));
 
         handleAlert();
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         if (bannerIOSPageBase.isAllowAllButtonPresent()) {
             bannerIOSPageBase.tapAcceptAllButton();
         }
-        Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(home.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         home.moveDownFromHeroTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.typeInSearchField(HULU_CONTENT_NOT_AVAILABLE_IN_CANADA);
         Assert.assertTrue(searchPage.isNoResultsFoundMessagePresent(HULU_CONTENT_NOT_AVAILABLE_IN_CANADA),
                 "No results found message was not as expected for non eligible country Canada");
@@ -129,12 +129,13 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
-        Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
+        logIn(getUnifiedAccount());
+        Assert.assertTrue(home.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+
         home.moveDownFromHeroTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
         searchPage.waitForPresenceOfAnElement(searchPage.getSearchField());
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
         // Look for entitled Hulu content
         searchPage.typeInSearchField(ENTITLED_HULU_CONTENT);
@@ -150,7 +151,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(searchPage.getTypeCellLabelContains(UNLOCK).isPresent(),
                 "Unlock 'upsell message' not found in search result");
         searchPage.clickSearchResult(UNENTITLED_HULU_CONTENT);
-        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), UNLOCK_BUTTON_NOT_DISPLAYED);
         detailsPage.getUnlockButton().click();
         Assert.assertTrue(detailsPage.isOnlyAvailableWithHuluHeaderPresent(), "Hulu ineligible screen header is not present");
@@ -165,12 +166,12 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
-        Assert.assertTrue(home.isOpened(), HOME_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(home.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         home.moveDownFromHeroTile();
         home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.typeInSearchField(END_GAME.getTitle());
         searchPage.waitForPresenceOfAnElement(searchPage.getSearchResults(END_GAME.getTitle()).get(0));
         searchPage.keyPressTimes(searchPage.getClickActionBasedOnLocalizedKeyboardOrientation(), 6, 1);
@@ -188,12 +189,12 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
-        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         homePage.moveDownFromHeroTile();
         homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         homePage.clickSelect();
         homePage.moveRight(1, 1);
         homePage.clickSelect();
@@ -210,7 +211,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
                 new DisneyPlusMediaCollectionIOSPageBase(getDriver());
         SoftAssert sa = new SoftAssert();
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         homePage.moveDownFromHeroTile();
         homePage.openGlobalNavAndSelectOneMenu(MOVIES.getText());
@@ -252,7 +253,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         homePage.moveDownFromHeroTile();
@@ -272,7 +273,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         homePage.moveDownFromHeroTile();
@@ -291,7 +292,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         homePage.moveDownFromHeroTile();
@@ -315,7 +316,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         Item firstUpcomingEvent = getUpcomingEventFromAPI(maxQuantityOfExpectedChannels);
         String contentTitle = firstUpcomingEvent.getVisuals().getTitle();
@@ -323,7 +324,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
 
         homePage.moveDownFromHeroTile();
         homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
-        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.typeInSearchField(contentTitle);
         searchPage.clickSearchResult(contentTitle);
 
@@ -401,7 +402,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
 
         setAccount(getUnifiedAccountApi().createAccount(
                 getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         homePage.moveDownFromHeroTile();
@@ -413,6 +414,32 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
                 "An ESPN+ title was not found when searching for Sports content");
         Assert.assertTrue(searchPage.getStaticTextByLabelContains(sport).isElementPresent(),
                 "Search did not show titles related to the given ESPN sport search");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121743"})
+    @Test(groups = {TestGroup.SEARCH, TestGroup.ESPN, US})
+    public void verifyUpsellDetailPageForESPNContent() {
+        DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
+        DisneyPlusAppleTVHomePage home = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        Assert.assertTrue(home.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+        home.moveDownFromHeroTile();
+        home.openGlobalNavAndSelectOneMenu(SEARCH.getText());
+        searchPage.waitForPresenceOfAnElement(searchPage.getSearchField());
+        Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
+
+        // Look for unentitled ESPN content
+        searchPage.typeInSearchField(UNENTITLED_ESPN_CONTENT);
+        Assert.assertTrue(searchPage.getStaticTextByLabelContains(UNENTITLED_ESPN_CONTENT).isPresent(), "ESPN content is not found on search result");
+        Assert.assertTrue(searchPage.getTypeCellLabelContains(UNLOCK).isPresent(),
+                "Unlock 'upsell message' not found in search result");
+        searchPage.clickSearchResult(UNENTITLED_ESPN_CONTENT);
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), UNLOCK_BUTTON_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.getStaticTextByLabel(AVAILABLE_WITH_ESPN_SUBSCRIPTION).isPresent(),
+                AVAILABLE_WITH_ESPN_SUBSCRIPTION + " upsell message is not displayed");
     }
 
     private Item getUpcomingEventFromAPI(int titlesLimit) {

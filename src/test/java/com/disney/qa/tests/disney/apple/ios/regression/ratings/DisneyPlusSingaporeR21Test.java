@@ -51,7 +51,7 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         initialSetup();
         handleAlert();
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(getUnifiedAccount().getFirstName());
@@ -178,14 +178,13 @@ public class DisneyPlusSingaporeR21Test extends DisneyPlusRatingsBase {
         passwordPage.submitPasswordForLogin(getUnifiedAccount().getUserPass());
         verifyAgeDOBPage.waitForVerifyAgeDOBCollectionPageToOpen();
         verifyAgeDOBPage.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
-        hideKeyboard();
-        verifyAgeDOBPage.clickVerifyAgeButton();
+        tap(verifyAgeDOBPage.getVerifyAgeButton());
         Assert.assertTrue(pinPage.isR21PinPageOpen(), PIN_PAGE_DID_NOT_OPEN);
 
         IntStream.range(0, 4).forEach(i -> {
             pinPage.getTypeKey(String.valueOf(i)).click();
         });
-        pinPage.getR21SetPinButton().click();
+        tap(pinPage.getR21SetPinButton());
         Assert.assertTrue(videoPlayer.isOpened(), "Video did not begin to play for first R21 content");
 
         videoPlayer.clickBackButton();
