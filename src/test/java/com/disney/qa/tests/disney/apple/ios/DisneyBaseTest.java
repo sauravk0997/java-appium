@@ -876,24 +876,4 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             throw new RuntimeException("Exception occurred trying to trigger password reset for current user: {}", e);
         }
     }
-
-    public void jarvisDisableDMPOverride() {
-        String JARVIS_DMP_CONFIG = "enableDMP";
-        String JARVIS_NO_OVERRIDE_SET = "No override set";
-        String JARVIS_BOOLEAN = "Bool";
-        DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
-        JarvisAppleBase jarvis = getJarvisPageFactory();
-        launchJarvis(true);
-        jarvis.openAppConfigOverrides();
-        jarvis.openOverrideSection(PLAYER);
-        jarvis.openOverrideSection(JARVIS_DMP_CONFIG);
-        if (applePageBase.getStaticTextByLabelContains(JARVIS_NO_OVERRIDE_SET).isPresent(SHORT_TIMEOUT)) {
-            LOGGER.info("Disabling DMP");
-            applePageBase.getTypeButtonContainsLabel(JARVIS_BOOLEAN).click();
-        }
-        LOGGER.info("Terminating Jarvis app..");
-        terminateApp(sessionBundles.get(JarvisAppleBase.JARVIS));
-        terminateApp(sessionBundles.get(DISNEY));
-        relaunch();
-    }
 }
