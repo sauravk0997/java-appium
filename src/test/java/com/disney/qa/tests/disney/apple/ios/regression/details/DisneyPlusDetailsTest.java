@@ -7,7 +7,6 @@ import com.disney.qa.api.client.responses.profile.Profile;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.*;
-import com.disney.qa.common.utils.*;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -25,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static com.disney.qa.api.disney.DisneyEntityIds.ESPN;
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.CollectionConstant.Collection.ESPN_LEAGUES;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
@@ -565,6 +563,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluShare() {
         String grootSeries = "I Am Groot";
+        String mailLabel = "Mail";
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -583,7 +582,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
 
         //Adult
         homePage.clickSearchIcon();
@@ -591,12 +590,12 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         searchPage.searchForMedia(PREY);
         searchPage.getDynamicAccessibilityId(PREY).click();
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
-        Assert.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found.");
+        Assert.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found");
         detailsPage.getShareBtn().click();
-        sa.assertTrue(detailsPage.getTypeOtherByLabel(String.format("%s | Disney+", PREY)).isPresent(),
-                String.format("'%s | Disney+' title was not found on share actions.", PREY));
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Mail").isPresent(),
-                "Share action 'Mail' was not found.");
+        sa.assertTrue(detailsPage.getTypeOtherByLabel(PREY).isPresent(),
+                String.format("'%s' title was not found on share actions", PREY));
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains(mailLabel).isPresent(),
+                "Share action 'Mail' was not found");
 
         detailsPage.getShareBtn().click();
         detailsPage.clickOnCopyShareLink();
@@ -616,7 +615,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         searchPage.getDynamicAccessibilityId(grootSeries).click();
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
         Assert.assertFalse(detailsPage.getShareBtn().isPresent(ONE_SEC_TIMEOUT),
-                "Share button was found on kids profile.");
+                "Share button was found on kids profile");
         sa.assertAll();
     }
 
