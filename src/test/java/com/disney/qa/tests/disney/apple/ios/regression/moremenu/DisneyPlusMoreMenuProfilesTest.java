@@ -2063,13 +2063,12 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78630"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, ANZ})
-    public void verifyMaturitySettingsForANZU18Profile() {
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, NZ})
+    public void verifyMaturitySettingsForANZU18ProfileWithNoFullCatalog() {
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
         DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
                 getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
@@ -2092,21 +2091,35 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
         Assert.assertTrue(editProfilePage.verifyProfileSettingsMaturityRating(RATING_M),
                 "Rating is not as expected for limited access profile");
+    }
 
-        editProfilePage.clickDoneBtn();
-        Assert.assertTrue(whoIsWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
-        whoIsWatching.clickAddProfile();
-        chooseAvatarPage.waitForPresenceOfAnElement(chooseAvatarPage.getSkipButton());
-        chooseAvatarPage.clickSkipButton();
-        Assert.assertTrue(addProfile.isAddProfilePageOpened(), "User was not taken to the 'Add Profiles' page as expected");
-        addProfile.enterProfileName(TERTIARY_PROFILE);
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-83369"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, NZ})
+    public void verifyMaturitySettingsForANZU18ProfileWithFullCatalog() {
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = new DisneyPlusMoreMenuIOSPageBase(getDriver());
+        DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenuPage.clickAddProfile();
+        Assert.assertTrue(chooseAvatarPage.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
+        ExtendedWebElement[] avatars = addProfile.getCellsWithLabels().toArray(new ExtendedWebElement[0]);
+        avatars[0].click();
+        Assert.assertTrue(addProfile.isAddProfilePageOpened(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
+        addProfile.enterProfileName(SECONDARY_PROFILE);
         addProfile.enterDOB(Person.U18.getMonth(), Person.U18.getDay(), Person.U18.getYear());
         addProfile.clickSaveProfileButton();
         //Select Yes for full catalog access
         addProfile.clickPrimaryButton();
         addProfile.clickSecondaryButtonByCoordinates();
-        Assert.assertTrue(whoIsWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
-        whoIsWatching.getEditProfileButton().click();
+        Assert.assertTrue(moreMenuPage.isOpened(), MORE_MENU_NOT_DISPLAYED_ERROR);
+        moreMenuPage.clickEditProfilesBtn();
         editProfilePage.clickEditModeProfile(TERTIARY_PROFILE);
         Assert.assertTrue(editProfilePage.verifyProfileSettingsMaturityRating(RATING_RP18_18_R18),
                 "Rating is not as expected for Full catalog access profile");
