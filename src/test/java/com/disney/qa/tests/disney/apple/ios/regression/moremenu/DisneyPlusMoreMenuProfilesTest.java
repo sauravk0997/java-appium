@@ -2063,7 +2063,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78361"})
-    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, ANZ})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, NZ})
     public void verifyGenderAndDOBFieldForANZWhenJuniorModeOn() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
