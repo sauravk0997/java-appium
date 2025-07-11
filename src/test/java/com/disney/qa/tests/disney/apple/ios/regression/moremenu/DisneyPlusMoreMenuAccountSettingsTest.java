@@ -38,7 +38,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     }
 
     public void setAppToAccountSettings() {
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
     }
@@ -163,7 +163,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage())));
-        setAppToAccountSettings(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToAccountSettings(getUnifiedAccount());
 
         accountPage.clickManageWithMyDisneyButton();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getUnifiedAccount()),
@@ -229,7 +229,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage())));
-        setAppToAccountSettings(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToAccountSettings(getUnifiedAccount());
 
         accountPage.clickManageWithMyDisneyButton();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getUnifiedAccount()),
@@ -261,7 +261,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage())));
-        setAppToAccountSettings(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToAccountSettings(getUnifiedAccount());
 
         accountPage.clickManageWithMyDisneyButton();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getUnifiedAccount()),
@@ -282,7 +282,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         Assert.assertTrue(welcomePage.isOpened(),
                 "User was not logged out and returned to the Welcome screen after submitting the new password");
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(),
                 "User was not able to log in successfully with the new password");
     }
@@ -298,7 +298,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage())));
-        setAppToAccountSettings(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToAccountSettings(getUnifiedAccount());
         Assert.assertTrue(accountPage.isOpened(), ACCOUNT_PAGE_NOT_DISPLAYED);
         accountPage.clickManageWithMyDisneyButton();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getUnifiedAccount()),
@@ -355,7 +355,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage())));
-        setAppToAccountSettings(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToAccountSettings(getUnifiedAccount());
 
         Assert.assertTrue(accountPage.isOpened(), ACCOUNT_PAGE_NOT_DISPLAYED);
         accountPage.clickManageWithMyDisneyButton();
@@ -389,7 +389,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
         Assert.assertTrue(welcomePage.isOpened(),
                 "User was not logged out and returned to the Welcome screen after logout");
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(),
                 "User was not able to log in successfully with the new email");
     }
@@ -408,7 +408,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage())));
-        setAppToAccountSettings(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToAccountSettings(getUnifiedAccount());
 
         accountPage.clickManageWithMyDisneyButton();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getUnifiedAccount()),
@@ -431,7 +431,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         Assert.assertTrue(welcomePage.isOpened(),
                 "User was not logged out and returned to the Welcome screen after submitting the new email");
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         Assert.assertTrue(homePage.isOpened(),
                 "User was not able to log in successfully with the new email");
@@ -445,7 +445,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
         DisneyPlusChangeEmailIOSPageBase changeEmailPage = initPage(DisneyPlusChangeEmailIOSPageBase.class);
 
-        setAppToAccountSettings(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToAccountSettings(getUnifiedAccount());
         accountPage.waitForAccountPageToOpen();
         accountPage.clickManageWithMyDisneyButton();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getUnifiedAccount()),
@@ -471,7 +471,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
         String incorrectOTP = "888888";
 
-        setAppToAccountSettings(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToAccountSettings(getUnifiedAccount());
         accountPage.waitForAccountPageToOpen();
         accountPage.clickManageWithMyDisneyButton();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getUnifiedAccount()),
@@ -497,7 +497,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage())));
-        setAppToAccountSettings(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToAccountSettings(getUnifiedAccount());
 
         accountPage.clickManageWithMyDisneyButton();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getUnifiedAccount()),
@@ -519,7 +519,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         String doneButtonLabel = "Done";
 
-        setAppToAccountSettings(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToAccountSettings(getUnifiedAccount());
         accountPage.waitForAccountPageToOpen();
         Assert.assertTrue(accountPage.isEditProfilesLinkPresent(), "Edit Profiles link was not displayed");
 
@@ -539,7 +539,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.MORE_MENU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyAccountsCommunicationSettings() {
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
-        setAppToAccountSettings(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToAccountSettings(getUnifiedAccount());
 
         accountPage.waitForAccountPageToOpen();
         accountPage.swipe(accountPage.getAccountManagementTextElement());
@@ -561,7 +561,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage =
                 initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
-        setAppToAccountSettings(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToAccountSettings(getUnifiedAccount());
 
         accountPage.clickManageWithMyDisneyButton();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getUnifiedAccount()),
@@ -582,7 +582,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         DisneyPlusOneTimePasscodeIOSPageBase oneTimePasscodePage =
                 initPage(DisneyPlusOneTimePasscodeIOSPageBase.class);
         DisneyPlusAccountIOSPageBase accountPage = initPage(DisneyPlusAccountIOSPageBase.class);
-        setAppToAccountSettings(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToAccountSettings(getUnifiedAccount());
         accountPage.clickManageWithMyDisneyButton();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getUnifiedAccount()),
                 MANAGE_MYDISNEY_ACCOUNT_OVERLAY_DID_NOT_OPEN);
@@ -608,7 +608,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage())));
-        setAppToAccountSettings(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToAccountSettings(getUnifiedAccount());
 
         accountPage.clickManageWithMyDisneyButton();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getUnifiedAccount()),
@@ -637,7 +637,7 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
         setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM,
                 getLocalizationUtils().getLocale(),
                 getLocalizationUtils().getUserLanguage())));
-        setAppToAccountSettings(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToAccountSettings(getUnifiedAccount());
 
         accountPage.clickManageWithMyDisneyButton();
         Assert.assertTrue(accountPage.waitForManageMyDisneyAccountOverlayToOpen(getUnifiedAccount()),
@@ -654,8 +654,8 @@ public class DisneyPlusMoreMenuAccountSettingsTest extends DisneyBaseTest {
 
     //Helper methods
 
-    private void setAppToAccountSettings(UnifiedAccount account, String profile) {
-        setAppToHomeScreen(account, profile);
+    private void setAppToAccountSettings(UnifiedAccount account) {
+        setAppToHomeScreen(account);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         initPage(DisneyPlusMoreMenuIOSPageBase.class).clickMenuOption(DisneyPlusMoreMenuIOSPageBase.MoreMenu.ACCOUNT);
     }

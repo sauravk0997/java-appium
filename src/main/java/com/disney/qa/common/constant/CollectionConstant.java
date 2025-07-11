@@ -169,6 +169,8 @@ public class CollectionConstant {
                 return "Sports";
             case REPLAYS_COLLECTION:
                 return "Replays";
+            case STREAMS:
+                return "Streams";
             case STREAMS_NON_STOP_PLAYLISTS:
                 return "Streams: Non-Stop Playlists";
             case STUDIOS_AND_NETWORKS:
