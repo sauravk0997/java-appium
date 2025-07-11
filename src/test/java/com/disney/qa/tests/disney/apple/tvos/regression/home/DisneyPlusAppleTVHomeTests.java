@@ -32,6 +32,7 @@ import java.util.stream.Stream;
 
 import static com.disney.qa.api.disney.DisneyEntityIds.HOME_PAGE;
 import static com.disney.qa.common.DisneyAbstractPage.FIFTEEN_SEC_TIMEOUT;
+import static com.disney.qa.common.constant.CollectionConstant.Collection.STREAMS;
 import static com.disney.qa.common.constant.CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS;
 import static com.disney.qa.common.constant.CollectionConstant.getCollectionName;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BASIC_MONTHLY;
@@ -43,6 +44,8 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
     private static final String WATCH_LIVE_BUTTON_NOT_DISPLAYED = "Watch Live CTA is not present";
     private static final String DETAILS_BUTTON_NOT_DISPLAYED = "Details CTA is not present";
+    private static final String LIVE_BADGE_TEXT = "LIVE";
+    private static final int MAX_EXPECTED_CHANNELS_SIX = 6;
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121758"})
     @Test(groups = {TestGroup.HOME, TestGroup.ESPN, US})
@@ -51,7 +54,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
@@ -65,7 +68,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
@@ -85,7 +88,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVBrandsPage brandPage = new DisneyPlusAppleTVBrandsPage(getDriver());
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
@@ -120,7 +123,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
@@ -179,7 +182,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         SoftAssert sa = new SoftAssert();
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilDisneyOriginalBrandIsFocused(20);
@@ -210,7 +213,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     public void verifyRecommendationsIncludeHuluTitlesForStandaloneUser() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         List<Item> availableHuluTitlesForStandaloneUserFromApi = getAvailableHuluTitlesForStandaloneUserFromApi();
@@ -246,10 +249,10 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     public void verifyLiveModalLinearChannelTile() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
-        String streamsCollectionName = getCollectionName(STREAMS_NON_STOP_PLAYLISTS);
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        String streamsCollectionName = getCollectionName(STREAMS);
+        logIn(getUnifiedAccount());
         homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 12);
-        String firstProgramTitle = homePage.getFirstCellTitleFromContainer(STREAMS_NON_STOP_PLAYLISTS).split(",")[1]
+        String firstProgramTitle = homePage.getFirstCellTitleFromContainer(STREAMS).split(",")[2]
                 .trim();
         homePage.clickSelect();
         Assert.assertTrue(liveEventModal.isOpened(), LIVE_MODAL_NOT_DISPLAYED);
@@ -260,10 +263,47 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(liveEventModal.getDetailsButton().isElementPresent(), DETAILS_BUTTON_NOT_DISPLAYED);
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-123168"})
+    @Test(groups = {TestGroup.HOME, US})
+    public void verifyLinearChannelMovieTile() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        SoftAssert sa = new SoftAssert();
+        String streamsCollectionName = getCollectionName(STREAMS);
+        String onNowText = "On Now:";
+
+        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
+
+        homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 25);
+        Item channelItemMovie = getFirstMovieChannelItem(MAX_EXPECTED_CHANNELS_SIX, STREAMS);
+        //Swipe Horizontally to Title
+        homePage.moveRightUntilElementIsFocused(homePage.getCellElementFromContainer(STREAMS,
+                channelItemMovie.getVisuals().getTitle()), MAX_EXPECTED_CHANNELS_SIX);
+        String movieYear = "";
+        String movieGenre = "";
+        String movieRating = "";
+        try {
+            movieYear = channelItemMovie.getVisuals().getMetastringParts().getReleaseYearRange().getStartYear();
+            movieGenre = channelItemMovie.getVisuals().getMetastringParts().getGenres().getValues().get(0);
+            movieRating = channelItemMovie.getVisuals().getMetastringParts().getRatingInfo().getRating().getText();
+        } catch (Exception e) {
+            throw new SkipException("Skipping test, metadata not found " + e.getMessage());
+        }
+        String yearAndGenre = String.format("%s \u2022 %s", movieYear, movieGenre);
+        sa.assertTrue(homePage.getTypeCellLabelContains(movieRating).isPresent(), "Channel Rating is not displayed");
+        sa.assertTrue(homePage.getStaticTextByLabelContains(yearAndGenre).isPresent(),
+                "Movie Year and Genre is not displayed");
+        sa.assertTrue(homePage.getStaticTextByLabelContains(onNowText).isPresent(),
+                "On Now is not displayed");
+        sa.assertTrue(homePage.getTypeOtherContainsLabel(LIVE_BADGE_TEXT).isPresent(),
+                "LIVE badge is not displayed");
+
+        sa.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118739"})
     @Test(groups = {TestGroup.HOME, US})
     public void verifyLiveModalEpisodicInfo() {
-        int maxQuantityOfExpectedChannels = 6;
         String episodicInfoLabelFormat = "Season %s Episode %s %s";
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
@@ -271,15 +311,15 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         String streamsCollectionName =
                 getCollectionName(STREAMS_NON_STOP_PLAYLISTS);
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 12);
 
-        Item channelItemWithEpisodicInfo = getFirstChannelItemThatHasEpisodicInfo(maxQuantityOfExpectedChannels);
+        Item channelItemWithEpisodicInfo = getFirstChannelItemThatHasEpisodicInfo(MAX_EXPECTED_CHANNELS_SIX);
         homePage.moveRightUntilElementIsFocused(
                 homePage.getCellElementFromContainer(STREAMS_NON_STOP_PLAYLISTS,
                         channelItemWithEpisodicInfo.getVisuals().getTitle()),
-                maxQuantityOfExpectedChannels);
+                MAX_EXPECTED_CHANNELS_SIX);
         String seasonNumber = "";
         String episodeNumber = "";
         String episodeTitle = "";
@@ -305,7 +345,6 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-118738"})
     @Test(groups = {TestGroup.HOME, US})
     public void verifyLiveModalWithEpisodicArtworkForSeriesLiveEvent() {
-        int maxQuantityOfExpectedChannels = 6;
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
         SoftAssert sa = new SoftAssert();
@@ -313,14 +352,14 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         String streamsCollectionName =
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS);
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilCollectionContentIsFocused(streamsCollectionName, 12);
-        Item channelItemWithEpisodicInfo = getFirstChannelItemThatHasEpisodicInfo(maxQuantityOfExpectedChannels);
+        Item channelItemWithEpisodicInfo = getFirstChannelItemThatHasEpisodicInfo(MAX_EXPECTED_CHANNELS_SIX);
         homePage.moveRightUntilElementIsFocused(
                 homePage.getCellElementFromContainer(STREAMS_NON_STOP_PLAYLISTS,
                         channelItemWithEpisodicInfo.getVisuals().getTitle()),
-                maxQuantityOfExpectedChannels);
+                MAX_EXPECTED_CHANNELS_SIX);
         homePage.clickSelect();
 
         Assert.assertTrue(liveEventModal.isOpened(), LIVE_MODAL_NOT_DISPLAYED);
@@ -342,7 +381,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         String streamsNonStopPlaylists =
                 CollectionConstant.getCollectionName(CollectionConstant.Collection.STREAMS_NON_STOP_PLAYLISTS);
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         homePage.moveDownUntilCollectionContentIsFocused(streamsNonStopPlaylists, 10);
 
@@ -391,7 +430,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
             throw new SkipException("Skipping test, failed to get collection details from the api " + e.getMessage());
         }
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         for (int i = 2; i < collections.size(); i++) {
@@ -426,7 +465,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         Container brandCollection;
         int totalBrandTile;
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         try {
@@ -465,7 +504,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         setAccount(getUnifiedAccountApi().createAccount(
                 getCreateUnifiedAccountRequest(DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         launchDeeplink(R.TESTDATA.get("disney_prod_hulu_series_only_murders_in_the_building_deeplink"));
@@ -534,7 +573,39 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
         sa.assertAll();
     }
 
-        private Item getFirstChannelItemThatHasEpisodicInfo(int titlesLimit) {
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-122930"})
+    @Test(groups = {TestGroup.HOME, US})
+    public void verifyLiveBadgeOnSetStream() {
+        String liveBadge = LIVE_BADGE_TEXT;
+        int maxCount = 15;
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusCollectionIOSPageBase collectionPage = initPage(DisneyPlusCollectionIOSPageBase.class);
+
+        String streamsCollection = getCollectionName(STREAMS);
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
+        logIn(getUnifiedAccount());
+
+        homePage.waitForHomePageToOpen();
+        List<Item> liveChannelsFromApi = getExploreAPIItemsFromSet(
+                getCollectionName(STREAMS), maxCount);
+
+        if (liveChannelsFromApi.isEmpty() || liveChannelsFromApi == null) {
+            throw new SkipException(String.format("No items for 'STREAMS' collection were fetched from Explore API", STREAMS));
+        }
+
+        homePage.moveDownUntilCollectionContentIsFocused(streamsCollection, maxCount);
+
+        ExtendedWebElement firstCellElement = collectionPage.getFirstCellFromCollection(streamsCollection);
+        ExtendedWebElement airingBadge = collectionPage.getAiringBadgeOfFirstCellElementFromCollection(streamsCollection);
+        Assert.assertEquals(airingBadge.getText().trim(), liveBadge, "Live content not found on stream set");
+
+        // Validate Left position of Live badge
+        validateElementPositionAlignmentInContainer(airingBadge, firstCellElement, LEFT_POSITION);
+        // Validate top position of live badge
+        validateElementExpectedHeightPositionInContainer(airingBadge, firstCellElement, TOP);
+    }
+
+    private Item getFirstChannelItemThatHasEpisodicInfo(int titlesLimit) {
         List<Item> liveChannelsFromApi = getExploreAPIItemsFromSet(
                 getCollectionName(STREAMS_NON_STOP_PLAYLISTS), titlesLimit);
         Assert.assertNotNull(liveChannelsFromApi,
@@ -546,5 +617,20 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
             }
         }
         throw new NoSuchElementException("Failed to fetch a live channel that has Episodic info");
+    }
+
+    private Item getFirstMovieChannelItem(int titlesLimit, CollectionConstant.Collection collection) {
+        List<Item> liveChannelsFromApi = getExploreAPIItemsFromSet(
+                getCollectionName(collection), titlesLimit);
+        if(liveChannelsFromApi.isEmpty() || liveChannelsFromApi == null) {
+            throw new SkipException("Skipping Test, Live Channels from API is null");
+        }
+        for (Item liveChannelFromApi : liveChannelsFromApi) {
+            LOGGER.info("channel titles {}", liveChannelFromApi.getVisuals().getTitle().toString());
+            if (liveChannelFromApi.getVisuals().getEpisodeNumber() == null && !liveChannelFromApi.getVisuals().getTitle().contains("ABC")) {
+                return liveChannelFromApi;
+            }
+        }
+        throw new NoSuchElementException("Failed to fetch a movie from linear channel container");
     }
 }

@@ -9,8 +9,8 @@ import java.util.stream.Stream;
 
 import com.disney.qa.api.account.*;
 import com.disney.config.DisneyParameters;
+import com.disney.qa.api.accountsharing.AccountSharingAccounts;
 import com.disney.qa.api.accountsharing.AccountSharingHelper;
-import com.disney.qa.api.accountsharing.AccountSharingUnifiedAccounts;
 import com.disney.qa.api.client.requests.*;
 import com.disney.qa.api.client.requests.offer.*;
 import com.disney.qa.api.client.responses.graphql.campaign.CampaignType;
@@ -88,9 +88,12 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public static final String MPAA = "MPAA";
     public static final String REST_OF_WORLD = "REST_OF_WORLD";
     public static final String JP_ENG = "JP_ENG";
+    public static final String KR_ENG = "KR_ENG";
     public static final String LATAM_ANZ = "LATAM_ANZ";
     public static final String LATAM_US = "LATAM_US";
     public static final String EMEA_CA = "EMEA_CA";
+    public static final String EMEA_LATAM = "EMEA_LATAM";
+    public static final String TR_EN = "TR_EN";
     protected static final ThreadLocal<String> TEST_FAIRY_APP_VERSION = new ThreadLocal<>();
     protected static final ThreadLocal<String> TEST_FAIRY_URL = new ThreadLocal<>();
     private static final ThreadLocal<ZebrunnerProxyBuilder> PROXY = new ThreadLocal<>();
@@ -228,6 +231,18 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         }
     };
 
+    private static final LazyInitializer<IDPApi> IDP_API = new LazyInitializer<>() {
+        @Override
+        protected IDPApi initialize() {
+            ApiConfiguration apiConfiguration = ApiConfiguration.builder()
+                    .platform(APPLE)
+                    .partner(DisneyConfiguration.getPartner().toUpperCase())
+                    .environment(DisneyParameters.getEnv())
+                    .build();
+            return new IDPApi(apiConfiguration);
+        }
+    };
+
     @BeforeSuite(alwaysRun = true)
     public void ignoreDriverSessionStartupExceptions() {
         WebDriverConfiguration.addIgnoredNewSessionErrorMessages(Stream.concat(
@@ -319,6 +334,9 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         } else if (groups.contains(KR)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), KR, true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), KO_LANG, true);
+        } else if (groups.contains(KR_ENG)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), KR, true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
         } else if (groups.contains(NL)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), NL, true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
@@ -355,8 +373,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         } else if (groups.contains(EMEA_CA)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getEMEAOrCanadaCountryCode(), true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
+        } else if (groups.contains(EMEA_LATAM)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getEmeaOrLatamCountryCode(), true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
         } else if (groups.contains(REST_OF_WORLD)) {
             R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), getRestOfWorldCountryCode(), true);
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
+        } else if (groups.contains(TR_EN)) {
+            R.CONFIG.put(WebDriverConfiguration.Parameter.LOCALE.getKey(), TR, true);
             R.CONFIG.put(WebDriverConfiguration.Parameter.LANGUAGE.getKey(), EN_LANG, true);
         } else {
             throw new RuntimeException("No associated Locale and Language was found.");
@@ -589,6 +613,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         }
     }
 
+    public static IDPApi getIDPApi() {
+        try {
+            return IDP_API.get();
+        } catch (ConcurrentException e) {
+            return ExceptionUtils.rethrow(e);
+        }
+    }
+
     public String getWatchlistInfoBlock(String entityId) {
         ExploreSearchRequest pageRequest = ExploreSearchRequest.builder()
                 .unifiedAccount(getUnifiedAccount())
@@ -605,9 +637,9 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         return EXPLORE_SEARCH_REQUEST.get().setContentEntitlements(CONTENT_ENTITLEMENT_HULU);
     }
 
-    public AccountSharingUnifiedAccounts createAccountSharingUnifiedAccounts() {
+    public AccountSharingAccounts<UnifiedAccount> createAccountSharingUnifiedAccounts() {
         //Create the test accounts
-        AccountSharingUnifiedAccounts accountSharingAccounts = getAccountSharingHelper().createSharingUnifiedAccounts(
+        AccountSharingAccounts<UnifiedAccount> accountSharingAccounts = getAccountSharingHelper().createSharingUnifiedAccounts(
                 CampaignType.STANDARD_CAMPAIGN,
                 getUnifiedOffer(
                         DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM,
@@ -619,7 +651,8 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
                         CampaignType.UPSELL_CAMPAIGN));
         //Create and accept the invitation
         boolean invitationSuccess = getAccountSharingHelper().acceptExtraMemberInvite(
-                accountSharingAccounts, getAccountSharingHelper().sendExtraMemberInvite(accountSharingAccounts));
+                accountSharingAccounts,
+                getAccountSharingHelper().sendExtraMemberInvite(accountSharingAccounts).getId());
         if (!invitationSuccess) {
             throw new RuntimeException("Consumption of extra member slot should be successful");
         }
@@ -753,6 +786,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         List<String> countryCodeList = Arrays.asList(KOREA, JAPAN, HONGKONG, TURKEY, GERMANY, UNITED_KINGDOM, ITALY,
                 SPAIN, POLAND, NETHERLANDS, AUSTRALIA, NEW_ZEALAND);
         LOGGER.info("Selecting random Country code");
+        return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
+    }
+
+    private String getEmeaOrLatamCountryCode() {
+        List<String> countryCodeList = Arrays.asList(GERMANY, ARGENTINA, BOLIVIA, CHILE, COLOMBIA,
+                COSTA_RICA, DOMINICAN_REPUBLIC, ECUADOR, EL_SALVADOR, GUATEMALA,
+                HONDURAS, MEXICO, NICARAGUA, PANAMA, PARAGUAY, PERU, URUGUAY);
+        LOGGER.info("Selecting random Country code from EMEA and LATAM region");
         return countryCodeList.get(new SecureRandom().nextInt(countryCodeList.size()));
     }
 

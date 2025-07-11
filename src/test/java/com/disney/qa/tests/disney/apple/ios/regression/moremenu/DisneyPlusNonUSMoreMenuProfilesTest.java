@@ -96,7 +96,6 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
     public void verifyEditProfileUIPrimaryProfile() {
         DisneyPlusMoreMenuIOSPageBase moreMenu = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfile = initPage(DisneyPlusEditProfileIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
 
         initialSetup();
@@ -108,7 +107,6 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
                         getLocalizationUtils().getUserLanguage())));
 
         setAppToHomeScreen(getUnifiedAccount());
-        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
         handleAlert();
 
         moreMenu.clickMoreTab();
@@ -158,7 +156,7 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
                 .build());
 
         setAppToHomeScreen(getUnifiedAccount());
-        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
+
         handleAlert();
         whoIsWatching.clickEditProfile();
         editProfile.clickEditModeProfile(KIDS_PROFILE);
@@ -185,7 +183,6 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
         DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
         DisneyPlusChooseAvatarIOSPageBase chooseAvatar = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
 
         String offInJP = "オフ";
         SoftAssert sa = new SoftAssert();
@@ -197,7 +194,6 @@ public class DisneyPlusNonUSMoreMenuProfilesTest extends DisneyBaseTest {
         initialSetup();
         handleAlert();
         setAppToHomeScreen(getUnifiedAccount());
-        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
         handleAlert();
         moreMenu.clickMoreTab();
         whoseWatchingPage.clickAddProfile();

@@ -25,8 +25,7 @@ import static com.disney.qa.common.DisneyAbstractPage.ONE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
-import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE;
-import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
+import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.*;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
@@ -49,7 +48,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVWhoIsWatchingPage whoseWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.openGlobalNavWithClickingMenu();
         homePage.navigateToOneGlobalNavMenu(PROFILE_NAME);
         homePage.clickSelect();
@@ -78,7 +77,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         DisneyPlusAppleTVChooseAvatarPage chooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         disneyPlusAppleTVHomePage.navigateToOneGlobalNavMenu(PROFILE_NAME);
@@ -103,7 +102,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         DisneyPlusAppleTVEditProfilePage disneyPlusAppleTVEditProfilePage = new DisneyPlusAppleTVEditProfilePage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         disneyPlusAppleTVHomePage.navigateToOneGlobalNavMenu(PROFILE_NAME);
@@ -128,7 +127,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVWhoIsWatchingPage disneyPlusAppleTVWhoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         DisneyPlusAppleTVEditProfilePage disneyPlusAppleTVEditProfilePage = new DisneyPlusAppleTVEditProfilePage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         disneyPlusAppleTVHomePage.openGlobalNavWithClickingMenu();
         disneyPlusAppleTVHomePage.navigateToOneGlobalNavMenu(PROFILE_NAME);
         disneyPlusAppleTVHomePage.clickSelect();
@@ -163,7 +162,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         navigateToAddProfileReviewPageFromHomePage(SECONDARY_PROFILE, Person.ADULT);
         addProfilePage.moveDown(3, 1);
@@ -217,7 +216,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
 
         setAccount(getUnifiedAccountApi().createAccountForOTP(
                 getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM).setProfileRestricted(true)));
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         //Try to add a new profile
         homePage.moveDownFromHeroTile();
@@ -235,7 +234,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                 "Forgot Password screen wasn't visible");
         forgotPasswordPage.enterOtpOnModal(getOTPFromApi(getUnifiedAccount()));
         Assert.assertTrue(changePasswordPage.isOpened(),
-                "Create New Password screen wasn't opened");
+                CHANGE_PASSWORD_PAGE_NOT_DISPLAYED);
         changePasswordPage.clickPasswordField();
         changePasswordPage.enterPassword("Abc12!");
         changePasswordPage.moveToContinueOrDoneBtnKeyboardEntry();
@@ -261,7 +260,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                 .setProfileRestricted(true)
                 .setLanguage(getLocalizationUtils().getUserLanguage());
         setAccount(getUnifiedAccountApi().createAccount(getDefaultCreateUnifiedAccountRequest()));
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.moveDownFromHeroTile();
         homePage.openGlobalNavAndSelectOneMenu(PROFILE.getText());
         Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
@@ -301,7 +300,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                 .setProfileRestricted(true)
                 .setLanguage(getLocalizationUtils().getUserLanguage());
         setAccount(getUnifiedAccountApi().createAccount(getDefaultCreateUnifiedAccountRequest()));
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.moveDownFromHeroTile();
         homePage.openGlobalNavAndSelectOneMenu(PROFILE.getText());
         Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
@@ -487,7 +486,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         String defaultRatingExpected = "TV-14";
         String ratingExpected = "TV-MA";
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         //Go through add profile screen
         navigateToAddProfileReviewPageFromHomePage(SECONDARY_PROFILE, Person.U18);
@@ -495,7 +494,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         addProfilePage.clickSaveProfileButton();
 
         Assert.assertTrue(addProfilePage.verifyHeadlineHeaderText(),
-                "Access to full catalog screen was not present");
+                ACCESS_TO_FULL_CATALOG_PAGE_NOT_DISPLAYED);
         Assert.assertTrue(addProfilePage.isMaturityRatingNotNowInfoDisplayed(defaultRatingExpected),
                 "The content rating was not TV-14 by default");
         Assert.assertTrue(addProfilePage.isUpdateMaturityRatingActionDisplayed(ratingExpected),
@@ -576,7 +575,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                 getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
                         getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         navigateToAddProfileReviewPageFromHomePage(JUNIOR_PROFILE, Person.ADULT);
         commonPage.moveDown(3, 1);
@@ -605,7 +604,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                 getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
                         getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         navigateToAddProfileReviewPageFromHomePage(SECONDARY_PROFILE, Person.ADULT);
@@ -638,7 +637,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
                 getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
                         getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         navigateToAddProfileReviewPageFromHomePage(SECONDARY_PROFILE, Person.ADULT);
@@ -773,7 +772,7 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         String expectedSubstring = "set to TV-MA";
         DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         navigateToAddProfileReviewPageFromHomePage(SECONDARY_PROFILE, Person.ADULT);
         addProfilePage.moveDown(3, 1);
@@ -793,6 +792,96 @@ public class DisneyPlusAppleTVProfilesTest extends DisneyPlusAppleTVBaseTest {
         Assert.assertTrue(addProfilePINDescription.contains(expectedSubstring),
                 String.format("Add Profile PIN description '%s' does not contain rating '%s'",
                         addProfilePINDescription, expectedSubstring));
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106205"})
+    @Test(groups = {TestGroup.PROFILES, US})
+    public void verifyPasswordResetOnWelchFlow() {
+        String newPassword = "Abc12!";
+        DisneyPlusAppleTVAddProfilePage addProfilePage = new DisneyPlusAppleTVAddProfilePage(getDriver());
+        DisneyPlusAppleTVParentalConsentPage parentalConsentPage =
+                new DisneyPlusAppleTVParentalConsentPage(getDriver());
+        DisneyPlusAppleTVForgotPasswordPage forgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
+        DisneyPlusAppleTVChangePasswordPage changePasswordPage = new DisneyPlusAppleTVChangePasswordPage(getDriver());
+
+        setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(
+                DISNEY_PLUS_PREMIUM,
+                getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage())));
+
+        logIn(getUnifiedAccount());
+        triggerPasswordResetForCurrentUser();
+
+        navigateToAddProfileReviewPageFromHomePage(SECONDARY_PROFILE, Person.U13);
+        addProfilePage.clickSaveProfileButton();
+
+        Assert.assertTrue(parentalConsentPage.isOpened(), PARENTAL_CONSENT_PAGE_NOT_DISPLAYED);
+        parentalConsentPage.getDeclineButton().click();
+
+        Assert.assertTrue(addProfilePage.getUpdateMaturityRatingTitle().isPresent(),
+                ACCESS_TO_FULL_CATALOG_PAGE_NOT_DISPLAYED);
+        addProfilePage.getFullCatalogButton().click();
+
+        Assert.assertTrue(forgotPasswordPage.getCheckEmailTitle().isPresent(),
+                CHECK_YOUR_EMAIL_INBOX_PAGE_NOT_DISPLAYED);
+        forgotPasswordPage.enterOtpOnModal(getOTPFromApi(getUnifiedAccount()));
+
+        Assert.assertTrue(changePasswordPage.isOpened(), CHANGE_PASSWORD_PAGE_NOT_DISPLAYED);
+        changePasswordPage.clickPasswordField();
+        changePasswordPage.enterPassword(newPassword);
+        changePasswordPage.moveToContinueOrDoneBtnKeyboardEntry();
+        changePasswordPage.clickSelect();
+        changePasswordPage.clickSave();
+
+        Assert.assertTrue(addProfilePage.getSecureProfilePINTitle().isPresent(), SECURE_PROFILE_PIN_PAGE_NOT_DISPLAYED);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-105691"})
+    @Test(groups = {TestGroup.PROFILES, KR_ENG})
+    public void verifyPasswordResetOnAddProfileForSouthKorea() {
+        String newPassword = "Test123!";
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVWhoIsWatchingPage whoIsWatchingPage = new DisneyPlusAppleTVWhoIsWatchingPage(getDriver());
+        DisneyPlusAppleTVForgotPasswordPage forgotPasswordPage = new DisneyPlusAppleTVForgotPasswordPage(getDriver());
+        DisneyPlusAppleTVChangePasswordPage changePasswordPage = new DisneyPlusAppleTVChangePasswordPage(getDriver());
+        DisneyPlusAppleTVChooseAvatarPage chooseAvatarPage = new DisneyPlusAppleTVChooseAvatarPage(getDriver());
+
+        // Create a South Korea account with 'Restrict Profile Creation' set to ON
+        setAccount(getUnifiedAccountApi().createAccountForOTP(getCreateUnifiedAccountRequest(
+                DISNEY_PLUS_PREMIUM,
+                getLocalizationUtils().getLocale(),
+                getLocalizationUtils().getUserLanguage())
+                .setProfileRestricted(true)));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+
+        logIn(getUnifiedAccount());
+        triggerPasswordResetForCurrentUser();
+
+        // Open Who's Watching page
+        homePage.moveDownFromHeroTile();
+        homePage.openGlobalNavWithClickingMenu();
+        homePage.navigateToOneGlobalNavMenu(PROFILE.getText());
+        homePage.clickSelect();
+
+        // Try to add a new profile
+        Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);
+        whoIsWatchingPage.clickAddProfile();
+
+        // Validate user is redirected to OTP screen and enter corresponding OTP
+        Assert.assertTrue(forgotPasswordPage.getCheckEmailTitle().isPresent(),
+                CHECK_YOUR_EMAIL_INBOX_PAGE_NOT_DISPLAYED);
+        forgotPasswordPage.enterOtpOnModal(getOTPFromApi(getUnifiedAccount()));
+
+        // Validate user is redirected to Create a New Password screen and enter a valid new password
+        Assert.assertTrue(changePasswordPage.isOpened(), CHANGE_PASSWORD_PAGE_NOT_DISPLAYED);
+        changePasswordPage.clickPasswordField();
+        changePasswordPage.enterPassword(newPassword);
+        changePasswordPage.moveToContinueOrDoneBtnKeyboardEntry();
+        changePasswordPage.clickSelect();
+        changePasswordPage.clickSave();
+
+        // Validate user is redirected to avatar selection page
+        Assert.assertTrue(chooseAvatarPage.getChooseAvatarTitle().isPresent(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
     }
 
     public void validateGenderOptions() {
