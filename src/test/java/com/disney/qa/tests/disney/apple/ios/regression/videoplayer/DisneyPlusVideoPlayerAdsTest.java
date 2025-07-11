@@ -69,8 +69,8 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         loginAndStartPlayback(MS_MARVEL);
-        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         int remainingTimeBeforeAd = videoPlayer.getRemainingTime();
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.isAdTimeDurationPresent(), AD_DURATION_NOT_DISPLAYED);
         videoPlayer.waitUntil(ExpectedConditions.invisibilityOfElementLocated(videoPlayer.getSeekbar().getBy()), SHORT_TIMEOUT);
         videoPlayer.waitForAdToCompleteIfPresent(POLLING_SIX, BUFFER_TIME_ZERO);
@@ -132,7 +132,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         videoPlayer.waitForPresenceOfAnElement(videoPlayer.getPlayerView());
         Assert.assertTrue(videoPlayer.waitUntil(ExpectedConditions.invisibilityOfElementLocated(
                 videoPlayer.getSeekbar().getBy()), SHORT_TIMEOUT), "Seek bar visible");
-        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(FIFTEEN_SEC_TIMEOUT), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         sa.assertTrue(videoPlayer.isElementPresent(DisneyPlusVideoPlayerIOSPageBase.PlayerControl.RESTART),
                 "Restart button is not visible on ad player overlay");
         sa.assertTrue(videoPlayer.getRestartButtonStatus().equals(FALSE),
@@ -280,6 +280,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         SoftAssert sa = new SoftAssert();
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
         setAppToHomeScreen(getUnifiedAccount());
+
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
         searchPage.searchForMedia(THE_MARVELS);
@@ -391,7 +392,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         loginAndStartPlayback(MS_MARVEL);
         // Validate and wait for Ad to complete
         videoPlayer.waitForPresenceOfAnElement(videoPlayer.getAdBadge());
-        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        Assert.assertTrue(videoPlayer.isAdBadgeLabelPresent(6), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         videoPlayer.waitForAdToCompleteIfPresent(POLLING_SIX, BUFFER_TIME_ZERO);
         // Wait to be outside grace period
         pause(FORTY_FIVE_SEC_TIMEOUT);
@@ -400,7 +401,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         // Wait for ad to start and verify Ad and Ad pod in timeline
         sa.assertTrue(videoPlayer.isAdPodPresent(), AD_POD_NOT_PRESENT_MESSAGE);
         sa.assertTrue(videoPlayer.isSeekbarVisible(), SEEK_BAR_NOT_VISIBLE_MESSAGE);
-        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
+        sa.assertTrue(videoPlayer.isAdBadgeLabelPresent(6), AD_BADGE_NOT_PRESENT_ERROR_MESSAGE);
         sa.assertAll();
     }
 
