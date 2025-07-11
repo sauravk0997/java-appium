@@ -961,4 +961,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public ExtendedWebElement getTitleVideoLabel() {
         return titleLabel;
     }
+
+    public List<String> broadcastsExpectedFeeds() {
+        return Arrays.asList("PRIMARY", "NATIONAL", "NATIONAL FEED", "HOME", "AWAY");
+    }
 }
