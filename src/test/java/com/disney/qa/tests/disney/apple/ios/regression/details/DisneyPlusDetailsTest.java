@@ -582,7 +582,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
 
         //Adult
         homePage.clickSearchIcon();
