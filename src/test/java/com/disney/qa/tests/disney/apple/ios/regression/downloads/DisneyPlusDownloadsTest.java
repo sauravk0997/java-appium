@@ -35,6 +35,7 @@ import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BASIC_MONTHLY;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_STANDARD_YEARLY_TURKEY;
+import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PREMIUM_YEARLY_TURKEY;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.*;
 
@@ -1017,18 +1018,35 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-83282"})
-    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, US})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, TR_EN})
     public void verifyAdFreeDownloadForAdTierUserTurkey() {
+        String subscriptionType = "Ad-tier";
+        setAccount(getUnifiedAccountApi().createAccount(
+                getCreateUnifiedAccountRequestForCountryWithPlan(DISNEY_PLUS_STANDARD_YEARLY_TURKEY,
+                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+
+        verifyAdFreeDownload(subscriptionType);
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-81029"})
+    @Test(groups = {TestGroup.DOWNLOADS, TestGroup.PRE_CONFIGURATION, TR_EN})
+    public void verifyAdFreeDownloadForPremiumUserTurkey() {
+        String subscriptionType = "Premium-tier";
+        setAccount(getUnifiedAccountApi().createAccount(
+                getCreateUnifiedAccountRequestForCountryWithPlan(DISNEY_PREMIUM_YEARLY_TURKEY,
+                        getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+
+        verifyAdFreeDownload(subscriptionType);
+    }
+
+    private void verifyAdFreeDownload(String subscriptionType) {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
-
-        setAccount(getUnifiedAccountApi().createAccount(
-                getCreateUnifiedAccountRequestForCountryWithPlan(DISNEY_PLUS_STANDARD_YEARLY_TURKEY,
-                        TR, getLocalizationUtils().getUserLanguage())));
-        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), TR);
 
         setAppToHomeScreen(getUnifiedAccount());
         handleOneTrustPopUp();
@@ -1055,7 +1073,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         downloadsPage.tapDownloadedAsset(episodeTitle);
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
         Assert.assertTrue(videoPlayer.isAdBadgeLabelNotPresent(),
-                "Ad is displayed on downloaded content for Ad-tier user");
+                String.format("Ad is displayed on downloaded content for %s user", subscriptionType));
     }
 
     public List<String> getListEpisodes(String element) {

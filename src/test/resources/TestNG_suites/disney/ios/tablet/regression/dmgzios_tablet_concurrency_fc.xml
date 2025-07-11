@@ -2,7 +2,7 @@
 <suite verbose="1" name="dmgzios_tablet_concurrency_fc" annotations="JDK" configfailurepolicy="continue" thread-count="4" parallel="tests">
     <parameter name="suiteOwner" value="apple-automation"/>
     <parameter name="stringParam::test_fairy_url::Enter TestFairy download URL" value=""/>
-    <parameter name="stringParam::test_fairy_app_version::Enter App Version, e.g., 4.3.0-77460" value="4.8.0-80044"/>
+    <parameter name="stringParam::test_fairy_app_version::Enter App Version, e.g., 4.3.0-77460" value="4.8.0-80090"/>
     <parameter name="stringParam::test_fairy_latest_app_store_rc_url::Enter TestFairy latest App Store RC download URL" value=""/>
     <parameter name="stringParam::test_fairy_jarvis_url::Enter TestFairy Jarvis download URL" value=""/>
     <parameter name="reporting.project-key" value="DIS"/>
@@ -19,7 +19,7 @@
     <parameter name="booleanParam::REPORT_TO_XRAY::Report to Xray workflow" value="true"/>
     <parameter name="stringParam::JIRA_PROJECT_ID::Jira project id" value="47653, 47975"/>
     <parameter name="stringParam::JIRA_PROJECT_KEY::Jira project key" value="DPQA, XMOBQA"/>
-    <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value="XMOBQA-83368"/>
+    <parameter name="stringParam::XRAY_TEST_EXECUTION_KEY::Xray test execution id" value="XMOBQA-83403"/>
     <parameter name="jenkinsEnvironments" value="Prod,PreProd"/>
     <parameter name="capabilities" value="platformName=iOS;deviceName=iPad_Air_M2_1,iPad_Air_M2_2,iPad_Air_M2_3,iPad_Air_M2_4,iPad_Air_M2_5,iPad_Air_M2_6,iPad_Air_M2_7,iPad_Gen_10_1,iPad_Gen_10_2,iPad_Gen_10_3,iPad_Pro_M4_1,iPad_Pro_M4_3,iPad_Pro_M4_5,iPad_Pro_M4_2,iPad_Gen_9;deviceType=Tablet;timeoutMs=120000;appPushTimeout=90000"/>
     <parameter name="stringParam::test::testclass#testmethod filer. If empty execute all of them" value=""/>
