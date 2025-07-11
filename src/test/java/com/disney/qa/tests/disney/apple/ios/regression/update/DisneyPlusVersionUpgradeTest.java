@@ -42,7 +42,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         installPreviousVersionTestFairyApp();
         terminateApp(sessionBundles.get(DISNEY));
         launchApp(sessionBundles.get(DISNEY));
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         moreMenu.clickMoreTab();
         // Assert that version installed it is the latest RC build used on App Store
@@ -197,7 +197,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         AppStorePageBase appStorePageBase = initPage(AppStorePageBase.class);
 
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), "Home page did not open");
 
         enableHardForceUpdateInJarvis();
@@ -232,7 +232,7 @@ public class DisneyPlusVersionUpgradeTest extends DisneyBaseTest {
         DisneyPlusWelcomeScreenIOSPageBase welcomePage = initPage(DisneyPlusWelcomeScreenIOSPageBase.class);
         String notNow = "NOT NOW";
         enableJarvisSoftUpdate();
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         Assert.assertTrue(welcomePage.isForceAppUpdateTitlePresent(), "Soft update device banner is not present");
         Assert.assertTrue(welcomePage.isForceAppUpdateButtonPresent(), "Update button is not present");
         Assert.assertTrue(welcomePage.getTypeButtonContainsLabel(notNow).isPresent(), "Not now button is not present");

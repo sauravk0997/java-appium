@@ -230,6 +230,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         Assert.assertTrue(detailsPage.isOpened(),
                 String.format(errorFormat, DURING_PRE_ROLL, NOT_RETURNED_DETAILS_PAGE_ERROR_MESSAGE));
 
+        detailsPage.waitForPlayOrContinueButton();
         detailsPage.clickPlayOrContinue();
         videoPlayer.waitForVideoToStart();
         videoPlayer.waitForAdToCompleteIfPresent(POLLING_FIVE, BUFFER_TIME_ZERO);
@@ -278,7 +279,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
 
         homePage.clickSearchIcon();
         homePage.getSearchNav().click();
@@ -430,7 +431,7 @@ public class DisneyPlusVideoPlayerAdsTest extends DisneyBaseTest {
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BASIC_MONTHLY)));
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         homePage.clickSearchIcon();
         searchPage.searchForMedia(content);

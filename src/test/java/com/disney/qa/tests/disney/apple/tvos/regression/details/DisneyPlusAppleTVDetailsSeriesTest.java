@@ -49,7 +49,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVSearchPage searchPage = new DisneyPlusAppleTVSearchPage(getDriver());
         String series = LOKI.getTitle();
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_ERROR_MESSAGE);
@@ -86,7 +86,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.moveDown(1, 1);
@@ -115,7 +115,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         int maxCount = 20;
         String continueButton = "CONTINUE";
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         //Populate continue watching collection
@@ -151,7 +151,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     public void verifySeriesDetailsPageLanding() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -165,7 +165,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -192,7 +192,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         SoftAssert sa = new SoftAssert();
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_daredevil_deeplink"));
@@ -219,7 +219,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         launchDeeplink(DEEPLINKURL.concat(DAREDEVIL_BORN_AGAIN.getEntityId()));
         Visuals visualsResponse = getExploreAPIPageVisuals(DAREDEVIL_BORN_AGAIN.getEntityId());
@@ -242,7 +242,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
@@ -272,7 +272,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         // Play an episode through deeplink, fast-forward a couple of times, pause playback and save remaining time
@@ -314,7 +314,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
         String nextEpisodeTitle = "";
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         // Get second episode title
         try {
@@ -346,7 +346,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         // Play first episode
         homePage.waitForHomePageToOpen();
@@ -372,7 +372,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         SoftAssert sa = new SoftAssert();
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         String seriesDeeplink = R.TESTDATA.get("disney_prod_series_detail_loki_deeplink");
         ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_loki_entity_id"),
@@ -424,7 +424,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     public void verifySeriesDetailsWatchlistPlusIcon() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -449,7 +449,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         // Play an episode through deeplink, fast-forward a couple of times, pause playback and save remaining time
@@ -511,7 +511,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
             throw new SkipException("Skipping test, Episode title not found" + e.getMessage());
         }
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -545,7 +545,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
             throw new SkipException("Skipping test, Episode title not found" + e.getMessage());
         }
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         launchDeeplink(seriesDeeplink);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -575,7 +575,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -615,7 +615,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
         Map<String, Object> exploreAPIData = getContentMetadataFromAPI(visualsResponse);
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -665,7 +665,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_loki_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -689,7 +689,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         int firstSeasonFirstEpisodeDurationInMinutes;
@@ -750,7 +750,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         String seriesBriefDescription;
@@ -786,7 +786,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         toggleAutoPlay(toggleValue);
         navigateToUpNextOnVideoPlayer(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
@@ -802,7 +802,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         navigateToUpNextOnVideoPlayer(R.TESTDATA.get("disney_prod_series_bluey_mini_episodes_playback_deeplink"));
         runtvOSAppInBackGround(FIVE_SEC_TIMEOUT);
@@ -819,7 +819,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         String nextEpisodeTitle = "";
         String toggleValue = "On";
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         toggleAutoPlay(toggleValue);
@@ -854,7 +854,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         String recommendationText = "You may also like";
         String toggleValue = "Off";
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
         toggleAutoPlay(toggleValue);
@@ -905,7 +905,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         } catch (Exception e) {
             throw new SkipException("Skipping test, Episode title not found" + e.getMessage());
         }
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
         launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -958,7 +958,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DisneyUnifiedOfferPlan
          .DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         // Play Exclusive episode
@@ -989,7 +989,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         String seasonName = "Extended Version";
 
         setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DisneyUnifiedOfferPlan.DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         // Play Exclusive episode
@@ -1017,7 +1017,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         int UI_LATENCY_IN_SEC = 30;
         String nextEpisodeTitle;
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         // Get second episode title
@@ -1056,7 +1056,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         String seasonTitle = "seasonTitle";
         String titleLabel = "titleLabel";
 
-        logIn(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        logIn(getUnifiedAccount());
 
         ExploreContent seriesApiContent = getSeriesApi(R.TESTDATA.get("disney_prod_loki_entity_id"),
                 DisneyPlusBrandIOSPageBase.Brand.DISNEY);

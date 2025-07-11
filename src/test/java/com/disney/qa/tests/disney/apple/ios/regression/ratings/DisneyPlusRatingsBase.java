@@ -44,7 +44,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         setAccountRatingsMax(getUnifiedAccount());
         initialSetup();
         handleAlert();
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
     }
 
     public void ratingsSetup(DisneyUnifiedOfferPlan planName, String ratingValue, String locale, boolean... ageVerified) {
@@ -64,7 +64,6 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         handleAlert();
         setAppToHomeScreen(getUnifiedAccount());
         handleOneTrustPopUp();
-        clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
     }
 
     public void ratingSetupWithPINForOTPAccount(DisneyUnifiedOfferPlan planName, String locale) {
@@ -118,7 +117,7 @@ public class DisneyPlusRatingsBase extends DisneyBaseTest implements IAPIHelper 
         setAccountRatingsMax(getUnifiedAccount());
         initialSetup();
         handleAlert();
-        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        setAppToHomeScreen(getUnifiedAccount());
     }
 
     public void confirmRegionalRatingsDisplays(String rating) {

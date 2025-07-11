@@ -102,12 +102,10 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
     public void testValidPasswordOneProfile() {
         DisneyPlusWelcomeScreenIOSPageBase welcomeScreen = new DisneyPlusWelcomeScreenIOSPageBase(getDriver());
         DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
-        DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
 
         welcomeScreen.clickLogInButton();
         login(getUnifiedAccount());
         handleGenericPopup(5, 1);
-        whoIsWatching.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
         homePage.waitForHomePageToOpen();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
     }
@@ -311,7 +309,6 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         DisneyPlusEnforceDOBCollectionPageBase enforceDOBCollectionPage =
                 initPage(DisneyPlusEnforceDOBCollectionPageBase.class);
         DisneyPlusDOBCollectionPageBase dobCollectionPage = initPage(DisneyPlusDOBCollectionPageBase.class);
-        DisneyPlusWhoseWatchingIOSPageBase whoseWatchingPage = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
 
         String stepperDict = getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION,
                 DictionaryKeys.ONBOARDING_STEPPER.getText());
@@ -364,7 +361,6 @@ public class DisneyPlusLoginTest extends DisneyBaseTest {
         welcomePage.clickLogInButton();
         loginPage.submitEmail(getUnifiedAccount().getEmail());
         passwordPage.submitPasswordForLogin(getUnifiedAccount().getUserPass());
-        whoseWatchingPage.clickProfile(getUnifiedAccount().getProfiles().get(0).getProfileName());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         sa.assertAll();
