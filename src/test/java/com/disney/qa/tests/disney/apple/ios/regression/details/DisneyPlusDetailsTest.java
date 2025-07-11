@@ -1029,36 +1029,39 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     public void verifyESPNUpsellDetailsPage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
         // Update to Api metadata validations when QP-4303 is resolved
-        String description = "The unforgettable tale of the most storied home run chase in baseball history";
-        String genre = "Documentaries";
-        String releaseYear = "2020";
-        String duration = "1h 44m";
+        String description = "Watch all your favorite sports content anytime, anywhere.";
+        String genre = "Sports";
+        String releaseYear = "2022";
+        String duration = "32m";
 
         setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         //Open an ESPN+ content title
-        launchDeeplink(R.TESTDATA.get("disney_prod_espn_long_gone_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_perfect_number_one_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         // Validate metadata
-        Assert.assertTrue(detailsPage.getMetaDataLabel().isPresent(), "Metadata badging information is not present");
-        Assert.assertTrue(detailsPage.getMetaDataLabel().getText().contains(releaseYear),
+        sa.assertTrue(detailsPage.getMetaDataLabel().isPresent(), "Metadata badging information is not present");
+        sa.assertTrue(detailsPage.getMetaDataLabel().getText().contains(releaseYear),
                 "Release year is not present");
-        Assert.assertTrue(detailsPage.getMetaDataLabel().getText().contains(genre),
+        sa.assertTrue(detailsPage.getMetaDataLabel().getText().contains(genre),
                 "Genre is not present");
-        Assert.assertTrue(detailsPage.getMetaDataLabel().getText().contains(duration),
-                "Duration year is not present");
-        Assert.assertTrue(detailsPage.getStaticTextByLabelContains(description).isPresent(),
+        sa.assertTrue(detailsPage.getMetaDataLabel().getText().contains(duration),
+                "Duration is not present");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains(description).isPresent(),
                 "Description is not present");
-        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), UNLOCK_BUTTON_NOT_DISPLAYED);
-        Assert.assertFalse(detailsPage.getPlayButton().isPresent(), "Play Button is present");
-        Assert.assertFalse(detailsPage.getWatchlistButton().isPresent(), "Watchlist Button is present");
+        sa.assertTrue(detailsPage.getUnlockButton().isPresent(), UNLOCK_BUTTON_NOT_DISPLAYED);
+        sa.assertFalse(detailsPage.getPlayButton().isPresent(), "Play Button is present");
+        sa.assertFalse(detailsPage.getWatchlistButton().isPresent(), "Watchlist Button is present");
 
         detailsPage.getUnlockButton().click();
-        Assert.assertTrue(detailsPage.isIneligibleScreenBodyPresent(), "Ineligible Screen Body is not present");
-        Assert.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(), "Ineligible Screen cta is not present");
+        sa.assertTrue(detailsPage.isIneligibleScreenBodyPresent(), "Ineligible Screen Body is not present");
+        sa.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(), "Ineligible Screen cta is not present");
+
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-82729"})
