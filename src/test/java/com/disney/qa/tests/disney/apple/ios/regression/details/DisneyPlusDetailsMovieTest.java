@@ -367,8 +367,8 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
-        String entityID = R.TESTDATA.get("disney_prod_movie_zombies_4_entity_id");
-        String deeplink = R.TESTDATA.get("disney_prod_movie_zombies_4_deeplink");
+        String entityID = R.TESTDATA.get("disney_prod_movie_alien_earth_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_movie_alien_earth_deeplink");
         launchDeeplink(deeplink);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
@@ -424,8 +424,8 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         homePage.waitForHomePageToOpen();
 
         //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
-        String entityID = R.TESTDATA.get("disney_prod_movie_zombies_4_entity_id");
-        String deeplink = R.TESTDATA.get("disney_prod_movie_zombies_4_deeplink");
+        String entityID = R.TESTDATA.get("disney_prod_movie_alien_earth_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_movie_alien_earth_deeplink");
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
         Map<String, Object> exploreAPIData = getMoviesMetaDataFromAPI(visualsResponse);
 
