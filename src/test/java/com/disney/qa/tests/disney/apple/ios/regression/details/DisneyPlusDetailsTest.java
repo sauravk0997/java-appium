@@ -7,7 +7,6 @@ import com.disney.qa.api.client.responses.profile.Profile;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.pojos.explore.ExploreContent;
 import com.disney.qa.common.constant.*;
-import com.disney.qa.common.utils.*;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
@@ -25,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static com.disney.qa.api.disney.DisneyEntityIds.ESPN;
 import static com.disney.qa.common.DisneyAbstractPage.*;
 import static com.disney.qa.common.constant.CollectionConstant.Collection.ESPN_LEAGUES;
 import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.*;
@@ -565,6 +563,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.HULU, TestGroup.PRE_CONFIGURATION, US})
     public void verifyHuluShare() {
         String grootSeries = "I Am Groot";
+        String mailLabel = "Mail";
         SoftAssert sa = new SoftAssert();
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
@@ -583,7 +582,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
 
         //Adult
         homePage.clickSearchIcon();
@@ -591,12 +590,12 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         searchPage.searchForMedia(PREY);
         searchPage.getDynamicAccessibilityId(PREY).click();
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
-        Assert.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found.");
+        Assert.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found");
         detailsPage.getShareBtn().click();
-        sa.assertTrue(detailsPage.getTypeOtherByLabel(String.format("%s | Disney+", PREY)).isPresent(),
-                String.format("'%s | Disney+' title was not found on share actions.", PREY));
-        sa.assertTrue(detailsPage.getStaticTextByLabelContains("Mail").isPresent(),
-                "Share action 'Mail' was not found.");
+        sa.assertTrue(detailsPage.getTypeOtherByLabel(PREY).isPresent(),
+                String.format("'%s' title was not found on share actions", PREY));
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains(mailLabel).isPresent(),
+                "Share action 'Mail' was not found");
 
         detailsPage.getShareBtn().click();
         detailsPage.clickOnCopyShareLink();
@@ -616,7 +615,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         searchPage.getDynamicAccessibilityId(grootSeries).click();
         Assert.assertTrue(detailsPage.waitForDetailsPageToOpen(), DETAILS_PAGE_NOT_DISPLAYED);
         Assert.assertFalse(detailsPage.getShareBtn().isPresent(ONE_SEC_TIMEOUT),
-                "Share button was found on kids profile.");
+                "Share button was found on kids profile");
         sa.assertAll();
     }
 
@@ -1030,36 +1029,39 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
     public void verifyESPNUpsellDetailsPage() {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
+        SoftAssert sa = new SoftAssert();
         // Update to Api metadata validations when QP-4303 is resolved
-        String description = "The unforgettable tale of the most storied home run chase in baseball history";
-        String genre = "Documentaries";
-        String releaseYear = "2020";
-        String duration = "1h 44m";
+        String description = "Watch all your favorite sports content anytime, anywhere.";
+        String genre = "Sports";
+        String releaseYear = "2022";
+        String duration = "32m";
 
         setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         //Open an ESPN+ content title
-        launchDeeplink(R.TESTDATA.get("disney_prod_espn_long_gone_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_perfect_number_one_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         // Validate metadata
-        Assert.assertTrue(detailsPage.getMetaDataLabel().isPresent(), "Metadata badging information is not present");
-        Assert.assertTrue(detailsPage.getMetaDataLabel().getText().contains(releaseYear),
+        sa.assertTrue(detailsPage.getMetaDataLabel().isPresent(), "Metadata badging information is not present");
+        sa.assertTrue(detailsPage.getMetaDataLabel().getText().contains(releaseYear),
                 "Release year is not present");
-        Assert.assertTrue(detailsPage.getMetaDataLabel().getText().contains(genre),
+        sa.assertTrue(detailsPage.getMetaDataLabel().getText().contains(genre),
                 "Genre is not present");
-        Assert.assertTrue(detailsPage.getMetaDataLabel().getText().contains(duration),
-                "Duration year is not present");
-        Assert.assertTrue(detailsPage.getStaticTextByLabelContains(description).isPresent(),
+        sa.assertTrue(detailsPage.getMetaDataLabel().getText().contains(duration),
+                "Duration is not present");
+        sa.assertTrue(detailsPage.getStaticTextByLabelContains(description).isPresent(),
                 "Description is not present");
-        Assert.assertTrue(detailsPage.getUnlockButton().isPresent(), UNLOCK_BUTTON_NOT_DISPLAYED);
-        Assert.assertFalse(detailsPage.getPlayButton().isPresent(), "Play Button is present");
-        Assert.assertFalse(detailsPage.getWatchlistButton().isPresent(), "Watchlist Button is present");
+        sa.assertTrue(detailsPage.getUnlockButton().isPresent(), UNLOCK_BUTTON_NOT_DISPLAYED);
+        sa.assertFalse(detailsPage.getPlayButton().isPresent(), "Play Button is present");
+        sa.assertFalse(detailsPage.getWatchlistButton().isPresent(), "Watchlist Button is present");
 
         detailsPage.getUnlockButton().click();
-        Assert.assertTrue(detailsPage.isIneligibleScreenBodyPresent(), "Ineligible Screen Body is not present");
-        Assert.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(), "Ineligible Screen cta is not present");
+        sa.assertTrue(detailsPage.isIneligibleScreenBodyPresent(), "Ineligible Screen Body is not present");
+        sa.assertTrue(detailsPage.getCtaIneligibleScreen().isPresent(), "Ineligible Screen cta is not present");
+
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-82729"})

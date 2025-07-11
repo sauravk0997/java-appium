@@ -607,7 +607,7 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
 
         videoPlayer.clickBroadcastMenu();
-        Assert.assertTrue(broadcastsExpectedFeeds().containsAll(videoPlayer.getBroadcastTargetFeedOptionText()),
+        Assert.assertTrue(videoPlayer.broadcastsExpectedFeeds().containsAll(videoPlayer.getBroadcastTargetFeedOptionText()),
                 "Target broadcasts feeds on UI are not as expected");
         Assert.assertTrue(videoPlayer.verifyFeedOptionsAreSorted(), "Feed options are not sorted");
         verifyFeedOptionSelected();
