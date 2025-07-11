@@ -194,9 +194,8 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
         sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found");
         detailsPage.getShareBtn().click();
-        sa.assertTrue(detailsPage.getTypeOtherByLabel(
-                        String.format("%s | Disney+", HOCUS_POCUS)).isPresent(),
-                String.format("'%s | Disney+' title was not found on share actions", HOCUS_POCUS));
+        sa.assertTrue(detailsPage.getTypeOtherByLabel(HOCUS_POCUS).isPresent(),
+                String.format("'%s' title was not found on share actions", HOCUS_POCUS));
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Copy").isPresent(),
                 "Share action 'Copy' was not found");
 
