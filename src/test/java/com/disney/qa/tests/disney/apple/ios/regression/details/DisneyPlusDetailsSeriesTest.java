@@ -9,7 +9,6 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.github.javafaker.Hobbit;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -277,7 +276,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
         sa.assertTrue(detailsPage.getShareBtn().isPresent(), SHARE_BTN_NOT_DISPLAYED);
         detailsPage.getShareBtn().click();
-        sa.assertTrue(detailsPage.getTypeOtherByLabel(String.format("%s | Disney+", SERIES_LOKI)).isPresent(), String.format("'%s | Disney+' title was not found on share actions.", SERIES_LOKI));
+        sa.assertTrue(detailsPage.getTypeOtherByLabel(SERIES_LOKI).isPresent(),
+                String.format("'%s' title was not found on share actions", SERIES_LOKI));
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Copy").isPresent(), "Share action 'Copy' was not found");
 
         detailsPage.clickOnCopyShareLink();
