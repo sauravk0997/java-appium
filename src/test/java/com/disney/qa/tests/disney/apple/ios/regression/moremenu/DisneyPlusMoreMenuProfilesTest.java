@@ -2120,7 +2120,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         addProfile.clickSecondaryButtonByCoordinates();
         Assert.assertTrue(moreMenuPage.isOpened(), MORE_MENU_NOT_DISPLAYED_ERROR);
         moreMenuPage.clickEditProfilesBtn();
-        editProfilePage.clickEditModeProfile(TERTIARY_PROFILE);
+        editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
         Assert.assertTrue(editProfilePage.verifyProfileSettingsMaturityRating(RATING_RP18_18_R18),
                 "Rating is not as expected for Full catalog access profile");
     }
