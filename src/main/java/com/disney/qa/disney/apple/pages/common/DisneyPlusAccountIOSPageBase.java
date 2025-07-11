@@ -10,8 +10,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
 
-import static com.disney.qa.common.constant.DisneyUnifiedOfferPlan.DISNEY_PLUS_PREMIUM;
-
 @SuppressWarnings("squid:MaximumInheritanceDepth")
 @DeviceType(pageType = DeviceType.Type.IOS_PHONE, parentClass = DisneyPlusApplePageBase.class)
 public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
@@ -61,10 +59,6 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public boolean isSubscriptionMessageDisplayed() {
         return getSubscriptionMessage().getText().equals(SUBSCRIPTION_MESSAGE);
-    }
-
-    public boolean isPremiumSubscriptionTitlePresent() {
-        return getTypeButtonByLabel(DISNEY_PLUS_PREMIUM.getValue()).isPresent();
     }
 
     public ExtendedWebElement getRestrictProfileCreationContainer() {
@@ -135,10 +129,6 @@ public class DisneyPlusAccountIOSPageBase extends DisneyPlusApplePageBase{
 
     public void toggleRestrictProfileCreation() {
             restrictedProfileToggle.click();
-    }
-
-    public void clickSubscriptionCell() {
-        subscriptionChange.click();
     }
 
     public void tapEditEmailButton() {
