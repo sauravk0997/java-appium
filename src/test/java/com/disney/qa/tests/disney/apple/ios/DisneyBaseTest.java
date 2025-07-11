@@ -621,6 +621,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         return metadataArray;
     }
 
+    public ExploreSearchRequest createUpNextRequest(String contentId) {
+        return ExploreSearchRequest.builder()
+                .contentEntitlements(CONTENT_ENTITLEMENT_DISNEY)
+                .profileId(getUnifiedAccount().getProfileId())
+                .contentId(contentId).build();
+    }
+
     //Jarvis Methods
     public void setOverrideValue(String newValue) {
         DisneyPlusApplePageBase applePageBase = initPage(DisneyPlusApplePageBase.class);
@@ -857,16 +864,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             throw new RuntimeException("Exception occurred...{}", e);
         }
         return response.getData();
-    }
-
-    public ArrayList<String> broadcastsExpectedFeeds() {
-        ArrayList<String> broadcastsExpectedFeeds = new ArrayList<>();
-        broadcastsExpectedFeeds.add("PRIMARY");
-        broadcastsExpectedFeeds.add("NATIONAL");
-        broadcastsExpectedFeeds.add("NATIONAL FEED");
-        broadcastsExpectedFeeds.add("HOME");
-        broadcastsExpectedFeeds.add("AWAY");
-        return broadcastsExpectedFeeds;
     }
 
     public void triggerPasswordResetForCurrentUser() {
