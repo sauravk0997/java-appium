@@ -1838,6 +1838,9 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
         DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        String profileNamePrefix = "AdultProfile";
+        SoftAssert sa = new SoftAssert();
+        int maxProfiles = 6;
 
         setAccount(createAccountSharingUnifiedAccounts().getReceivingAccount());
         setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
@@ -1858,20 +1861,20 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         launchApp(sessionBundles.get(DISNEY));
 
         homePage.clickMoreTab();
-        moreMenuPage.clickEditProfilesBtn();
         Assert.assertTrue(editProfilePage.getAddProfileBtn().isElementPresent(FIVE_SEC_TIMEOUT),
                 "Add Profile button should be present after conversion to independent subscription");
-
-        // User can add profiles up to the max allowed
-        addAdultProfiles(getUnifiedAccount(), 6, "AdultProfile");
-        //This time is needed to propagate the changes
         terminateApp(sessionBundles.get(DISNEY));
-        pause(30);
+        // User can add profiles up to the max allowed
+        addAdultProfiles(getUnifiedAccount(), maxProfiles, profileNamePrefix);
         launchApp(sessionBundles.get(DISNEY));
+
         homePage.clickMoreTab();
         moreMenuPage.clickEditProfilesBtn();
-        Assert.assertFalse(editProfilePage.getAddProfileBtn().isElementPresent(FIVE_SEC_TIMEOUT),
+        sa.assertTrue(editProfilePage.getStaticTextByLabel(profileNamePrefix+maxProfiles).isPresent(),
+        "Profile with name " + profileNamePrefix + maxProfiles + " is not present");
+        sa.assertFalse(editProfilePage.getAddProfileBtn().isElementPresent(FIVE_SEC_TIMEOUT),
                 "Add Profile button should not be present after reaching max profile limit");
+        sa.assertAll();
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72166"})
