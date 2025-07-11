@@ -1031,16 +1031,16 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusDetailsIOSPageBase detailsPage = initPage(DisneyPlusDetailsIOSPageBase.class);
         // Update to Api metadata validations when QP-4303 is resolved
-        String description = "The unforgettable tale of the most storied home run chase in baseball history";
-        String genre = "Documentaries";
-        String releaseYear = "2020";
-        String duration = "1h 44m";
+        String description = "Watch all your favorite sports content anytime, anywhere.";
+        String genre = "Sports";
+        String releaseYear = "2022";
+        String duration = "33m";
 
         setAppToHomeScreen(getUnifiedAccount());
         homePage.waitForHomePageToOpen();
 
         //Open an ESPN+ content title
-        launchDeeplink(R.TESTDATA.get("disney_prod_espn_long_gone_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_espn_perfect_number_one_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
 
         // Validate metadata
