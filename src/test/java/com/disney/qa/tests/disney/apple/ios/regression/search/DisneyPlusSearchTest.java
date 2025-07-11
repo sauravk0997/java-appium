@@ -527,6 +527,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-67313"})
     @Test(groups = {TestGroup.SEARCH, TestGroup.PRE_CONFIGURATION, US})
     public void verifySearchExploreUIElements() {
+        String emptyQueryString = "";
         DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
         DisneyPlusSearchIOSPageBase searchPage = initPage(DisneyPlusSearchIOSPageBase.class);
         SoftAssert sa = new SoftAssert();
@@ -534,7 +535,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
 
         ArrayList<Container> emptySearchContainers;
         try {
-            emptySearchContainers = getSearchExploreQuery("").getPage().getContainers();
+            emptySearchContainers = getSearchExploreQuery(emptyQueryString).getPage().getContainers();
         } catch (Exception e) {
             throw new SkipException("Skipping test, failed to get empty search collections using Explore API", e);
         }
