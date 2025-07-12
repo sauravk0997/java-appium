@@ -549,17 +549,15 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
         // If Explore (previous) UI is visible, validate corresponding elements
         if (searchPage.isExploreTitleDisplayed(SHORT_TIMEOUT)) {
             sa.assertTrue(searchPage.isCollectionTitleDisplayed(), "Collection title not displayed");
-            if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
-                searchPage.swipeUp(1500);
-                sa.assertFalse(searchPage.getOriginalsTile().isPresent(ONE_SEC_TIMEOUT),
-                        "Originals tile found after scrolling");
-                sa.assertFalse(searchPage.getMovieTile().isPresent(ONE_SEC_TIMEOUT),
-                        "Movies tile found after scrolling");
-                sa.assertFalse(searchPage.getSeriesTile().isPresent(ONE_SEC_TIMEOUT),
-                        "Series tile found after scrolling");
-                sa.assertFalse(searchPage.isExploreTitleDisplayed(ONE_SEC_TIMEOUT),
-                        "Explore title is displayed after scrolling");
-            }
+            swipeTillElementIsNotVisible(searchPage.getExploreTitle(), 5, null, Direction.UP, 900);
+            sa.assertFalse(searchPage.getOriginalsTile().isPresent(ONE_SEC_TIMEOUT),
+                    "Originals tile found after scrolling");
+            sa.assertFalse(searchPage.getMovieTile().isPresent(ONE_SEC_TIMEOUT),
+                    "Movies tile found after scrolling");
+            sa.assertFalse(searchPage.getSeriesTile().isPresent(ONE_SEC_TIMEOUT),
+                    "Series tile found after scrolling");
+            sa.assertFalse(searchPage.isExploreTitleDisplayed(ONE_SEC_TIMEOUT),
+                    "Explore title is displayed after scrolling");
         }
         // If Explore (previous) UI is not visible, validate new expected Collections
         else {
@@ -586,13 +584,13 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                         String.format("Last element (%s) from '%s' collection was not visible" +
                                         " after swiping left in the container", lastElementTitle, collectionName));
             }
+
             String firstCollectionTitle = emptySearchContainers.get(0).getVisuals().getName();
-            if (DisneyConfiguration.getDeviceType().equalsIgnoreCase("Phone")) {
-                searchPage.swipeUp(1500);
-                sa.assertFalse(searchPage.getStaticTextByLabel(firstCollectionTitle).isPresent(THREE_SEC_TIMEOUT),
-                        String.format("First collection title '%s' is displayed after scrolling",
-                                firstCollectionTitle));
-            }
+            ExtendedWebElement firstCollectionLabel = searchPage.getStaticTextByLabel(firstCollectionTitle);
+            swipeTillElementIsNotVisible(firstCollectionLabel, 5, null, Direction.UP, 900);
+            sa.assertFalse(firstCollectionLabel.isPresent(THREE_SEC_TIMEOUT),
+                    String.format("First collection title '%s' is displayed after scrolling",
+                            firstCollectionTitle));
         }
         sa.assertAll();
     }
