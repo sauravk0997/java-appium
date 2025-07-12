@@ -810,8 +810,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
                         ))
                 .findFirst();
         if (matchingTitle.isEmpty()) {
-            throw new NoSuchElementException("Failed to find a title in Trending collection that matches " +
-                    "the available Hulu titles using Explore API");
+            throw new SkipException("Failed to find a title in Trending collection that matches " +
+                    "the available Hulu titles for standalone users using Explore API");
         }
 
         ExtendedWebElement huluTitleCell = homePage.getCellElementFromContainer(
