@@ -165,6 +165,11 @@ public class DisneyPlusSearchIOSPageBase extends DisneyPlusApplePageBase {
         return noResultsFoundText;
     }
 
+    public ExtendedWebElement getExploreTitle() {
+        return getDynamicAccessibilityId((getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.NAV_EXPLORE_TITLE.getText())));
+    }
+
     public void clearText() {
         LOGGER.info("Clearing text in search bar");
         getClearTextBtn().click();
