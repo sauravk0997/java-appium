@@ -605,6 +605,24 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
         }
     }
 
+    /**
+     * Swipe until the given element is no longer visible. Retry for the amount of given swipes.
+     * If container is set to 'null' it will scroll over the whole screen.
+     *
+     * @param swipes
+     * @param element
+     * @param container
+     * @param direction
+     * @param duration
+     */
+    default void swipeTillElementIsNotVisible(ExtendedWebElement element, int swipes, ExtendedWebElement container,
+                                                  Direction direction, int duration) {
+        while (element.isPresent(1) && swipes > 0) {
+            swipeInContainer(container, direction, duration);
+            swipes--;
+        }
+    }
+
     default boolean detectDevice(DeviceType.Type device) {
         return IDriverPool.currentDevice.get().getDeviceType().equals(device);
     }
