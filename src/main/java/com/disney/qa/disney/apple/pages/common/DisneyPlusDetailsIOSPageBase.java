@@ -45,9 +45,9 @@ public class DisneyPlusDetailsIOSPageBase extends DisneyPlusApplePageBase {
     private static final String UPGRADE_NOW = "UPGRADE NOW";
     private static final String UNLOCK = "UNLOCK";
     private static final String STARRING = "Starring";
-    private static final String SHOP_TAB_HEADING = "Discover Disney+ Perks";
-    private static final String SHOP_TAB_SUB_HEADING = "Your Disney+ subscription grants access to everyday savings, " +
-            "chances to win, and more.";
+    private static final String SHOP_TAB_HEADING = "Special Room Offer";
+    private static final String SHOP_TAB_SUB_HEADING = "Disney+ Subscribers get special savings at select Disney " +
+            "Resorts Collection hotels at Walt Disney World® Resort";
     private static final String SHOP_TAB_LINK = "Go to Disney store.com";
 
     //LOCATORS
