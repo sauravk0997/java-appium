@@ -2110,6 +2110,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78630"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, NZ})
     public void verifyMaturitySettingsForANZU18ProfileWithNoFullCatalog() {
+        DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
         DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
@@ -2120,6 +2121,9 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
 
         setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        if (homePage.isTravelAlertTitlePresent()) {
+            homePage.getTravelAlertOk().click();
+        }
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenuPage.clickAddProfile();
         Assert.assertTrue(chooseAvatarPage.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
@@ -2141,6 +2145,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-83369"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, NZ})
     public void verifyMaturitySettingsForANZU18ProfileWithFullCatalog() {
+        DisneyPlusHomeIOSPageBase homePage = new DisneyPlusHomeIOSPageBase(getDriver());
         DisneyPlusMoreMenuIOSPageBase moreMenuPage = new DisneyPlusMoreMenuIOSPageBase(getDriver());
         DisneyPlusAddProfileIOSPageBase addProfile = new DisneyPlusAddProfileIOSPageBase(getDriver());
         DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
@@ -2151,6 +2156,9 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
 
         setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        if (homePage.isTravelAlertTitlePresent()) {
+            homePage.getTravelAlertOk().click();
+        }
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenuPage.clickAddProfile();
         Assert.assertTrue(chooseAvatarPage.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
@@ -2162,6 +2170,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         addProfile.clickSaveProfileButton();
         //Select Yes for full catalog access
         addProfile.clickPrimaryButton();
+        addProfile.waitForPresenceOfAnElement(addProfile.getSecondaryButton());
         addProfile.clickSecondaryButtonByCoordinates();
         Assert.assertTrue(moreMenuPage.isOpened(), MORE_MENU_NOT_DISPLAYED_ERROR);
         moreMenuPage.clickEditProfilesBtn();
