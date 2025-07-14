@@ -42,7 +42,6 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     private static final long SCRUB_PERCENTAGE_HUNDRED = 100;
     private static final String SEASON_TITLE = "seasonTitle";
     private static final String TITLE_LABEL = "titleLabel";
-    private static final int UI_LATENCY_IN_SEC = 30;
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64981"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
@@ -1017,6 +1016,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVUpNextPage upNextPage = new DisneyPlusAppleTVUpNextPage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        int UI_LATENCY_IN_SEC = 30;
         String nextEpisodeTitle;
 
         logIn(getUnifiedAccount());
@@ -1180,11 +1180,11 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         String continueWatchingCollection = CollectionConstant
                 .getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
         int maxCount = 20;
-
+        int latency = 60;
         logIn(getUnifiedAccount());
 
         //Populate continue watching collection
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_bluey_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_daredevil_deeplink"));
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         detailsPage.clickPlayButton();
         videoPlayer.waitForVideoToStart();
@@ -1196,6 +1196,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         commonPage.clickSelect();
         int remainingTime = videoPlayer.getRemainingTimeThreeIntegers();
         LOGGER.info("Remaining time {}", remainingTime);
+        // Back home
         commonPage.moveDown(1, 1);
         commonPage.clickBack();
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -1210,13 +1211,10 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
                 "Continue button was not present on details page");
 
         detailsPage.getContinueButton().click();
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
-
+        videoPlayer.waitForVideoToStart();
         int remainingTimeAfterCW = videoPlayer.getRemainingTimeThreeIntegers();
         LOGGER.info("RemainingTime after continue watching {}", remainingTimeAfterCW);
-        ValueRange range = ValueRange.of(0, UI_LATENCY_IN_SEC);
-      //  Assert.assertTrue((remainingTimeBeforeForward - remainingTimeAfterForward) > expectedSkippedSeconds,
-
+        ValueRange range = ValueRange.of(0, latency);
         Assert.assertTrue(range.isValidIntValue(remainingTime - remainingTimeAfterCW),
                 "Video did not started from bookmark");
     }
