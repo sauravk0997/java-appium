@@ -86,15 +86,19 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         handleAlert();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
-        DisneyLocalizationUtils localizationUtils = getLocalizationUtils(US, lang);
+        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils("US", lang, MobilePlatform.IOS,
+                DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
+                DISNEY);
+        disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
+        disneyLocalizationUtils.setLegalDocuments();
         confirmLegalPageOpens();
 
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
         DisneyPlusOneTrustIOSPageBase oneTrustPage = initPage(DisneyPlusOneTrustIOSPageBase.class);
-        localizationUtils.getLegalHeaders().forEach(documentHeader -> {
+        getLocalizationUtils().getLegalHeaders().forEach(documentHeader -> {
             disneyPlusLegalIOSPageBase.getLegalHeader(documentHeader).click();
             LOGGER.info("Comparing '{}'", documentHeader);
-            if (documentHeader.equalsIgnoreCase(localizationUtils.getDictionaryItem(
+            if (documentHeader.equalsIgnoreCase(getLocalizationUtils().getDictionaryItem(
                     DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FOOTER_MANAGE_PREFERENCE.getText()))) {
                 sa.assertTrue(oneTrustPage.isOpened(), "opt out of Sale/Sharing page is not present");
                 oneTrustPage.tapCloseButton();

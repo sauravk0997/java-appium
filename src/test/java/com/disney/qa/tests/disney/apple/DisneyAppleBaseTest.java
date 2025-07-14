@@ -442,6 +442,14 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
         return date.replace(":", "_");
     }
 
+    public static DisneyMobileConfigApi getConfigApi() {
+        try {
+            return CONFIG_API.get();
+        } catch (ConcurrentException e) {
+            return ExceptionUtils.rethrow(e);
+        }
+    }
+
     public static UnifiedAccountApi getUnifiedAccountApi() {
         return UNIFIED_ACCOUNT_API.get();
     }
