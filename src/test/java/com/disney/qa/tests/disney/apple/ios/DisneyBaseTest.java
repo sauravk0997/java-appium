@@ -587,10 +587,10 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public List<Item> getAvailableHuluTitlesForStandaloneUserFromApi() {
         List<Item> huluSeriesFromApi = getExploreAPIItemsFromSet
                 (CollectionConstant.getCollectionName(CollectionConstant.Collection.ENJOY_THESE_SERIES_FROM_HULU),
-                        20);
+                        100);
         List<Item> huluMoviesFromApi = getExploreAPIItemsFromSet
                 (CollectionConstant.getCollectionName(CollectionConstant.Collection.ENJOY_THESE_MOVIES_FROM_HULU),
-                        20);
+                        100);
         List<Item> huluContentFromApi = Stream.concat(
                         huluSeriesFromApi.stream(), huluMoviesFromApi.stream())
                 .collect(Collectors.toList());
@@ -621,6 +621,13 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
         }
         genreList.forEach(genre -> metadataArray.add(genre));
         return metadataArray;
+    }
+
+    public ExploreSearchRequest createUpNextRequest(String contentId) {
+        return ExploreSearchRequest.builder()
+                .contentEntitlements(CONTENT_ENTITLEMENT_DISNEY)
+                .profileId(getUnifiedAccount().getProfileId())
+                .contentId(contentId).build();
     }
 
     //Jarvis Methods
@@ -859,16 +866,6 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
             throw new RuntimeException("Exception occurred...{}", e);
         }
         return response.getData();
-    }
-
-    public ArrayList<String> broadcastsExpectedFeeds() {
-        ArrayList<String> broadcastsExpectedFeeds = new ArrayList<>();
-        broadcastsExpectedFeeds.add("PRIMARY");
-        broadcastsExpectedFeeds.add("NATIONAL");
-        broadcastsExpectedFeeds.add("NATIONAL FEED");
-        broadcastsExpectedFeeds.add("HOME");
-        broadcastsExpectedFeeds.add("AWAY");
-        return broadcastsExpectedFeeds;
     }
 
     public void triggerPasswordResetForCurrentUser() {
