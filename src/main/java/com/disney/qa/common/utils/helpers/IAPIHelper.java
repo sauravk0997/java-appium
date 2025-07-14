@@ -27,13 +27,15 @@ public interface IAPIHelper {
     default String getPinnedPlatformVersion() {
         Pattern pattern = Pattern.compile("^(\\d\\.\\d+)");
         Matcher matcher = pattern.matcher(TEST_FAIRY_APP_VERSION);
+        String pinnedPlatformVersion;
         if (matcher.find()) {
-            I_API_HELPER_LOGGER.info("Pinned Platform Version: {}", matcher.group(0));
-            return matcher.group(0);
+            pinnedPlatformVersion = matcher.group(0);
         } else {
-            throw new RuntimeException(String.format("Couldn't extract pinned platform version from APP version %s",
+            throw new IllegalArgumentException(String.format("Couldn't extract pinned platform version from APP version %s",
                     TEST_FAIRY_APP_VERSION));
         }
+        I_API_HELPER_LOGGER.info("Pinned Platform Version: {}", pinnedPlatformVersion);
+        return pinnedPlatformVersion;
     }
 
     /**
