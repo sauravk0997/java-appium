@@ -1175,16 +1175,28 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.MOVIES, US})
     public void verifySeriesContentLandingPage() {
         DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVSeriesPage seriesPage = new DisneyPlusAppleTVSeriesPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
 
         logIn(getUnifiedAccount());
-        homePage.waitForHomePageToOpen();
         homePage.moveDownFromHeroTile();
         homePage.openGlobalNavAndSelectOneMenu(SERIES.getText());
         Assert.assertTrue(seriesPage.isOpened(), "Series page was not open");
 
+        commonPage.moveDown(1, 1);
+        commonPage.clickSelect();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED); */
+        commonPage.moveDown(1, 1);
+        Assert.assertTrue(detailsPage.isFocused(detailsPage.getEpisodesTab()), EPISODES_TAB_NOT_FOCUSED_ERROR_MESSAGE);
+        commonPage.clickRight();
+        Assert.assertTrue(detailsPage.isFocused(detailsPage.getSuggestedTab()),"Suggested tab is not focused");
+        commonPage.clickRight();
+        if (detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT)) {
+            Assert.assertTrue(detailsPage.isFocused(detailsPage.getExtrasTab()),  "Extras tab is not focused");
+            commonPage.clickRight();
+        }
+        Assert.assertTrue(detailsPage.isFocused(detailsPage.getDetailsTab()), "Details tab is not focused");
     }
 
     private void toggleAutoPlay(String toggleValue) {
