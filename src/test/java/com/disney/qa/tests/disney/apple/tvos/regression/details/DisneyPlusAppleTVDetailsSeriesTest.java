@@ -40,6 +40,8 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     private static final long SCRUB_PERCENTAGE_TWENTY = 20;
     private static final long SCRUB_PERCENTAGE_FIFTY = 50;
     private static final long SCRUB_PERCENTAGE_HUNDRED = 100;
+    private static final String SEASON_TITLE = "seasonTitle";
+    private static final String TITLE_LABEL = "titleLabel";
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64981"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
@@ -1053,8 +1055,6 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
-        String seasonTitle = "seasonTitle";
-        String titleLabel = "titleLabel";
 
         logIn(getUnifiedAccount());
 
@@ -1091,8 +1091,8 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         commonPage.clickRight();
 
         // Validate if seasons and episodes are ordered
-        Assert.assertTrue(detailsPage.isListOrdered(seasonTitle), "Seasons are not ordered ascending as expected");
-        Assert.assertTrue(detailsPage.isListOrdered(titleLabel), "Episodes are not ordered ascending as expected");
+        Assert.assertTrue(detailsPage.isListOrdered(SEASON_TITLE), "Seasons are not ordered ascending as expected");
+        Assert.assertTrue(detailsPage.isListOrdered(TITLE_LABEL), "Episodes are not ordered ascending as expected");
 
         // Validate the first episode's cell to assert there are no episodes from a different season
         Assert.assertTrue(detailsPage.isFocused(detailsPage.getTypeCellNameContains(firstEpisodeSecondSeasonTitle)),
@@ -1110,13 +1110,10 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-64938"})
     @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
     public void verifySeriesDetailsPageEpisodeTab() {
-        String firstEpisodeFirstSeasonTitle, firstEpisodeFirstSeasonBriefDesc,
-                secondEpisodeFirstSeasonTitle;
-        int firstEpisodeFirstSeasonDurationTime, firstSeasonSize = 0;
+        String firstEpisodeTitle, firstEpisodeBriefDesc, secondEpisodeTitle;
+        int firstEpisodeFirstSeasonDurationTime, firstSeasonSize;
         DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
         DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
-        String seasonTitle = "seasonTitle";
-        String titleLabel = "titleLabel";
         SoftAssert sa = new SoftAssert();
         logIn(getUnifiedAccount());
 
@@ -1124,10 +1121,10 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
                 DisneyPlusBrandIOSPageBase.Brand.DISNEY);
         try {
             Visuals seasonVisuals = seriesApiContent.getSeasons().get(0).getItems().get(0).getVisuals();
-            firstEpisodeFirstSeasonTitle = seasonVisuals.getEpisodeTitle();
-            firstEpisodeFirstSeasonBriefDesc = seasonVisuals.getDescription().getBrief();
+            firstEpisodeTitle = seasonVisuals.getEpisodeTitle();
+            firstEpisodeBriefDesc = seasonVisuals.getDescription().getBrief();
             firstEpisodeFirstSeasonDurationTime = seasonVisuals.getDurationMs();
-            secondEpisodeFirstSeasonTitle = seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getEpisodeTitle();
+            secondEpisodeTitle = seriesApiContent.getSeasons().get(0).getItems().get(1).getVisuals().getEpisodeTitle();
             firstSeasonSize = seriesApiContent.getSeasons().get(0).getItems().size();
         } catch (Exception e) {
             throw new SkipException("Skipping test, Episode title and description not found" + e.getMessage());
@@ -1143,11 +1140,11 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         sa.assertTrue(detailsPage.getEpisodeViewSection().isPresent(), "Episode view section is not present");
 
         // Validate relevant content populated from first season
-        sa.assertTrue(detailsPage.getTypeCellNameContains(firstEpisodeFirstSeasonTitle).isPresent(),
+        sa.assertTrue(detailsPage.getTypeCellNameContains(firstEpisodeTitle).isPresent(),
                 "First episode title is not present");
-        sa.assertTrue(detailsPage.getTypeCellNameContains(firstEpisodeFirstSeasonBriefDesc).isPresent(),
+        sa.assertTrue(detailsPage.getTypeCellNameContains(firstEpisodeBriefDesc).isPresent(),
                 "First episode description is not present");
-        sa.assertTrue(detailsPage.getTypeCellNameContains(secondEpisodeFirstSeasonTitle).isPresent(),
+        sa.assertTrue(detailsPage.getTypeCellNameContains(secondEpisodeTitle).isPresent(),
                 "Second episode title is not present");
         sa.assertTrue(detailsPage.isContentImageViewPresent(),
                 "Content Image View not found on episode container");
@@ -1165,8 +1162,8 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
                 "Episode number not displayed on Season view section");
 
         // Validate if seasons and episodes are ordered
-        Assert.assertTrue(detailsPage.isListOrdered(seasonTitle), "Seasons are not ordered ascending as expected");
-        Assert.assertTrue(detailsPage.isListOrdered(titleLabel), "Episodes are not ordered ascending as expected");
+        Assert.assertTrue(detailsPage.isListOrdered(SEASON_TITLE), "Seasons are not ordered ascending as expected");
+        Assert.assertTrue(detailsPage.isListOrdered(TITLE_LABEL), "Episodes are not ordered ascending as expected");
 
         validateElementPositionAlignment(detailsPage.getSeasonViewSection(), LEFT_POSITION);
         validateElementPositionAlignment(detailsPage.getEpisodeViewSection(), RIGHT_POSITION);
