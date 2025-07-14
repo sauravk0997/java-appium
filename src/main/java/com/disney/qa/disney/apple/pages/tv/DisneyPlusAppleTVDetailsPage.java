@@ -41,6 +41,10 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
     private ExtendedWebElement seasonViewSection;
     @ExtendedFindBy(accessibilityId = "seasonTitle")
     private ExtendedWebElement episodeTitleSection;
+    @ExtendedFindBy(accessibilityId = "seasonTotalEpisodes")
+    private ExtendedWebElement seasonEpisodeNumber;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[$name = 'contentImageView'$]")
+    private ExtendedWebElement episodeViewSection;
 
     public DisneyPlusAppleTVDetailsPage(WebDriver driver) {
         super(driver);
@@ -202,6 +206,10 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         return seasonViewSection;
     }
 
+    public ExtendedWebElement getEpisodeViewSection() {
+        return episodeViewSection;
+    }
+
     public ExtendedWebElement getEpisodeTitleSection() {
         return episodeTitleSection;
     }
@@ -210,5 +218,9 @@ public class DisneyPlusAppleTVDetailsPage extends DisneyPlusDetailsIOSPageBase {
         List<ExtendedWebElement> titlesFromScreen = findExtendedWebElements(getStaticTextByName(element).getBy());
         return IntStream.range(0, titlesFromScreen.size() - 1)
                 .allMatch(i -> titlesFromScreen.get(i).getText().compareTo(titlesFromScreen.get(i + 1).getText()) <= 0);
+    }
+
+    public ExtendedWebElement getSeasonEpisodeNumber() {
+        return seasonEpisodeNumber;
     }
 }
