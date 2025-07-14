@@ -1216,7 +1216,7 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         LOGGER.info("RemainingTime after continue watching {}", remainingTimeAfterCW);
         ValueRange range = ValueRange.of(0, latency);
         Assert.assertTrue(range.isValidIntValue(remainingTime - remainingTimeAfterCW),
-                "Video did not started from bookmark");
+                "Video did not resume from bookmark");
     }
 
     private void toggleAutoPlay(String toggleValue) {
