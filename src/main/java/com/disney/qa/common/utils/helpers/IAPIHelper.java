@@ -31,8 +31,8 @@ public interface IAPIHelper {
         if (matcher.find()) {
             pinnedPlatformVersion = matcher.group(0);
         } else {
-            throw new IllegalArgumentException(String.format("Couldn't extract pinned platform version from APP version %s",
-                    TEST_FAIRY_APP_VERSION));
+            throw new IllegalArgumentException(String.format("Couldn't extract pinned platform version from " +
+                    "APP version %s", TEST_FAIRY_APP_VERSION));
         }
         I_API_HELPER_LOGGER.info("Pinned Platform Version: {}", pinnedPlatformVersion);
         return pinnedPlatformVersion;
