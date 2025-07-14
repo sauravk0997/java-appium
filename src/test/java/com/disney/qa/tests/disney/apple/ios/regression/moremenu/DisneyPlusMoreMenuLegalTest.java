@@ -98,8 +98,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         getLocalizationUtils().getLegalHeaders().forEach(documentHeader -> {
             disneyPlusLegalIOSPageBase.getLegalHeader(documentHeader).click();
             LOGGER.info("Comparing '{}'", documentHeader);
-            if (documentHeader.equalsIgnoreCase(getLocalizationUtils().getDictionaryItem(
-                    DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FOOTER_MANAGE_PREFERENCE.getText()))) {
+            if (documentHeader.equalsIgnoreCase(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.FOOTER_MANAGE_PREFERENCE.getText()))) {
                 sa.assertTrue(oneTrustPage.isOpened(), "opt out of Sale/Sharing page is not present");
                 oneTrustPage.tapCloseButton();
             } else {
