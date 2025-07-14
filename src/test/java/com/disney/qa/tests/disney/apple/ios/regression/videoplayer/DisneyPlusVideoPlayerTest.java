@@ -263,7 +263,7 @@ public class DisneyPlusVideoPlayerTest extends DisneyBaseTest {
     public void verifyESPNAlternateBroadcastSelectorFeedsOptions() {
         DisneyPlusVideoPlayerIOSPageBase videoPlayer = initPage(DisneyPlusVideoPlayerIOSPageBase.class);
         openBroadcastMenu();
-        Assert.assertTrue(broadcastsExpectedFeeds().containsAll(videoPlayer.getBroadcastTargetFeedOptionText()),
+        Assert.assertTrue(videoPlayer.broadcastsExpectedFeeds().containsAll(videoPlayer.getBroadcastTargetFeedOptionText()),
                 "Target broadcasts feeds on UI are not as expected");
         verifyFeedOptionSelected();
     }
