@@ -1,14 +1,10 @@
 package com.disney.qa.common.utils.helpers;
 
 import com.disney.config.DisneyConfiguration;
-import com.disney.qa.api.config.DisneyMobileConfigApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.config.Configuration;
 import com.zebrunner.carina.webdriver.config.WebDriverConfiguration;
-import org.apache.commons.lang3.concurrent.ConcurrentException;
-import org.apache.commons.lang3.concurrent.LazyInitializer;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,25 +13,30 @@ import org.slf4j.LoggerFactory;
 import java.lang.invoke.MethodHandles;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import static com.disney.qa.common.constant.IConstantHelper.DEVICE_TYPE_TVOS;
-import static com.disney.qa.common.utils.IOSUtils.LOGGER;
-import static com.disney.qa.disney.apple.pages.common.DisneyPlusApplePageBase.DEVICE_TYPE;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public interface IAPIHelper {
     String TEST_FAIRY_APP_VERSION = R.CONFIG.get("test_fairy_app_version");
+    String IOS_PLATFORM = "ios";
+    String APPLE_TV_PLATFORM = "apple-tv";
     Map<ImmutablePair<String, String>, DisneyLocalizationUtils> LOCALIZATION_UTILS = new ConcurrentHashMap<>();
     Map<ImmutablePair<String, String>, DisneyLocalizationUtils> APPLE_TV_LOCALIZATION_UTILS = new ConcurrentHashMap<>();
     Logger I_API_HELPER_LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
-    LazyInitializer<DisneyMobileConfigApi> MOBILE_CONFIG_API = new LazyInitializer<>() {
-        @Override
-        protected DisneyMobileConfigApi initialize() {
-            String platform = (R.CONFIG.get(DEVICE_TYPE).equals(DEVICE_TYPE_TVOS)) ? "tvos" : "ios";
-            I_API_HELPER_LOGGER.info("App version: {}", TEST_FAIRY_APP_VERSION);
-            return new DisneyMobileConfigApi(platform, Configuration.getRequired(Configuration.Parameter.ENV), DisneyConfiguration.getPartner(),
-                    TEST_FAIRY_APP_VERSION.split("-")[0]);
+
+    default String getPinnedPlatformVersion() {
+        Pattern pattern = Pattern.compile("^(\\d\\.\\d+)");
+        Matcher matcher = pattern.matcher(TEST_FAIRY_APP_VERSION);
+        String pinnedPlatformVersion;
+        if (matcher.find()) {
+            pinnedPlatformVersion = matcher.group(0);
+        } else {
+            throw new IllegalArgumentException(String.format("Couldn't extract pinned platform version from " +
+                    "APP version %s", TEST_FAIRY_APP_VERSION));
         }
-    };
+        I_API_HELPER_LOGGER.info("Pinned Platform Version: {}", pinnedPlatformVersion);
+        return pinnedPlatformVersion;
+    }
 
     /**
      * Get localization utils<br>
@@ -45,11 +46,13 @@ public interface IAPIHelper {
         return LOCALIZATION_UTILS.computeIfAbsent(new ImmutablePair<>(WebDriverConfiguration.getLocale()
                 .getCountry(), WebDriverConfiguration.getLocale()
                 .getLanguage()), pair -> {
-            DisneyLocalizationUtils localizationUtils = new DisneyLocalizationUtils(pair.getLeft(), pair.getRight(), "iOS",
+            DisneyLocalizationUtils localizationUtils = new DisneyLocalizationUtils(pair.getLeft(), pair.getRight(),
+                    IOS_PLATFORM,
                     Configuration.getRequired(Configuration.Parameter.ENV),
-                    DisneyConfiguration.getPartner());
-            LOGGER.info("Dict version:{}", getMobileConfigApi().getDictionaryVersions());
-            localizationUtils.setDictionaries(getMobileConfigApi().getDictionaryVersions());
+                    DisneyConfiguration.getPartner(),
+                    getPinnedPlatformVersion(),
+                    true);
+            localizationUtils.setDictionaries(localizationUtils.getPinnedDictionaryVersions());
             localizationUtils.setLegalDocuments();
             return localizationUtils;
         });
@@ -64,11 +67,12 @@ public interface IAPIHelper {
     default DisneyLocalizationUtils getLocalizationUtils(String country, String language) {
         return LOCALIZATION_UTILS.computeIfAbsent(new ImmutablePair<>(country, language), pair -> {
             DisneyLocalizationUtils localizationUtils = new DisneyLocalizationUtils(pair.getLeft(), pair.getRight(),
-                    "iOS",
+                    IOS_PLATFORM,
                     Configuration.getRequired(Configuration.Parameter.ENV),
-                    DisneyConfiguration.getPartner());
-            LOGGER.info("Dict version:{}", getMobileConfigApi().getDictionaryVersions());
-            localizationUtils.setDictionaries(getMobileConfigApi().getDictionaryVersions());
+                    DisneyConfiguration.getPartner(),
+                    getPinnedPlatformVersion(),
+                    true);
+            localizationUtils.setDictionaries(localizationUtils.getPinnedDictionaryVersions());
             localizationUtils.setLegalDocuments();
             return localizationUtils;
         });
@@ -83,20 +87,14 @@ public interface IAPIHelper {
                 .getCountry(), WebDriverConfiguration.getLocale()
                 .getLanguage()), pair -> {
             DisneyLocalizationUtils localizationUtils = new DisneyLocalizationUtils(pair.getLeft(), pair.getRight(),
-                    "apple-tv",
+                    APPLE_TV_PLATFORM,
                     Configuration.getRequired(Configuration.Parameter.ENV),
-                    DisneyConfiguration.getPartner());
-            localizationUtils.setDictionaries(getMobileConfigApi().getDictionaryVersions());
+                    DisneyConfiguration.getPartner(),
+                    getPinnedPlatformVersion(),
+                    true);
+            localizationUtils.setDictionaries(localizationUtils.getPinnedDictionaryVersions());
             localizationUtils.setLegalDocuments();
             return localizationUtils;
         });
-    }
-
-    default DisneyMobileConfigApi getMobileConfigApi() {
-        try {
-            return MOBILE_CONFIG_API.get();
-        } catch (ConcurrentException e) {
-            return ExceptionUtils.rethrow(e);
-        }
     }
 }
