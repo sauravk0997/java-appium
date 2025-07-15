@@ -19,11 +19,11 @@ public class DisneyPlusUpNextIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement upNextImageView;
     @ExtendedFindBy(accessibilityId = "nextEpisodeHeader")
     private ExtendedWebElement nextEpisodeHeader;
-    @ExtendedFindBy(accessibilityId = "contentTitleLabel")
+    @ExtendedFindBy(accessibilityId = "upNextContentTitleLabel")
     private ExtendedWebElement contentTitleLabel;
-    @ExtendedFindBy(accessibilityId = "countdownProgressButton")
+    @ExtendedFindBy(iosPredicate = "name == 'upNextImageView' AND label == 'dmx.upNextPlay'")
     private ExtendedWebElement playButton;
-    @ExtendedFindBy(accessibilityId = "seeAllEpisodeButton")
+    @ExtendedFindBy(accessibilityId = "upNextExtraActionButton")
     private ExtendedWebElement seeAllEpisodeButton;
 
     //FUNCTIONS
