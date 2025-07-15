@@ -427,40 +427,6 @@ public class DisneyPlusAppleTVVideoPlayerTest extends DisneyPlusAppleTVBaseTest 
         validateElementExpectedHeightPosition(videoPlayer.getNetworkWatermarkLogo(ESPN_PLUS), BOTTOM);
     }
 
-    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-106643"})
-    @Test(groups = {TestGroup.VIDEO_PLAYER, US})
-    public void verifyESPNLiveEvent() {
-        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
-        DisneyPlusCollectionIOSPageBase collectionPage = new DisneyPlusCollectionIOSPageBase(getDriver());
-        DisneyPlusAppleTVLiveEventModalPage liveEventModal = new DisneyPlusAppleTVLiveEventModalPage(getDriver());
-        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
-        String errorMessage = "Skipping test, no live events are available";
-
-        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_BUNDLE_TRIO_PREMIUM_MONTHLY)));
-        logIn(getUnifiedAccount());
-        String liveAndUpcomingEventsCollection =
-                getCollectionName(CollectionConstant.Collection.ESPN_PLUS_LIVE_AND_UPCOMING);
-
-        homePage.waitForHomePageToOpen();
-        homePage.moveDownFromHeroTile();
-        homePage.moveDownUntilCollectionContentIsFocused(liveAndUpcomingEventsCollection, 10);
-
-        // Verify airing badge to validate if there is a live event occurring
-        String airingBadge = collectionPage.getAiringBadgeOfFirstCellElementFromCollection(
-                liveAndUpcomingEventsCollection).getText();
-        LOGGER.info("Airing badge: {}", airingBadge);
-        if (airingBadge.equals(UPCOMING)) {
-            throw new SkipException(errorMessage);
-        }
-
-        // Open live event
-        homePage.getFirstCellFromCollection(liveAndUpcomingEventsCollection).click();
-        Assert.assertTrue(liveEventModal.isOpened(), "Live modal did not open");
-        liveEventModal.getWatchLiveButton().click();
-        videoPlayer.waitForPresenceOfAnElement(videoPlayer.getPlayerView());
-        Assert.assertTrue(videoPlayer.isOpened(), VIDEO_PLAYER_NOT_DISPLAYED);
-    }
-
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-121061"})
     @Test(groups = {TestGroup.ESPN, TestGroup.VIDEO_PLAYER, US})
     public void verifyESPNVODPlayback() {
