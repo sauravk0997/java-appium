@@ -96,19 +96,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     ThreadLocal<CreateUnifiedAccountRequest> CREATE_UNIFIED_ACCOUNT_REQUEST =
             ThreadLocal.withInitial(CreateUnifiedAccountRequest::new);
 
-    private static final LazyInitializer<DisneyMobileConfigApi> CONFIG_API = new LazyInitializer<>() {
-        @Override
-        protected DisneyMobileConfigApi initialize() {
-            String testFairyAppVersion = R.CONFIG.get("test_fairy_app_version");
-            LOGGER.info("version: {}", testFairyAppVersion);
-            if (StringUtils.equalsIgnoreCase(DisneyConfiguration.getDeviceType(), "tvOS")) {
-                return new DisneyMobileConfigApi(MobilePlatform.TVOS, "prod", DisneyConfiguration.getPartner(), testFairyAppVersion);
-            } else {
-                return new DisneyMobileConfigApi(MobilePlatform.IOS, DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()), DISNEY, testFairyAppVersion);
-            }
-        }
-    };
-
     private final ThreadLocal<UnifiedAccount> UNIFIED_ACCOUNT = ThreadLocal.withInitial(() ->
             getUnifiedAccountApi().createAccount(
                     getCreateUnifiedAccountRequest(DISNEY_PLUS_PREMIUM)));
@@ -440,14 +427,6 @@ public class DisneyAppleBaseTest extends AbstractTest implements IOSUtils, IAPIH
     public String getDate() {
         String date = DateUtils.now();
         return date.replace(":", "_");
-    }
-
-    public static DisneyMobileConfigApi getConfigApi() {
-        try {
-            return CONFIG_API.get();
-        } catch (ConcurrentException e) {
-            return ExceptionUtils.rethrow(e);
-        }
     }
 
     public static UnifiedAccountApi getUnifiedAccountApi() {
