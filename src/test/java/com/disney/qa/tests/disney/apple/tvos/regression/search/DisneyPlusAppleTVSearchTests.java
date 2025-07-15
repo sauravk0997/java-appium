@@ -255,8 +255,9 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
 
         logIn(getUnifiedAccount());
 
+        homePage.waitForHomePageToOpen();
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
-        homePage.moveDownFromHeroTile();
+        homePage.moveDownUntilDisneyOriginalBrandIsFocused(2);
         homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 
@@ -326,6 +327,7 @@ public class DisneyPlusAppleTVSearchTests extends DisneyPlusAppleTVBaseTest {
         homePage.openGlobalNavAndSelectOneMenu(SEARCH.getText());
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.typeInSearchField(contentTitle);
+        Assert.assertTrue(searchPage.waitForSearchResultToVisible(), "search result is not visible");
         searchPage.clickSearchResult(contentTitle);
 
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);

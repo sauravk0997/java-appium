@@ -564,7 +564,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public boolean isAdBadgeLabelPresent(int...timeout) {
         int waitTime = timeout.length > 0 ? timeout[0] : FIFTEEN_SEC_TIMEOUT;
-        return fluentWait(getDriver(), waitTime, THREE_SEC_TIMEOUT, "Ad badge label not present")
+        return fluentWait(getDriver(), waitTime, ONE_SEC_TIMEOUT, "Ad badge label not present")
                 .until(it -> isAdBadgePresent(ONE_SEC_TIMEOUT));
     }
 
@@ -960,5 +960,9 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
 
     public ExtendedWebElement getTitleVideoLabel() {
         return titleLabel;
+    }
+
+    public List<String> broadcastsExpectedFeeds() {
+        return Arrays.asList("PRIMARY", "NATIONAL", "NATIONAL FEED", "HOME", "AWAY");
     }
 }

@@ -6,7 +6,7 @@ import com.disney.config.DisneyConfiguration;
 import com.disney.qa.api.client.responses.content.ContentSet;
 import com.disney.qa.api.dictionary.DisneyDictionaryApi;
 import com.disney.qa.api.dictionary.DisneyLocalizationUtils;
-import com.disney.qa.api.pojos.UnifiedAccount;
+import com.disney.qa.api.pojos.*;
 import com.disney.qa.common.constant.*;
 import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
@@ -1831,6 +1831,51 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 "Gender is not updated");
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-76767"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.ACCOUNT_SHARING, TestGroup.PRE_CONFIGURATION, US})
+    public void verifyExtraMembersProfileLimits() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+        String profileNamePrefix = "AdultProfile";
+        SoftAssert sa = new SoftAssert();
+        int maxProfiles = 6;
+
+        setAccount(createAccountSharingUnifiedAccounts().getReceivingAccount());
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        homePage.clickMoreTab();
+        moreMenuPage.clickEditProfilesBtn();
+
+        Assert.assertTrue(editProfilePage.isOpened(), EDIT_PROFILE_PAGE_NOT_DISPLAYED);
+        Assert.assertEquals(editProfilePage.getQuantityOfProfileCells(), 1,
+                "Extra Member account should only have one profile");
+        Assert.assertFalse(editProfilePage.getAddProfileBtn().isElementPresent(FIVE_SEC_TIMEOUT),
+                "Add Profile button should not be present for Extra Member account");
+
+        //Convert Extra Member account to independent D+ subscription
+        convertExtraMemberToIndependentSubscription(getUnifiedAccount());
+
+        // Refresh app state to reflect new subscription status
+        terminateApp(sessionBundles.get(DISNEY));
+        launchApp(sessionBundles.get(DISNEY));
+
+        homePage.clickMoreTab();
+        Assert.assertTrue(editProfilePage.getAddProfileBtn().isElementPresent(FIVE_SEC_TIMEOUT),
+                "Add Profile button should be present after conversion to independent subscription");
+        terminateApp(sessionBundles.get(DISNEY));
+        // User can add profiles up to the max allowed
+        addAdultProfiles(getUnifiedAccount(), maxProfiles, profileNamePrefix);
+        launchApp(sessionBundles.get(DISNEY));
+
+        homePage.clickMoreTab();
+        moreMenuPage.clickEditProfilesBtn();
+        sa.assertTrue(editProfilePage.getStaticTextByLabel(profileNamePrefix+maxProfiles).isPresent(),
+        "Profile with name " + profileNamePrefix + maxProfiles + " is not present");
+        sa.assertFalse(editProfilePage.getAddProfileBtn().isElementPresent(FIVE_SEC_TIMEOUT),
+                "Add Profile button should not be present after reaching max profile limit");
+        sa.assertAll();
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-72166"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, US})
     public void verifySharePlayForgotPasswordResetScreen() {
@@ -2155,5 +2200,19 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         handleGenericPopup(5,1);
         handleOneTrustPopUp();
         whoseWatchingPage.clickProfile(profileName, false);
+    }
+
+    public void addAdultProfiles(UnifiedAccount account, int count, String namePrefix) {
+        for (int i = 1; i <= count; i++) {
+            String profileName = namePrefix + i;
+            getUnifiedAccountApi().addProfile(CreateUnifiedAccountProfileRequest.builder()
+                    .unifiedAccount(account)
+                    .profileName(profileName)
+                    .dateOfBirth(ADULT_DOB)
+                    .language(getLocalizationUtils().getUserLanguage())
+                    .kidsModeEnabled(false)
+                    .isStarOnboarded(true)
+                    .build());
+        }
     }
 }

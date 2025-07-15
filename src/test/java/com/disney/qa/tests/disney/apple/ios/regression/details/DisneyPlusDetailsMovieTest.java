@@ -194,9 +194,8 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
         sa.assertTrue(detailsPage.getShareBtn().isPresent(), "Share button not found");
         detailsPage.getShareBtn().click();
-        sa.assertTrue(detailsPage.getTypeOtherByLabel(
-                        String.format("%s | Disney+", HOCUS_POCUS)).isPresent(),
-                String.format("'%s | Disney+' title was not found on share actions", HOCUS_POCUS));
+        sa.assertTrue(detailsPage.getTypeOtherByLabel(HOCUS_POCUS).isPresent(),
+                String.format("'%s' title was not found on share actions", HOCUS_POCUS));
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Copy").isPresent(),
                 "Share action 'Copy' was not found");
 
@@ -367,8 +366,8 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
-        String entityID = R.TESTDATA.get("disney_prod_movie_zombies_4_entity_id");
-        String deeplink = R.TESTDATA.get("disney_prod_movie_zombies_4_deeplink");
+        String entityID = R.TESTDATA.get("disney_prod_movie_rio_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_movie_rio_deeplink");
         launchDeeplink(deeplink);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
@@ -408,7 +407,7 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         sa.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.getSearchBar().click();
         String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
-        String expectedUrl = R.TESTDATA.get("disney_prod_movie_zombies_4_deeplink");
+        String expectedUrl = R.TESTDATA.get("disney_prod_movie_rio_deeplink");
         sa.assertTrue(expectedUrl.contains(url.replace(httpPrefix, "")),
                 String.format("Share link for movie %s is not the expected", contentTitle));
         sa.assertAll();
@@ -424,8 +423,8 @@ public class DisneyPlusDetailsMovieTest extends DisneyBaseTest {
         homePage.waitForHomePageToOpen();
 
         //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
-        String entityID = R.TESTDATA.get("disney_prod_movie_zombies_4_entity_id");
-        String deeplink = R.TESTDATA.get("disney_prod_movie_zombies_4_deeplink");
+        String entityID = R.TESTDATA.get("disney_prod_movie_rio_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_movie_rio_deeplink");
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
         Map<String, Object> exploreAPIData = getMoviesMetaDataFromAPI(visualsResponse);
 

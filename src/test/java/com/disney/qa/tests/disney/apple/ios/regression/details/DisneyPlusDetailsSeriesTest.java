@@ -9,7 +9,6 @@ import com.disney.qa.disney.apple.pages.common.*;
 import com.disney.qa.tests.disney.apple.ios.DisneyBaseTest;
 import com.disney.util.TestGroup;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.github.javafaker.Hobbit;
 import com.zebrunner.carina.utils.R;
 import com.zebrunner.carina.utils.factory.DeviceType;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
@@ -277,7 +276,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         searchPage.getDisplayedTitles().get(0).click();
         sa.assertTrue(detailsPage.getShareBtn().isPresent(), SHARE_BTN_NOT_DISPLAYED);
         detailsPage.getShareBtn().click();
-        sa.assertTrue(detailsPage.getTypeOtherByLabel(String.format("%s | Disney+", SERIES_LOKI)).isPresent(), String.format("'%s | Disney+' title was not found on share actions.", SERIES_LOKI));
+        sa.assertTrue(detailsPage.getTypeOtherByLabel(SERIES_LOKI).isPresent(),
+                String.format("'%s' title was not found on share actions", SERIES_LOKI));
         sa.assertTrue(detailsPage.getStaticTextByLabelContains("Copy").isPresent(), "Share action 'Copy' was not found");
 
         detailsPage.clickOnCopyShareLink();
@@ -612,8 +612,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         homePage.waitForHomePageToOpen();
 
         //TODO: Replace entity-id, deeplink from API when https://jira.disney.com/browse/QP-3247 is ready
-        String entityID = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_entity_id");
-        String deeplink = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_deeplink");
+        String entityID = R.TESTDATA.get("disney_prod_series_eyes_of_wakanda_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_series_eyes_of_wakanda_deeplink");
 
         launchDeeplink(deeplink);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -657,7 +657,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.getSearchBar().click();
         String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
-        String expectedUrl = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_deeplink");
+        String expectedUrl = R.TESTDATA.get("disney_prod_series_eyes_of_wakanda_deeplink");
         sa.assertTrue(expectedUrl.contains(url.replace(httpPrefix, "")),
                 String.format("Share link for coming soon series %s is not as expected", contentTitle));
         sa.assertAll();
@@ -674,8 +674,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         homePage.waitForHomePageToOpen();
 
         //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
-        String entityID = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_entity_id");
-        String deeplink = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_deeplink");
+        String entityID = R.TESTDATA.get("disney_prod_series_eyes_of_wakanda_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_series_eyes_of_wakanda_deeplink");
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
         Map<String, Object> exploreAPIData = getContentMetadataFromAPI(visualsResponse);
 
