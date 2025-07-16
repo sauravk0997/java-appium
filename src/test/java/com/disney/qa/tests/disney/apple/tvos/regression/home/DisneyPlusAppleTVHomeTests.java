@@ -237,7 +237,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
                 CollectionConstant.Collection.TRENDING, matchingTitle.get().getVisuals().getTitle());
 
         homePage.moveDownUntilCollectionContentIsFocused(
-                getCollectionName(CollectionConstant.Collection.TRENDING), 15);
+                getCollectionName(CollectionConstant.Collection.TRENDING), 30);
         homePage.moveRightUntilElementIsFocused(huluTitleCell, 30);
         Assert.assertTrue(huluTitleCell.isElementPresent(),
                 "Hulu title cell was not present under Trending collection UI");
