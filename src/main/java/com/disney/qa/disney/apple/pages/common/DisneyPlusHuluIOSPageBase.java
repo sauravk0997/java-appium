@@ -36,12 +36,10 @@ public class DisneyPlusHuluIOSPageBase extends DisneyPlusApplePageBase {
     }
 
    public boolean isStudiosAndNetworkPresent() {
-        ExtendedWebElement studiosLabel = getStudiosAndNetwork();
-        swipePageTillElementPresent(studiosLabel, 8, brandLandingView, Direction.UP, 1000);
-        if (!getCollection(CollectionConstant.Collection.STUDIOS_AND_NETWORKS).isPresent()){
-            swipeInContainer(brandLandingView, Direction.UP, 1000);
-        }
-        return studiosLabel.isPresent();
+        ExtendedWebElement studiosAndNetworksLabel = staticTextByLabel.format(
+                CollectionConstant.getCollectionTitle(CollectionConstant.Collection.STUDIOS_AND_NETWORKS));
+        swipeTillCollectionTappable(CollectionConstant.Collection.STUDIOS_AND_NETWORKS, Direction.UP, 5);
+        return studiosAndNetworksLabel.isPresent();
     }
 
     public boolean isHuluBrandImageExpanded() {
