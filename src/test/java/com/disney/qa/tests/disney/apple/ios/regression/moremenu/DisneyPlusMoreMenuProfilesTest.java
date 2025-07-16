@@ -2107,6 +2107,76 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
         Assert.assertTrue(whoseWatching.isOpened(), WHO_IS_WATCHING_SCREEN_IS_NOT_DISPLAYED);
     }
 
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78630"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, NZ})
+    public void verifyMaturitySettingsForANZU18ProfileWithNoFullCatalog() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        if (homePage.isTravelAlertTitlePresent()) {
+            homePage.getTravelAlertOk().click();
+        }
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenuPage.clickAddProfile();
+        Assert.assertTrue(chooseAvatarPage.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
+        chooseAvatarPage.clickSkipButton();
+        Assert.assertTrue(addProfile.isAddProfilePageOpened(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
+        addProfile.enterProfileName(SECONDARY_PROFILE);
+        addProfile.enterDOB(Person.U18.getMonth(), Person.U18.getDay(), Person.U18.getYear());
+        addProfile.clickSaveProfileButton();
+        //Select No for full catalog access
+        addProfile.clickSecondaryButton();
+        Assert.assertTrue(moreMenuPage.isOpened(), MORE_MENU_NOT_DISPLAYED_ERROR);
+        moreMenuPage.clickEditProfilesBtn();
+        editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
+        Assert.assertTrue(editProfilePage.verifyProfileSettingsMaturityRating(RATING_M),
+                "Rating is not as expected for limited access profile");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-83369"})
+    @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, NZ})
+    public void verifyMaturitySettingsForANZU18ProfileWithFullCatalog() {
+        DisneyPlusHomeIOSPageBase homePage = initPage(DisneyPlusHomeIOSPageBase.class);
+        DisneyPlusMoreMenuIOSPageBase moreMenuPage = initPage(DisneyPlusMoreMenuIOSPageBase.class);
+        DisneyPlusAddProfileIOSPageBase addProfile = initPage(DisneyPlusAddProfileIOSPageBase.class);
+        DisneyPlusChooseAvatarIOSPageBase chooseAvatarPage = initPage(DisneyPlusChooseAvatarIOSPageBase.class);
+        DisneyPlusEditProfileIOSPageBase editProfilePage = initPage(DisneyPlusEditProfileIOSPageBase.class);
+
+        setAccount(getUnifiedAccountApi().createAccount(getCreateUnifiedAccountRequest(DISNEY_PLUS_STANDARD,
+                getLocalizationUtils().getLocale(), getLocalizationUtils().getUserLanguage())));
+        getUnifiedAccountApi().overrideLocations(getUnifiedAccount(), getLocalizationUtils().getLocale());
+
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
+        if (homePage.isTravelAlertTitlePresent()) {
+            homePage.getTravelAlertOk().click();
+        }
+        navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
+        moreMenuPage.clickAddProfile();
+        Assert.assertTrue(chooseAvatarPage.isOpened(), CHOOSE_AVATAR_PAGE_NOT_DISPLAYED);
+        chooseAvatarPage.clickSkipButton();
+        Assert.assertTrue(addProfile.isAddProfilePageOpened(), ADD_PROFILE_PAGE_NOT_DISPLAYED);
+        addProfile.enterProfileName(SECONDARY_PROFILE);
+        addProfile.enterDOB(Person.U18.getMonth(), Person.U18.getDay(), Person.U18.getYear());
+        addProfile.clickSaveProfileButton();
+        //Select Yes for full catalog access
+        addProfile.clickPrimaryButton();
+        addProfile.waitForPresenceOfAnElement(addProfile.getSecondaryButton());
+        addProfile.clickSecondaryButtonByCoordinates();
+        Assert.assertTrue(moreMenuPage.isOpened(), MORE_MENU_NOT_DISPLAYED_ERROR);
+        moreMenuPage.clickEditProfilesBtn();
+        editProfilePage.clickEditModeProfile(SECONDARY_PROFILE);
+        Assert.assertTrue(editProfilePage.verifyProfileSettingsMaturityRating(RATING_RP18_18_R18),
+                "Rating is not as expected for Full catalog access profile");
+    }
+
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XMOBQA-78361"})
     @Test(groups = {TestGroup.PROFILES, TestGroup.PRE_CONFIGURATION, NZ})
     public void verifyGenderAndDOBFieldForANZWhenJuniorModeOn() {
