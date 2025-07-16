@@ -18,7 +18,7 @@ import java.lang.invoke.MethodHandles;
 public class DisneyPlusAppleTVVideoPlayerPage extends DisneyPlusVideoPlayerIOSPageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == 'Restart'`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`name == 'restartButton'`]")
     private ExtendedWebElement restartBtn;
 
     public DisneyPlusAppleTVVideoPlayerPage(WebDriver driver) {
