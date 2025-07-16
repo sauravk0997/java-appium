@@ -102,7 +102,7 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_DID_NOT_OPEN);
-        homePage.swipeTillCollectionTappable(collection, Direction.UP, verticalSwipeCount);
+        homePage.swipeUpTillCollectionCompletelyVisible(collection, verticalSwipeCount);
         Assert.assertTrue(homePage.isCollectionPresent(collection), recommendedContainerNotFound);
         Assert.assertTrue(homePage.isCollectionTitlePresent(collection), recommendedHeaderNotFound);
 
