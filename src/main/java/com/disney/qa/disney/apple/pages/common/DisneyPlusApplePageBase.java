@@ -1101,25 +1101,18 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         }
     }
 
-    public boolean validateScrollingInCollections(CollectionConstant.Collection collection) {
-        DisneyPlusHuluIOSPageBase huluIOSPageBase = initPage(DisneyPlusHuluIOSPageBase.class);
-        ExtendedWebElement huluOriginalsLabel = getHuluOriginals();
-        swipePageTillElementPresent(huluOriginalsLabel, 5, brandLandingView, Direction.UP, 1000);
-        Assert.assertTrue(huluIOSPageBase.getTypeOtherContainsName("Hulu Originals").isPresent(),
-                "Hulu Originals collection was not found");
-        huluIOSPageBase.waitForLoaderToDisappear(5);
-        huluIOSPageBase.swipeLeftInCollectionNumOfTimes(1, collection);
-        BufferedImage recommendedForYouLastTileInView = getElementImage(
-                huluIOSPageBase.getCollection(collection));
-        huluIOSPageBase.swipeRightInCollectionNumOfTimes(1, collection);
-        BufferedImage recommendedForYouFirstTileInView = getElementImage(
-                huluIOSPageBase.getCollection(collection));
+    public boolean validateScrollingInCollection(CollectionConstant.Collection collection) {
+        String collectionTitle = CollectionConstant.getCollectionTitle(collection);
+        swipeTillCollectionTappable(collection, Direction.UP, 5);
+        Assert.assertTrue(getTypeOtherContainsName(collectionTitle).isPresent(),
+                String.format("'%s' collection was not found", collectionTitle));
+        waitForLoaderToDisappear(FIVE_SEC_TIMEOUT);
+        swipeLeftInCollectionNumOfTimes(1, collection);
+        BufferedImage collectionSnapshotAfterLeftSwipe = getElementImage(getCollection(collection));
+        swipeRightInCollectionNumOfTimes(1, collection);
+        BufferedImage collectionSnapshotAfterRightSwipe = getElementImage(getCollection(collection));
 
-        return areImagesDifferent(recommendedForYouFirstTileInView, recommendedForYouLastTileInView);
-    }
-
-    public ExtendedWebElement getHuluOriginals() {
-        return staticTextByLabel.format("Hulu Originals");
+        return areImagesDifferent(collectionSnapshotAfterLeftSwipe, collectionSnapshotAfterRightSwipe);
     }
 
     public boolean isBackButtonPresent() {
@@ -1193,6 +1186,10 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
 
     public ExtendedWebElement getCellElementFromContainer(CollectionConstant.Collection collection, String title) {
         return cellElementFromCollection.format(CollectionConstant.getCollectionName(collection), title);
+    }
+
+    public ExtendedWebElement getCellElementFromContainer(String collectionId, String title) {
+        return cellElementFromCollection.format(collectionId, title);
     }
 
     public boolean isRatingPresent(String rating) {
