@@ -160,7 +160,7 @@ public class DisneyPlusRalphProfileTest extends DisneyBaseTest {
 
         // Validate Content Rating and Birthdate are disabled
         sa.assertTrue(addProfile.isDateOfBirthFieldPresent(), DOB_FIELD_NOT_DISPLAYED);
-        addProfile.getDynamicTextEntryFieldByName(addProfile.getBirthdateTextField()).click();
+        addProfile.getDateOfBirthField().click();
         Assert.assertTrue(editProfile.getDoneButton().isElementNotPresent(THREE_SEC_TIMEOUT),
                 "Date of birth is not disabled");
         Assert.assertTrue(addProfile.getChooseContentRating().isPresent(), "Choose content is not disabled");
