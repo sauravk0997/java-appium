@@ -214,12 +214,8 @@ public interface UniversalUtils extends IDriverPool {
     }
 
     default boolean isValueInRange(int rgbVal, int rgbSource, int range) {
-        boolean ret = false;
-        Range<Integer> valueRange = Range.between(rgbSource - range, rgbSource + range);
-        if (valueRange.contains(rgbVal)) {
-            ret = true;
-        }
-        return ret;
+        Range<Integer> valueRange = Range.of(rgbSource - range, rgbSource + range);
+        return valueRange.contains(rgbVal);
     }
 
     private int getColorAcceptanceRange() {
