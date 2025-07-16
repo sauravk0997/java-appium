@@ -37,7 +37,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(accessibilityId = "ucp.playerView")
     protected ExtendedWebElement playerView;
 
-    @ExtendedFindBy(accessibilityId = "ucp.currentPosition")
+    @ExtendedFindBy(accessibilityId = "seekBar")
     protected ExtendedWebElement seekBar;
 
     @ExtendedFindBy(accessibilityId = "currentTimeMarker")
@@ -54,18 +54,13 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private ExtendedWebElement currentTimeLabel;
     @ExtendedFindBy(accessibilityId = "seekTimeLabel")
     protected ExtendedWebElement seekTimeLabel;
-    @ExtendedFindBy(accessibilityId = "ucp.fastRewind")
-    private ExtendedWebElement rewindButton;
-    @ExtendedFindBy(accessibilityId = "ucp.fastForward")
-    private ExtendedWebElement forwardButton;
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name == 'ucp.playerView'$]/" +
-            "**/XCUIElementTypeImage[`name == 'loader'`]")
+    @ExtendedFindBy(accessibilityId = "dmx.loadingIcon")
     private ExtendedWebElement ucpLoadSpinner;
     @ExtendedFindBy(accessibilityId = "audioSubtitleMenuButton")
     private ExtendedWebElement audioSubtitleMenuButton;
     @ExtendedFindBy(accessibilityId = "GCKUICastButton")
     private ExtendedWebElement chromecastButton;
-    @ExtendedFindBy(accessibilityId = "ucp.audioOutput")
+    @ExtendedFindBy(accessibilityId = "airPlayButton")
     private ExtendedWebElement airplayButton;
     @ExtendedFindBy(accessibilityId = "lockPlayerControlsButton")
     private ExtendedWebElement iconPinUnlocked;
@@ -93,6 +88,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name == \"broadcast\"$]" +
             "/**/XCUIElementTypeCollectionView[2]/XCUIElementTypeCell")
     private ExtendedWebElement broadcastFeed;
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name == \"Dismiss\"`]")
+    private ExtendedWebElement videoPlayerCloseButton;
 
     //FUNCTIONS
 
@@ -113,8 +110,20 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY, DictionaryKeys.PAUSE.getText()));
     }
 
+    public ExtendedWebElement getForwardButton() {
+        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                DictionaryKeys.SKIP_FORWARD.getText()));
+    }
+
+    public ExtendedWebElement getRewindButton() {
+        return getDynamicAccessibilityId(getLocalizationUtils().getDictionaryItem(
+                DisneyDictionaryApi.ResourceKeys.ACCESSIBILITY,
+                DictionaryKeys.SKIP_BACK.getText()));
+    }
+
     public ExtendedWebElement getBackButton() {
-        return dynamicBtnFindByName.format("buttonBack");
+        return videoPlayerCloseButton;
     }
 
     public ExtendedWebElement getBroadcastMenu() {
@@ -150,7 +159,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
             case CHROMECAST:
                 return chromecastButton;
             case FAST_FORWARD:
-                return forwardButton;
+                return getForwardButton();
             case NEXT_EPISODE:
                 return getNextEpisodeButton();
             case PLAY:
@@ -160,7 +169,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
             case RESTART:
                 return getRestartButton();
             case REWIND:
-                return rewindButton;
+                return getRewindButton();
             case LOCK_ICON:
                 return iconPinUnlocked;
             case UNLOCK_ICON:
@@ -284,12 +293,12 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public DisneyPlusVideoPlayerIOSPageBase displayVideoController() {
         LOGGER.info("Activating video player controls...");
         //Check is due to placement of PlayPause, which will pause the video if clicked
-        Dimension size = getDriver().manage().window().getSize();
-        tapAtCoordinateNoOfTimes((size.width * 35), (size.height * 50), 1);
-        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, FIVE_SEC_TIMEOUT, "Seek bar is present").until(it -> !seekBar.isPresent(ONE_SEC_TIMEOUT));
+        getPlayerView().click();
+        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, FIVE_SEC_TIMEOUT, "Seek bar is present")
+                .until(it -> !seekBar.isElementPresent(ONE_SEC_TIMEOUT));
         int attempts = 0;
         do {
-            clickElementAtLocation(playerView, 35, 50);
+            getPlayerView().click();
         } while (attempts++ < 5 && !seekBar.isElementPresent(THREE_SEC_TIMEOUT));
         if (attempts == 6) {
             Assert.fail("Seek bar was present and attempts exceeded over 5.");
@@ -334,7 +343,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public DisneyPlusVideoPlayerIOSPageBase tapRewindButton(int times) {
         displayVideoController();
         while (times > 0) {
-            rewindButton.click();
+            getRewindButton().click();
             times--;
         }
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
@@ -343,7 +352,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     public DisneyPlusVideoPlayerIOSPageBase tapForwardButton(int times) {
         displayVideoController();
         while (times > 0) {
-            forwardButton.click();
+            getForwardButton().click();
             times--;
         }
         return initPage(DisneyPlusVideoPlayerIOSPageBase.class);
