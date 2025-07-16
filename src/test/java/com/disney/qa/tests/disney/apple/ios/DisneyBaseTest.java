@@ -81,6 +81,8 @@ public class DisneyBaseTest extends DisneyAppleBaseTest {
     public static final String DISNEY_PLUS_HELP_CENTER = "Disney+ Help Center";
     public static final String RESTRICTED = "Restricted";
     public static final String RATING_MATURE = "TV-MA";
+    public static final String RATING_M = "M";
+    public static final String RATING_RP18_18_R18 = "RP18, 18, R18";
     public static final String RATING_R = "R";
     public static final String RATING_TV14 = "TV-14";
     public static final String ENGLISH_LANG = "en";
