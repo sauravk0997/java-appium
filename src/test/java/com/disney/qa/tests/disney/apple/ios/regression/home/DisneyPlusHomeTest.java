@@ -751,8 +751,8 @@ public class DisneyPlusHomeTest extends DisneyBaseTest {
 
         homePage.clickOnBrandCell(brandPage.getBrand(DisneyPlusBrandIOSPageBase.Brand.HULU));
         huluPage.waitForLoaderToDisappear(TEN_SEC_TIMEOUT);
-        sa.assertTrue(huluPage.validateScrollingInHuluCollection(CollectionConstant.Collection.HULU_ORIGINALS),
-                "Unable to validate Scrolling in Hulu Collection");
+        sa.assertTrue(huluPage.validateScrollingInCollection(CollectionConstant.Collection.HULU_ORIGINALS),
+                "Unable to validate scrolling in Hulu Collection");
         sa.assertTrue(huluPage.isStudiosAndNetworkPresent(), STUDIOS_AND_NETWORKS_NOT_DISPLAYED);
         verifyNetworkLogoValues(sa, huluPage);
 
