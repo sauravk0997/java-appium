@@ -89,7 +89,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
             "/**/XCUIElementTypeCollectionView[2]/XCUIElementTypeCell")
     private ExtendedWebElement broadcastFeed;
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeImage[`name == \"Dismiss\"`]")
-    private ExtendedWebElement backButton;
+    private ExtendedWebElement videoPlayerCloseButton;
 
     //FUNCTIONS
 
@@ -123,7 +123,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     }
 
     public ExtendedWebElement getBackButton() {
-        return backButton;
+        return videoPlayerCloseButton;
     }
 
     public ExtendedWebElement getBroadcastMenu() {
@@ -294,7 +294,8 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
         LOGGER.info("Activating video player controls...");
         //Check is due to placement of PlayPause, which will pause the video if clicked
         getPlayerView().click();
-        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, FIVE_SEC_TIMEOUT, "Seek bar is present").until(it -> !seekBar.isElementPresent(ONE_SEC_TIMEOUT));
+        fluentWait(getDriver(), FIFTEEN_SEC_TIMEOUT, FIVE_SEC_TIMEOUT, "Seek bar is present")
+                .until(it -> !seekBar.isElementPresent(ONE_SEC_TIMEOUT));
         int attempts = 0;
         do {
             getPlayerView().click();

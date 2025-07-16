@@ -36,10 +36,12 @@ public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase 
     @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS '%s,'`]")
     private ExtendedWebElement languageCell;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name == 'Audio'$]/XCUIElementTypeScrollView/**/XCUIElementTypeButton")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name == 'Audio'$]" +
+            "/XCUIElementTypeScrollView/**/XCUIElementTypeButton")
     private ExtendedWebElement audioLanguageCell;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name == 'Subtitles'$]/XCUIElementTypeScrollView/**/XCUIElementTypeButton")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name == 'Subtitles'$]" +
+            "/XCUIElementTypeScrollView/**/XCUIElementTypeButton")
     private ExtendedWebElement audioSubtitleCell;
 
 
