@@ -28,6 +28,7 @@ import static com.disney.qa.common.DisneyAbstractPage.THREE_SEC_TIMEOUT;
 import static com.disney.qa.common.constant.IConstantHelper.*;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.PROFILE;
 import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SEARCH;
+import static com.disney.qa.disney.apple.pages.tv.DisneyPlusAppleTVHomePage.globalNavigationMenu.SERIES;
 
 @Listeners(JocastaCarinaAdapter.class)
 public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTest {
@@ -1168,6 +1169,34 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         validateElementPositionAlignment(detailsPage.getSeasonViewSection(), LEFT_POSITION);
         validateElementPositionAlignment(detailsPage.getEpisodeViewSection(), RIGHT_POSITION);
         sa.assertAll();
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67384"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
+    public void verifySeriesContentLandingPage() {
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVSeriesPage seriesPage = new DisneyPlusAppleTVSeriesPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+
+        logIn(getUnifiedAccount());
+        homePage.moveDownFromHeroTile();
+        homePage.openGlobalNavAndSelectOneMenu(SERIES.getText());
+        Assert.assertTrue(seriesPage.isOpened(), "Series page was not open");
+
+        commonPage.moveDown(1, 1);
+        commonPage.clickSelect();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        commonPage.moveDown(1, 1);
+        Assert.assertTrue(detailsPage.isFocused(detailsPage.getEpisodesTab()), EPISODES_TAB_NOT_FOCUSED_ERROR_MESSAGE);
+        commonPage.clickRight();
+        Assert.assertTrue(detailsPage.isFocused(detailsPage.getSuggestedTab()), "Suggested tab is not focused");
+        commonPage.clickRight();
+        if (detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT)) {
+            Assert.assertTrue(detailsPage.isFocused(detailsPage.getExtrasTab()), "Extras tab is not focused");
+            commonPage.clickRight();
+        }
+        Assert.assertTrue(detailsPage.isFocused(detailsPage.getDetailsTab()), "Details tab is not focused");
     }
 
     @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67048"})
