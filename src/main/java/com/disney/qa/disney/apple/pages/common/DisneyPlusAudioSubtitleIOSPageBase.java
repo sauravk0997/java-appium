@@ -18,39 +18,28 @@ public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase 
 
     //LOCATORS
 
-    @ExtendedFindBy(accessibilityId = "languageSettingsView")
-    private ExtendedWebElement languageSettingsView;
-
     @ExtendedFindBy(accessibilityId = "Audio")
     private ExtendedWebElement audioHeading;
 
     @ExtendedFindBy(accessibilityId = "Subtitles")
     private ExtendedWebElement subtitlesHeading;
 
-    @ExtendedFindBy(accessibilityId = "audioCollectionView")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name == 'Audio'$]/XCUIElementTypeScrollView")
     private ExtendedWebElement audioCollectionView;
 
-    @ExtendedFindBy(accessibilityId = "subtitleCollectionView")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name == 'Subtitles'$]/XCUIElementTypeScrollView")
     private ExtendedWebElement subtitleCollectionView;
 
-    @ExtendedFindBy(accessibilityId = "closeInactive")
+    @ExtendedFindBy(accessibilityId = "dmx.closeMenu")
     private ExtendedWebElement closeButton;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCell[`label == \"%s\"`]")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeButton[`label CONTAINS '%s,'`]")
     private ExtendedWebElement languageCell;
 
-    //This will return the third generation element in view hierarchy
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[$name='subtitleCollectionView'$]/XCUIElementTypeCell/XCUIElementTypeOther[$name CONTAINS '%s'$]/XCUIElementTypeOther/XCUIElementTypeButton[$name='audioSubtitleCellButton'$]")
-    private ExtendedWebElement languageCellCheckmark;
-
-    //This will return the immediate preceding sibling in view hierarchy
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name='%s'$]/XCUIElementTypeOther/XCUIElementTypeButton[$name='audioSubtitleCellButton'$]")
-    private ExtendedWebElement audioSubtitleCheckBox;
-
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == \"audioCollectionView\"`]/XCUIElementTypeCell")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name == 'Audio'$]/XCUIElementTypeScrollView/**/XCUIElementTypeButton")
     private ExtendedWebElement audioLanguageCell;
 
-    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeCollectionView[`name == \"subtitleCollectionView\"`]/XCUIElementTypeCell")
+    @ExtendedFindBy(iosClassChain = "**/XCUIElementTypeOther[$name == 'Subtitles'$]/XCUIElementTypeScrollView/**/XCUIElementTypeButton")
     private ExtendedWebElement audioSubtitleCell;
 
 
@@ -61,7 +50,7 @@ public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase 
 
     @Override
     public boolean isOpened() {
-        return languageSettingsView.isPresent(FIVE_SEC_TIMEOUT);
+        return audioCollectionView.isPresent(FIVE_SEC_TIMEOUT);
     }
 
     public void tapCloseButton() {
@@ -75,9 +64,9 @@ public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase 
 
     public boolean verifySelectedAudioIs(String language) {
         LOGGER.info("verifying if selected audio language is: {}", language);
-        ExtendedWebElement element = audioSubtitleCheckBox.format(language);
+        ExtendedWebElement element = languageCell.format(language);
         swipeInContainerTillElementIsPresent(audioCollectionView, element, 5, Direction.UP);
-        return element.getAttribute("label").equalsIgnoreCase("checkmark");
+        return element.getAttribute(VALUE).equalsIgnoreCase("1");
     }
 
     public void chooseAudioLanguage(String language) {
@@ -108,9 +97,9 @@ public class DisneyPlusAudioSubtitleIOSPageBase extends DisneyPlusApplePageBase 
 
     public boolean verifySelectedSubtitleLangIs(String language) {
         LOGGER.info("verifying if selected subtitles language is: {}", language);
-        ExtendedWebElement element = languageCellCheckmark.format(language);
+        ExtendedWebElement element = languageCell.format(language);
         swipeInContainerTillElementIsPresent(subtitleCollectionView, element, 5, Direction.UP);
-        return element.getAttribute("label").equalsIgnoreCase("checkmark");
+        return element.getAttribute(VALUE).equalsIgnoreCase("1");
     }
 
     public List<String> getAudioLanguagesFromUI(){
