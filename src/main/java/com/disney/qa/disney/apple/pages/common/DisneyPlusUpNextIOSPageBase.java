@@ -5,6 +5,7 @@ import com.disney.qa.disney.dictionarykeys.DictionaryKeys;
 import com.zebrunner.carina.webdriver.decorator.ExtendedWebElement;
 import com.zebrunner.carina.webdriver.locator.ExtendedFindBy;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,15 +16,15 @@ public class DisneyPlusUpNextIOSPageBase extends DisneyPlusApplePageBase {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     //LOCATORS
-    @ExtendedFindBy(accessibilityId = "upNextImageView")
+    @FindBy(name = "upNextImageView")
     private ExtendedWebElement upNextImageView;
     @ExtendedFindBy(accessibilityId = "nextEpisodeHeader")
     private ExtendedWebElement nextEpisodeHeader;
-    @ExtendedFindBy(accessibilityId = "contentTitleLabel")
+    @ExtendedFindBy(accessibilityId = "upNextContentTitleLabel")
     private ExtendedWebElement contentTitleLabel;
-    @ExtendedFindBy(accessibilityId = "countdownProgressButton")
+    @ExtendedFindBy(iosPredicate = "name == 'upNextImageView' AND label == 'dmx.upNextPlay'")
     private ExtendedWebElement playButton;
-    @ExtendedFindBy(accessibilityId = "seeAllEpisodeButton")
+    @ExtendedFindBy(accessibilityId = "upNextExtraActionButton")
     private ExtendedWebElement seeAllEpisodeButton;
 
     //FUNCTIONS

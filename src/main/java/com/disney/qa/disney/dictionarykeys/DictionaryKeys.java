@@ -428,6 +428,8 @@ public enum DictionaryKeys {
     SET_PROFILE_ENTRY_PIN_BODY("set_profile_entry_pin_body"),
     SIGN_UP("sign_up"),
     SIZE_RUNTIME_PLACEHOLDER("size_runtime_placeholder"),
+    SKIP_BACK("video_controls_skipback"),
+    SKIP_FORWARD("video_controls_skipforward"),
     STREAM_WIFI_ONLY("settings_datausage_wifionly"),
     STREAMCONCURRENCY("streamconcurrency"),
     STREAMCONCURRENCY_TITLE("streamconcurrency_title"),
