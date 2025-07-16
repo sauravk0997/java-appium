@@ -612,8 +612,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         homePage.waitForHomePageToOpen();
 
         //TODO: Replace entity-id, deeplink from API when https://jira.disney.com/browse/QP-3247 is ready
-        String entityID = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_entity_id");
-        String deeplink = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_deeplink");
+        String entityID = R.TESTDATA.get("disney_prod_series_eyes_of_wakanda_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_series_eyes_of_wakanda_deeplink");
 
         launchDeeplink(deeplink);
         Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
@@ -657,7 +657,7 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
         searchPage.getSearchBar().click();
         String url = searchPage.getClipboardContentBySearchInput().split("\\?")[0];
-        String expectedUrl = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_deeplink");
+        String expectedUrl = R.TESTDATA.get("disney_prod_series_eyes_of_wakanda_deeplink");
         sa.assertTrue(expectedUrl.contains(url.replace(httpPrefix, "")),
                 String.format("Share link for coming soon series %s is not as expected", contentTitle));
         sa.assertAll();
@@ -674,8 +674,8 @@ public class DisneyPlusDetailsSeriesTest extends DisneyBaseTest {
         homePage.waitForHomePageToOpen();
 
         //TODO: Replace entity-id, deeplink from API when https://jira.disneystreaming.com/browse/QP-3247 is ready
-        String entityID = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_entity_id");
-        String deeplink = R.TESTDATA.get("disney_prod_series_phineas_and_ferb_deeplink");
+        String entityID = R.TESTDATA.get("disney_prod_series_eyes_of_wakanda_entity_id");
+        String deeplink = R.TESTDATA.get("disney_prod_series_eyes_of_wakanda_deeplink");
         Visuals visualsResponse = getExploreAPIPageVisuals(entityID);
         Map<String, Object> exploreAPIData = getContentMetadataFromAPI(visualsResponse);
 

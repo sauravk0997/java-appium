@@ -86,11 +86,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         handleAlert();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         disneyPlusMoreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
-        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils("US", lang, MobilePlatform.IOS,
-                DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
-                DISNEY);
-        disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
-        disneyLocalizationUtils.setLegalDocuments();
         confirmLegalPageOpens();
 
         DisneyplusLegalIOSPageBase disneyPlusLegalIOSPageBase = initPage(DisneyplusLegalIOSPageBase.class);
@@ -124,11 +119,6 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
         handleAlert();
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenuIOSPageBase.getStaticTextByLabel(getLocalizationUtils().getDictionaryItem(DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
-        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils("US", "en", MobilePlatform.IOS,
-                DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
-                DISNEY);
-        disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
-        disneyLocalizationUtils.setLegalDocuments();
         confirmLegalPageOpens();
         legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, DISNEY_TERMS_OF_USE, getLocalizationUtils());
         legalIOSPageBase.clickAndCollapseLegalScreenSection(sa, SUBSCRIBER_AGREEMENT, getLocalizationUtils());
@@ -170,12 +160,7 @@ public class DisneyPlusMoreMenuLegalTest extends DisneyBaseTest {
                 DisneyDictionaryApi.ResourceKeys.APPLICATION, DictionaryKeys.LEGAL_TITLE.getText())).click();
         Assert.assertTrue(legalPage.isOpened(),"Legal Page did not open on navigation");
 
-        DisneyLocalizationUtils disneyLocalizationUtils = new DisneyLocalizationUtils(country, DE_LANG,
-                MobilePlatform.IOS,
-                DisneyParameters.getEnvironmentType(DisneyParameters.getEnv()),
-                DISNEY);
-        disneyLocalizationUtils.setDictionaries(getConfigApi().getDictionaryVersions());
-        disneyLocalizationUtils.setLegalDocuments();
+        DisneyLocalizationUtils disneyLocalizationUtils = getLocalizationUtils(country, DE_LANG);
         disneyLocalizationUtils.getLegalHeaders().forEach(header -> {
             LOGGER.info("Verifying header is present: {}", header);
             Assert.assertTrue(legalPage.isLegalHeadersPresent(header),

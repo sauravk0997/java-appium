@@ -354,9 +354,11 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
      * @param direction
      */
 
-    default void swipeInContainerTillElementIsPresent(ExtendedWebElement container, ExtendedWebElement element, int count, Direction direction) {
-        while (element.isElementNotPresent(5) && count >= 0) {
-            swipeInContainer(container, direction, 1, 900);
+    default void swipeInContainerTillElementIsPresent(ExtendedWebElement container, ExtendedWebElement element,
+                                                      int count, Direction direction, int... duration) {
+        int swipeDuration = duration.length > 0 ? duration[0] : 900;
+        while (element.isElementNotPresent(1) && count >= 0) {
+            swipeInContainer(container, direction, 1, swipeDuration);
             count--;
         }
     }
@@ -600,6 +602,24 @@ public interface IOSUtils extends MobileUtilsExtended, IMobileUtils, IPageAction
             swipeUp(1, 1000);
         } else if (yCoordinate < minThreshold) {
             swipeDown(1, 1000);
+        }
+    }
+
+    /**
+     * Swipe until the given element is no longer visible. Retry for the amount of given swipes.
+     * If container is set to 'null' it will scroll over the whole screen.
+     *
+     * @param swipes
+     * @param element
+     * @param container
+     * @param direction
+     * @param duration
+     */
+    default void swipeTillElementIsNotVisible(ExtendedWebElement element, int swipes, ExtendedWebElement container,
+                                                  Direction direction, int duration) {
+        while (element.isPresent(1) && swipes > 0) {
+            swipeInContainer(container, direction, duration);
+            swipes--;
         }
     }
 
