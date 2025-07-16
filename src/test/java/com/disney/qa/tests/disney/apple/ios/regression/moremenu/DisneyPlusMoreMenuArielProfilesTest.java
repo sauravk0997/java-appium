@@ -443,10 +443,14 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
         sa.assertTrue(addProfile.isKidProfileSubCopyPresent(), KID_PROFILE_SUBCOPY_NOT_DISPLAYED);
         sa.assertTrue(editProfilePage.getLearnMoreLink().isPresent(), "Learn More Link is not displayed");
         addProfile.enterProfileName(KIDS_PROFILE);
+        addProfile.enterDOB(Person.U18.getMonth(), Person.U18.getDay(), Person.U18.getYear());
+        sa.assertFalse(addProfile.isGenderFieldEnabled(), "Gender field is enabled for U18 profile");
         addProfile.enterDOB(Person.ADULT.getMonth(), Person.ADULT.getDay(), Person.ADULT.getYear());
-        addProfile.chooseGender();
+        sa.assertTrue(addProfile.isGenderFieldEnabled(), "Gender field is not enabled for 18+ profile");
         addProfile.tapJuniorModeToggle();
         sa.assertEquals(editProfilePage.getJuniorModeToggleValue(), "On", "Junior Mode toggle is not ON");
+        sa.assertTrue(addProfile.isGenderFieldEnabled(), "Gender field is not enabled after Junior mode toggle is ON");
+        addProfile.chooseGender();
         moreMenu.clickSaveProfileButton();
         sa.assertTrue(moreMenu.isOpened(), MORE_MENU_NOT_DISPLAYED);
         sa.assertTrue(moreMenu.getProfileAvatar(KIDS_PROFILE).isPresent(), "Kids Profile is not present");
