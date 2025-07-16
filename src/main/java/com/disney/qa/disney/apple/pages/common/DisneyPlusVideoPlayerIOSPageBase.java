@@ -34,7 +34,7 @@ public class DisneyPlusVideoPlayerIOSPageBase extends DisneyPlusApplePageBase {
     private static final String BROADCAST_COLLECTION = "broadcastCollectionView";
 
     //LOCATORS
-    @ExtendedFindBy(accessibilityId = "fullScreenLoadingView")
+    @ExtendedFindBy(accessibilityId = "ucp.playerView")
     protected ExtendedWebElement playerView;
 
     @ExtendedFindBy(accessibilityId = "seekBar")
