@@ -1190,13 +1190,62 @@ public class DisneyPlusAppleTVDetailsSeriesTest extends DisneyPlusAppleTVBaseTes
         commonPage.moveDown(1, 1);
         Assert.assertTrue(detailsPage.isFocused(detailsPage.getEpisodesTab()), EPISODES_TAB_NOT_FOCUSED_ERROR_MESSAGE);
         commonPage.clickRight();
-        Assert.assertTrue(detailsPage.isFocused(detailsPage.getSuggestedTab()),"Suggested tab is not focused");
+        Assert.assertTrue(detailsPage.isFocused(detailsPage.getSuggestedTab()), "Suggested tab is not focused");
         commonPage.clickRight();
         if (detailsPage.getExtrasTab().isPresent(SHORT_TIMEOUT)) {
-            Assert.assertTrue(detailsPage.isFocused(detailsPage.getExtrasTab()),  "Extras tab is not focused");
+            Assert.assertTrue(detailsPage.isFocused(detailsPage.getExtrasTab()), "Extras tab is not focused");
             commonPage.clickRight();
         }
         Assert.assertTrue(detailsPage.isFocused(detailsPage.getDetailsTab()), "Details tab is not focused");
+    }
+
+    @TestLabel(name = ZEBRUNNER_XRAY_TEST_KEY, value = {"XCDQA-67048"})
+    @Test(groups = {TestGroup.DETAILS_PAGE, TestGroup.SERIES, US})
+    public void verifySeriesResumingFromBookmark() {
+        DisneyPlusAppleTVVideoPlayerPage videoPlayer = new DisneyPlusAppleTVVideoPlayerPage(getDriver());
+        DisneyPlusAppleTVDetailsPage detailsPage = new DisneyPlusAppleTVDetailsPage(getDriver());
+        DisneyPlusAppleTVCommonPage commonPage = new DisneyPlusAppleTVCommonPage(getDriver());
+        DisneyPlusAppleTVHomePage homePage = new DisneyPlusAppleTVHomePage(getDriver());
+        String continueWatchingCollection = CollectionConstant
+                .getCollectionName(CollectionConstant.Collection.CONTINUE_WATCHING);
+        int maxCount = 20;
+        int latency = 60;
+        logIn(getUnifiedAccount());
+
+        //Populate continue watching collection
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_detail_daredevil_deeplink"));
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        detailsPage.clickPlayButton();
+        videoPlayer.waitForVideoToStart();
+
+        // Forward video and get remaining time
+        commonPage.clickRight(6, 1, 1);
+        videoPlayer.waitForVideoToStart();
+        commonPage.clickDown(1);
+        commonPage.clickSelect();
+        int remainingTime = videoPlayer.getRemainingTimeThreeIntegers();
+        LOGGER.info("Remaining time {}", remainingTime);
+        // Back home
+        commonPage.moveDown(1, 1);
+        commonPage.clickBack();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        commonPage.clickBack();
+
+        //Navigate to continue watching collection
+        homePage.waitForHomePageToOpen();
+        commonPage.moveDownUntilCollectionContentIsFocused(continueWatchingCollection, maxCount);
+        commonPage.clickSelect();
+        Assert.assertTrue(detailsPage.isOpened(), DETAILS_PAGE_NOT_DISPLAYED);
+        Assert.assertTrue(detailsPage.getContinueButton().isPresent(),
+                "Continue button was not present on details page");
+
+        detailsPage.getContinueButton().click();
+        videoPlayer.waitForVideoToStart();
+        int remainingTimeAfterCW = videoPlayer.getRemainingTimeThreeIntegers();
+        LOGGER.info("RemainingTime after continue watching {}", remainingTimeAfterCW);
+        ValueRange range = ValueRange.of(0, latency);
+        Assert.assertTrue(range.isValidIntValue(remainingTime - remainingTimeAfterCW),
+                "Video did not resume from bookmark");
     }
 
     private void toggleAutoPlay(String toggleValue) {

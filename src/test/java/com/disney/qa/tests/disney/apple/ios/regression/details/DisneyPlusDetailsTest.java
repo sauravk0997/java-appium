@@ -255,11 +255,11 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         //Verify Shop Promo for Series
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_win_or_lose_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_disney_parks_sunrise_series_deeplink"));
         validateShopPromoLabelHeaderAndSubHeader(sa);
 
         //Verify Shop Promo for Movie
-        launchDeeplink(R.TESTDATA.get("disney_prod_movie_moana_2_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_zootropolis_deeplink"));
         validateShopPromoLabelHeaderAndSubHeader(sa);
         sa.assertAll();
     }
@@ -271,12 +271,12 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
         setAppToHomeScreen(getUnifiedAccount());
 
         //verify Shop Tab button for movies
-        launchDeeplink(R.TESTDATA.get("disney_prod_movie_moana_2_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_zootropolis_deeplink"));
         validateShopTabButton(sa);
         validateShopTabContainer(sa);
 
         //Verify Shop tab button for series
-        launchDeeplink(R.TESTDATA.get("disney_prod_series_win_or_lose_deeplink"));
+        launchDeeplink(R.TESTDATA.get("disney_prod_series_disney_parks_sunrise_series_deeplink"));
         validateShopTabButton(sa);
         validateShopTabContainer(sa);
         sa.assertAll();
