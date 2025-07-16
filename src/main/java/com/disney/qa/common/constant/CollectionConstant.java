@@ -167,6 +167,8 @@ public class CollectionConstant {
                 return "Leagues";
             case ESPN_SPORTS:
                 return "Sports";
+            case HULU_ORIGINALS:
+                return "Hulu Originals";
             case REPLAYS_COLLECTION:
                 return "Replays";
             case STREAMS:
