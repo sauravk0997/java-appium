@@ -1115,10 +1115,6 @@ public class DisneyPlusApplePageBase extends DisneyAbstractPage implements IRemo
         return areImagesDifferent(collectionSnapshotAfterLeftSwipe, collectionSnapshotAfterRightSwipe);
     }
 
-    public ExtendedWebElement getHuluOriginals() {
-        return staticTextByLabel.format("Hulu Originals");
-    }
-
     public boolean isBackButtonPresent() {
         return collectionBackButton.isPresent();
     }
