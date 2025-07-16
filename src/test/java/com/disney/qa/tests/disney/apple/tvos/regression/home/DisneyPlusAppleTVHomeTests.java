@@ -217,7 +217,7 @@ public class DisneyPlusAppleTVHomeTests extends DisneyPlusAppleTVBaseTest {
 
         List<Item> availableHuluTitlesForStandaloneUserFromApi = getAvailableHuluTitlesForStandaloneUserFromApi();
         List<Item> trendingTitlesFromApi = getExploreAPIItemsFromSet
-                (getCollectionName(CollectionConstant.Collection.TRENDING), 20);
+                (getCollectionName(CollectionConstant.Collection.TRENDING), 30);
         if (trendingTitlesFromApi.isEmpty()) {
             throw new NoSuchElementException("Failed to get Trending collection titles from Explore API");
         }
