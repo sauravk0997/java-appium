@@ -158,7 +158,7 @@ public class DisneyPlusDetailsTest extends DisneyBaseTest {
                 profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystem(),
                 profile.getAttributes().getParentalControls().getMaturityRating().getRatingSystemValues().get(1));
 
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), profile.getProfileName());
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         // Movies
