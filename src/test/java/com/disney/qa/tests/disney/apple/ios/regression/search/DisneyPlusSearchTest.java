@@ -651,7 +651,7 @@ public class DisneyPlusSearchTest extends DisneyBaseTest {
                 .avatarId(BABY_YODA)
                 .kidsModeEnabled(false)
                 .build());
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
         homePage.clickSearchIcon();
         Assert.assertTrue(searchPage.isOpened(), SEARCH_PAGE_NOT_DISPLAYED);
 

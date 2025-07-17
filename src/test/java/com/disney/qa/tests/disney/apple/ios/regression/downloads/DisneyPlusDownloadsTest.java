@@ -1137,8 +1137,7 @@ public class DisneyPlusDownloadsTest extends DisneyBaseTest {
         DisneyPlusDownloadsIOSPageBase downloadsPage = initPage(DisneyPlusDownloadsIOSPageBase.class);
         DisneyPlusWhoseWatchingIOSPageBase whoIsWatching = initPage(DisneyPlusWhoseWatchingIOSPageBase.class);
 
-        setAppToHomeScreen(getUnifiedAccount());
-
+        setAppToHomeScreen(getUnifiedAccount(), getUnifiedAccount().getProfiles().get(0).getProfileName());
         //Download TV-MA content
         homePage.clickSearchIcon();
         searchPage.searchForMedia(ONLY_MURDERS_IN_THE_BUILDING);

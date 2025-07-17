@@ -80,7 +80,7 @@ public class DisneyPlusMoreMenuArielProfilesTest extends DisneyBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-        setAppToHomeScreen(testAccount);
+        setAppToHomeScreen(testAccount, DEFAULT_PROFILE);
         navigateToTab(DisneyPlusApplePageBase.FooterTabs.MORE_MENU);
         moreMenu.clickEditProfilesBtn();
         editProfiles.clickEditModeProfile(KIDS_PROFILE);

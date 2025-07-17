@@ -53,7 +53,7 @@ public class DisneyPlusAppleTVDeepLinksTests extends DisneyPlusAppleTVBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-        logIn(getUnifiedAccount());
+        logIn(getUnifiedAccount(), DEFAULT_PROFILE);
         terminateApp(sessionBundles.get(DISNEY));
         launchDeeplink(R.TESTDATA.get("disney_prod_home_page_deeplink"));
         Assert.assertTrue(whoIsWatchingPage.isOpened(), WHOS_WATCHING_NOT_DISPLAYED);

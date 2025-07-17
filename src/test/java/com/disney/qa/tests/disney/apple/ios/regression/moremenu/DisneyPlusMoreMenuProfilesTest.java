@@ -722,7 +722,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
         Assert.assertTrue(homePage.isOpened(), HOME_PAGE_NOT_DISPLAYED);
 
         homePage.clickMoreTab();
@@ -1004,7 +1004,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(KIDS_PROFILE);
@@ -1183,7 +1183,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
         moreMenu.clickMoreTab();
         moreMenu.clickEditProfilesBtn();
         editProfile.clickEditModeProfile(KIDS_PROFILE);
@@ -1419,7 +1419,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .isStarOnboarded(true)
                 .build());
 
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
         homePage.clickMoreTab();
         whoIsWatching.clickEditProfile();
         editProfile.clickEditModeProfile(JUNIOR_PROFILE);
@@ -1513,7 +1513,7 @@ public class DisneyPlusMoreMenuProfilesTest extends DisneyBaseTest {
                 .kidsModeEnabled(false)
                 .isStarOnboarded(true)
                 .build());
-        setAppToHomeScreen(getUnifiedAccount());
+        setAppToHomeScreen(getUnifiedAccount(), DEFAULT_PROFILE);
 
         //Toggle is ON by default for secondary profile
         homePage.clickMoreTab();
